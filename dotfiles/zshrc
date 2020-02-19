@@ -1,0 +1,110 @@
+#========================================================
+#                        COMPLETION 
+#========================================================
+# enable completion
+# (this option setoff coz extremly slow down zsh)
+#autoload -Uz compinit
+#compinit
+
+autoload bashcompinit
+bashcompinit
+
+zmodload -i zsh/complist
+
+WORDCHARS=''
+
+unsetopt menu_complete   # do not autoselect the first completion entry
+#unsetopt flowcontrol
+setopt auto_menu         # show completion menu on successive tab press
+setopt complete_in_word
+setopt always_to_end
+
+# Automatically update PATH entries
+zstyle ':completion:*' rehash true
+
+# Keep directories and files separated
+zstyle ':completion:*' list-dirs-first true
+
+# zsh completions
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
+}
+compctl -K _pip_completion pip3
+# pip zsh completion end
+
+# awscli zsh autocomplete
+autoload -Uz compinit && compinit
+source /usr/local/bin/aws_zsh_completer.sh
+
+#========================================================
+#                        EXPORT
+#========================================================
+export JAVA_HOME="/Library/Internet_Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
+
+# setting HOME and PATH vars for maestro cli
+export MAESTRO_CLI_HOME="/usr/local/opt/maestro-cli"
+export PATH="$PATH:$MAESTRO_CLI_HOME/bin"
+
+# setting PATH for user local bin folders
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+
+# setting PATH for Python
+export PATH="/Library/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
+export PATH="/Users/srj_b/Library/Python/3.8/bin:$PATH"
+export PATH="/Users/srj_b/Library/Python/3.7/bin:$PATH"
+
+# setting PATH for golang
+export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:$(go env GOBIN)"
+# The GOPATH environment variable specifies the location of your workspace
+export GOPATH="$HOME/Documents/Playground/Sandbox/go"
+
+export PATH
+
+export EDITOR="vim"
+export CLICOLOR=1
+#export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
+
+# support colors in less
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;40;31m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+setopt PUSHDSILENT
+
+#========================================================
+#                       ALIAS 
+#========================================================
+#User's different staff
+alias ls='ls -G'
+#alias ll='ls -Glh'
+#alias la='ls -GA'
+#alias l='ls -GC'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias frinp='~/Documents/Playground/Junk/search-replace.sh'
+alias lsofc='lsof -i |egrep -i "(listen|established)"'
+
+#========================================================
+#                       PROMT 
+#========================================================
+#This is the default structure of the prompt on many Linux systems
+#export PROMPT='%B%F{240}%1~%f%b %# '
+#PS1="[%B%F{red}%n@%m %1~%f%b]%# "
+#PS1="[%B%F{red}%n@%m %1~%f%b]\$ "
+PS1="[%B%F{red}%n@%m%f%b %F{blue}%1~%f]\$ "
+
+umask 0077

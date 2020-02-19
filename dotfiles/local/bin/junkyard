@@ -1,0 +1,12 @@
+#!/bin/bash
+
+file_location="/Users/srj_b/Documents/Playground/Junk/junk.txt"
+
+case $1 in
+    -e | --edit)
+        vim "${file_location}"
+        ;;
+    *)
+        view "${file_location}"
+        ;;
+esac

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+file_location="/Users/srj_b/Documents/Playground/Junk/observes.txt"
+
+case $1 in
+    -e | --edit)
+        echo >> "${file_location}"
+        date >> "${file_location}"
+        echo >> "${file_location}"
+        vim "${file_location}"
+        ;;
+    *)
+        view "${file_location}"
+        ;;
+esac
