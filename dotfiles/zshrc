@@ -14,7 +14,7 @@ zmodload -i zsh/complist
 WORDCHARS=''
 
 unsetopt menu_complete   # do not autoselect the first completion entry
-#unsetopt flowcontrol
+unsetopt flowcontrol
 setopt auto_menu         # show completion menu on successive tab press
 setopt complete_in_word
 setopt always_to_end
@@ -70,9 +70,11 @@ export GOPATH="$HOME/Documents/Playground/Sandbox/go"
 
 export PATH
 
-export EDITOR="vim"
+#note: if env var "EDITOR" have default value "vim"
+#zsh will automatically set bindkey -v 
+#this behaviour will lead toward cli vim mod
+#export EDITOR="vim"
 export CLICOLOR=1
-#export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
 
 # support colors in less
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -108,3 +110,7 @@ alias lsofc='lsof -i |egrep -i "(listen|established)"'
 PS1="[%B%F{red}%n@%m%f%b %F{blue}%1~%f]\$ "
 
 umask 0077
+
+#========================================================
+#                        KEY_BINDINGS
+#========================================================
