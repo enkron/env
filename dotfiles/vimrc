@@ -90,14 +90,22 @@ let g:syntastic_python_checkers = ['flake8', 'pyflakes']
 """"""""""""""""""""""
 "      Mappings      "
 """"""""""""""""""""""
-nmap <Space> :w!<CR>
-nmap ~ %
+nnoremap <Space> :w!<CR>
 nnoremap ,b :ls<CR>:buffer<Space>
+nnoremap ,<space> :nohlsearch<CR>
+nnoremap ~ %
+
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap { {}<Left>
+inoremap " ""<Left>
+inoremap ' ''<Left>
+inoremap ` ``<Left>
 
 " search mappings: these will make it so that going to the
 " next one in a search will center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" Do not show stupid q: window
+" do not show q: window
 map q: :q
