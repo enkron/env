@@ -2,14 +2,15 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'         " let Vundle manage Vundle, required
 Plugin 'dikiaap/minimalist'           " Minimalist color-scheme.
-Plugin 'vim-scripts/indentpython.vim' " fixes autoindent behavior
 Plugin 'vim-syntastic/syntastic'      " check syntax on each save
-Plugin 'nvie/vim-flake8'              " PEP8 checking
 Plugin 'sheerun/vim-polyglot'         " a collection of language packs
-Plugin 'davidhalter/jedi-vim'         " understands most of Python's core features
-" Plugin 'Valloric/YouCompleteMe'     " code completion engine
-                                      " doesnt work on mac properly
-Plugin 'fatih/vim-go'                 " golang official plugin
+Plugin 'rust-lang/rust.vim'           " vim configuration for rust
+"Plugin 'vim-scripts/indentpython.vim' " fixes autoindent behavior
+"Plugin 'davidhalter/jedi-vim'         " understands most of Python's core features
+"Plugin 'nvie/vim-flake8'              " PEP8 checking
+"Plugin 'Valloric/YouCompleteMe'       " code completion engine
+                                       " doesnt work on mac properly
+"Plugin 'fatih/vim-go'                 " golang official plugin
 call vundle#end()
 
 """"""""""""""""""""""
@@ -67,17 +68,20 @@ set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 """""""""""""""""""""
 "      Plugins      "
 """""""""""""""""""""
-" vim-go
-let g:go_fmt_command = "goimports"
-let g:go_autodetect_gopath = 1
-let g:go_list_type = "quickfix"
+" rust.vim
+let g:rustfmt_autosave = 1
 
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_generate_tags = 1
+" go.vim
+"let g:go_fmt_command = "goimports"
+"let g:go_autodetect_gopath = 1
+"let g:go_list_type = "quickfix"
+
+"let g:go_highlight_types = 1
+"let g:go_highlight_fields = 1
+"let g:go_highlight_functions = 1
+"let g:go_highlight_function_calls = 1
+"let g:go_highlight_extra_types = 1
+"let g:go_highlight_generate_tags = 1
 
 " minimalist color scheme
 let g:airline_theme='minimalist'
