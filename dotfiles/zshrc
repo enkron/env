@@ -68,6 +68,9 @@ export PATH="$PATH:$(go env GOBIN)"
 # The GOPATH environment variable specifies the location of your workspace
 export GOPATH="$HOME/Documents/Playground/Sandbox/go"
 
+# the cargo's (rust package manager) bin dir
+export PATH="$HOME/.cargo/bin:$PATH"
+
 export PATH
 
 #note: if env var "EDITOR" have default value "vim"
