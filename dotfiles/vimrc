@@ -1,7 +1,7 @@
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'         " let Vundle manage Vundle, required
-Plugin 'dikiaap/minimalist'           " Minimalist color-scheme.
+Plugin 'dikiaap/minimalist'           " minimalist color-scheme.
 Plugin 'vim-syntastic/syntastic'      " check syntax on each save
 Plugin 'sheerun/vim-polyglot'         " a collection of language packs
 Plugin 'rust-lang/rust.vim'           " vim configuration for rust
