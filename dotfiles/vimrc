@@ -1,16 +1,17 @@
+"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'         " let Vundle manage Vundle, required
 Plugin 'dikiaap/minimalist'           " minimalist color-scheme.
 Plugin 'vim-syntastic/syntastic'      " check syntax on each save
 Plugin 'sheerun/vim-polyglot'         " a collection of language packs
-Plugin 'rust-lang/rust.vim'           " vim configuration for rust
+Plugin 'fatih/vim-go'                 " golang official plugin
 "Plugin 'vim-scripts/indentpython.vim' " fixes autoindent behavior
 "Plugin 'davidhalter/jedi-vim'         " understands most of Python's core features
 "Plugin 'nvie/vim-flake8'              " PEP8 checking
 "Plugin 'Valloric/YouCompleteMe'       " code completion engine
                                        " doesnt work on mac properly
-"Plugin 'fatih/vim-go'                 " golang official plugin
+"Plugin 'rust-lang/rust.vim'           " vim configuration for rust
 call vundle#end()
 
 """"""""""""""""""""""
@@ -28,7 +29,7 @@ autocmd FileType python setlocal completeopt-=preview " disable the docstring
                                                       " window to popup
                                                       " during completion
 
-let python_highlight_all=1      " enable python syntax highlighting features
+"let python_highlight_all=1      " enable python syntax highlighting features
 
 set nocompatible                " Enables us Vim specific features
 filetype off                    " Reset filetype detection first ...
@@ -68,28 +69,28 @@ set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 """""""""""""""""""""
 "      Plugins      "
 """""""""""""""""""""
-" rust.vim
-let g:rustfmt_autosave = 1
-
 " go.vim
-"let g:go_fmt_command = "goimports"
-"let g:go_autodetect_gopath = 1
-"let g:go_list_type = "quickfix"
+let g:go_fmt_command = "goimports"
+let g:go_autodetect_gopath = 1
+let g:go_list_type = "quickfix"
 
-"let g:go_highlight_types = 1
-"let g:go_highlight_fields = 1
-"let g:go_highlight_functions = 1
-"let g:go_highlight_function_calls = 1
-"let g:go_highlight_extra_types = 1
-"let g:go_highlight_generate_tags = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
 
 " minimalist color scheme
 let g:airline_theme='minimalist'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
+" rust.vim
+"let g:rustfmt_autosave = 1
+
 " syntastic syntax checker
-let g:syntastic_python_checkers = ['flake8', 'pyflakes']
+"let g:syntastic_python_checkers = ['flake8', 'pyflakes']
 
 """"""""""""""""""""""
 "      Mappings      "
