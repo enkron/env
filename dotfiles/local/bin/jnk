@@ -1,12 +1,18 @@
 #!/bin/bash
 
-file_location="/Users/srj_b/Documents/Playground/Junk/junk.txt"
+FILE_LOC="/Users/srj_b/Documents/Playground/Junk/jnk.md"
+OPT="$1"
 
-case $1 in
-    -e | --edit)
-        vim "${file_location}"
-        ;;
-    *)
-        view "${file_location}"
-        ;;
-esac
+function main {
+    case $OPT in
+        -e | --edit)
+            vim "${FILE_LOC}"
+            ;;
+        *)
+            view "${FILE_LOC}"
+            ;;
+    esac
+}
+
+
+main

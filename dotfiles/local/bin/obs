@@ -1,15 +1,21 @@
 #!/bin/bash
 
-file_location="/Users/srj_b/Documents/Playground/Junk/observes.txt"
+FILE_LOC="/Users/srj_b/Documents/Playground/Junk/obs.txt"
+OPT="$1"
 
-case $1 in
-    -e | --edit)
-        echo >> "${file_location}"
-        date >> "${file_location}"
-        echo >> "${file_location}"
-        vim "${file_location}"
-        ;;
-    *)
-        view "${file_location}"
-        ;;
-esac
+function main {
+    case "$OPT" in
+        -e | --edit)
+            echo >> "${FILE_LOC}"
+            date >> "${FILE_LOC}"
+            echo >> "${FILE_LOC}"
+            vim "${FILE_LOC}"
+            ;;
+        *)
+            view "${FILE_LOC}"
+            ;;
+    esac
+}
+
+
+main
