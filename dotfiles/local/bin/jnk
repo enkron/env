@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILE_LOC="/Users/srj_b/Documents/Playground/Junk/jnk.md"
+FILE_LOC="/Users/srj_b/Documents/Playground/jnk/jnk.md"
 OPT="$1"
 
 function main {
