@@ -69,7 +69,7 @@ export PATH="$PATH:$(go env GOBIN)"
 export GOPATH="$HOME/Documents/Playground/Sandbox/go"
 
 # the cargo's (rust package manager) bin dir
-export PATH="$HOME/.cargo/bin:$PATH"
+#export PATH="$HOME/.cargo/bin:$PATH"
 
 export PATH
 
