@@ -48,8 +48,8 @@ set showmatch                   " show the matching part
                                 " of the pair for [] {} and ()
 set cursorline                  " show a visual line under the cursor's current line
 set fileformat=unix             " store the file in a Unix format
-set textwidth=79                " ensure your line length doesn’t
-                                " go beyond 80 characters
+set textwidth=72                " ensure your line length doesn’t
+                                " go beyond 72 characters
 set encoding=utf-8              " using utf-8 when working with python
 set ruler		                " show the cursor position all the time
 set history=50		            " keep 50 lines of command line history
@@ -111,6 +111,13 @@ inoremap ` ``<Left>
 " next one in a search will center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
+
+" when long lines inserted j k moves one physical line
+" gj gk moves down one displayed line
+noremap <Up> gk
+noremap <Down> gj
+noremap j gj
+noremap k gk
 
 " do not show q: window
 map q: :q

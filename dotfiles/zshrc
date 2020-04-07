@@ -102,6 +102,7 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias frinp='~/Documents/Playground/Junk/search-replace.sh'
 alias lsofc='lsof -i |egrep -i "(listen|established)"'
+alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/'
 
 #========================================================
 #                       PROMT 
