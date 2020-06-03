@@ -69,7 +69,7 @@ export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:$(go env GOBIN)"
 
 #The GOPATH environment variable specifies the location of your workspace
-export GOPATH="$HOME/Documents/Playground/sandbox/go"
+export GOPATH="$HOME/Documents/obs/sandbox/go"
 
 # the cargo's (rust package manager) bin dir
 #export PATH="$HOME/.cargo/bin:$PATH"
@@ -103,7 +103,7 @@ alias ls='ls -G'
 #alias l='ls -GC'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
-alias frinp='~/Documents/Playground/Junk/search-replace.sh'
+alias sr='~/Documents/obs/utils/search-replace.sh'
 alias lsofc='lsof -i |egrep -i "(listen|established)"'
 alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/'
 
