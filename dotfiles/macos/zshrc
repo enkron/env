@@ -57,16 +57,8 @@ export PATH="$PATH:$MAESTRO_CLI_HOME/bin"
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 
-# setting PATH for Python
-export PATH="/Library/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
-export PATH="$HOME/Library/Python/3.8/bin:$PATH"
-export PATH="$HOME/Library/Python/3.7/bin:$PATH"
-
 #setting PATH for golang bin files
 export PATH="$PATH:/usr/local/go/bin"
-
-#setting GOBIN dir for user bin files
-export PATH="$PATH:$(go env GOBIN)"
 
 #The GOPATH environment variable specifies the location of your workspace
 export GOPATH="$HOME/Documents/obs/sandbox/go"
