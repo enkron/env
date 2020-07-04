@@ -2,7 +2,7 @@
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'         " let Vundle manage Vundle, required
-Plugin 'dikiaap/minimalist'           " minimalist color-scheme.
+Plugin 'enkron/stsc'                  " stsc color-scheme.
 Plugin 'vim-syntastic/syntastic'      " check syntax on each save
 Plugin 'sheerun/vim-polyglot'         " a collection of language packs
 Plugin 'fatih/vim-go'                 " golang official plugin
@@ -19,7 +19,7 @@ call vundle#end()
 """"""""""""""""""""""
 " Colorscheme
 set t_Co=256
-colorscheme minimalist
+colorscheme stsc
 
 set term=builtin_xterm 
 syntax on                       " enable syntax highlighting
