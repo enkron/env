@@ -54,8 +54,8 @@ export MAESTRO_CLI_HOME="/usr/local/opt/maestro-cli"
 export PATH="$PATH:$MAESTRO_CLI_HOME/bin"
 
 # setting PATH for user local bin folders
-export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-export PATH="/usr/local/sbin:$PATH"
+export PATH="${HOME}/.local/bin:${HOME}/bin:${PATH}"
+export PATH="/usr/local/sbin:${PATH}"
 
 #setting PATH for golang bin files
 export PATH="$PATH:/usr/local/go/bin"
@@ -64,7 +64,7 @@ export PATH="$PATH:/usr/local/go/bin"
 export GOPATH="${HOME}/Documents/obs/sandbox/go"
 
 # the cargo's (rust package manager) bin dir
-#export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="${HOME}/.cargo/bin:${PATH}"
 
 export PATH
 
