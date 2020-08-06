@@ -106,7 +106,7 @@ alias icloud="cd ${HOME}/Library/Mobile\ Documents/com~apple~CloudDocs/"
 #export PROMPT='%B%F{240}%1~%f%b %# '
 #PS1="[%B%F{red}%n@%m %1~%f%b]%# "
 #PS1="[%B%F{red}%n@%m %1~%f%b]\$ "
-PS1="[%B%F{red}%n@%m%f%b %F{blue}%1~%f]\$ "
+PS1="[%F{white}%n@%m%f %F{blue}%1~%f]\$ "
 
 umask 0077
 

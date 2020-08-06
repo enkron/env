@@ -17,53 +17,51 @@ call vundle#end()
 """"""""""""""""""""""
 "      Settings      "
 """"""""""""""""""""""
-" Colorscheme
 set t_Co=256
 colorscheme vim-avarice
 
-set term=builtin_xterm 
-syntax on                       " enable syntax highlighting
+set term=${TERM}
+syntax on                            " enable syntax highlighting
 
 set omnifunc=syntaxcomplete#Complete
 autocmd FileType python setlocal completeopt-=preview " disable the docstring
                                                       " window to popup
                                                       " during completion
 
-"let python_highlight_all=1      " enable python syntax highlighting features
+" let python_highlight_all=1         " enable python syntax highlighting features
 
-set nocompatible                " Enables us Vim specific features
-filetype off                    " Reset filetype detection first ...
-filetype plugin indent on       " ... and enable filetype detection
-set tabstop=4                   " set tabs to have 4 spaces
-set shiftwidth=4                " when using the >> or << commands,
-                                " shift lines by 4 spaces
-set expandtab                   " expand tabs into spaces
+set nocompatible                     " Enables us Vim specific features
+filetype off                         " Reset filetype detection first ...
+filetype plugin indent on            " ... and enable filetype detection
+set tabstop=4                        " set tabs to have 4 spaces
+set shiftwidth=4                     " when using the >> or << commands,
+                                     " shift lines by 4 spaces
+set expandtab                        " expand tabs into spaces
 set smarttab 
 set smartindent
-set number                      " show line numbers
-set relativenumber              " each line in a file is numbered relative
-                                " to the cursor’s current position to show
-                                " the distance to that line
-set showmatch                   " show the matching part
-                                " of the pair for [] {} and ()
-set cursorline                  " show a visual line under the cursor's current line
-set fileformat=unix             " store the file in a Unix format
-set textwidth=72                " ensure your line length doesn’t
-                                " go beyond 72 characters
-set encoding=utf-8              " using utf-8 when working with python
-set ruler		                " show the cursor position all the time
-set history=50		            " keep 50 lines of command line history
-set viminfo='20,\"50	        " read/write a .viminfo file, don't store more
-			                    " than 50 lines of registers
-set bs=indent,eol,start		    " allow backspacing over everything in insert mode
-set noswapfile                  " don't use swapfile
-set nobackup                    " don't create backup files
-set showcmd                     " show what i'm typing
+set number                           " show line numbers
+set relativenumber                   " each line in a file is numbered relative
+                                     " to the cursor’s current position to show
+                                     " the distance to that line
+set showmatch                        " show the matching part
+                                     " of the pair for [] {} and ()
+set cursorline                       " show a visual line under the cursor's current line
+set cursorlineopt=number,screenline  " settings for how 'cursorline' is displayed
+set fileformat=unix                  " store the file in a Unix format
+set textwidth=72                     " ensure your line length doesn’t
+                                     " go beyond 72 characters
+set encoding=utf-8                   " using utf-8 when working with python
+set ruler		                     " show the cursor position all the time
+set history=50		                 " keep 50 lines of command line history
+set viminfo='20,\"50	             " read/write a .viminfo file, don't store more
+			                         " than 50 lines of registers
+set bs=indent,eol,start		         " allow backspacing over everything in insert mode
+set noswapfile                       " don't use swapfile
+set nobackup                         " don't create backup files
+set showcmd                          " show what i'm typing
+set hlsearch                         " enable highlight searched patterns
 
-set hlsearch                    " enable highlight searched patterns
-highlight Search ctermbg=black ctermfg=red
-
-set laststatus=2                " show status line always
+set laststatus=2                     " show status line always
 set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 
 """""""""""""""""""""
@@ -83,6 +81,7 @@ let g:go_highlight_generate_tags = 1
 
 " rust.vim
 let g:rustfmt_autosave = 1
+let g:rust_keep_autopairs_default = 1
 
 " syntastic syntax checker
 "let g:syntastic_python_checkers = ['flake8', 'pyflakes']
@@ -100,8 +99,8 @@ inoremap ( ()<Left>
 inoremap [ []<Left>
 inoremap { {}<Left>
 inoremap " ""<Left>
-inoremap ' ''<Left>
-inoremap ` ``<Left>
+" inoremap ' ''<Left>
+" inoremap ` ``<Left>
 
 " search mappings: these will make it so that going to the
 " next one in a search will center on the line it's found in.
@@ -117,3 +116,13 @@ noremap k gk
 
 " do not show q: window
 map q: :q
+
+""""""""""""""""""""""
+"   Rust Mappings    "
+""""""""""""""""""""""
+nnoremap ,rr :RustRun<CR>
+
+""""""""""""""""""""""
+"  Vundle Mappings   "
+""""""""""""""""""""""
+nnoremap ,vu :PluginUpdate<CR>
