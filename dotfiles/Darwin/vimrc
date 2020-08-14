@@ -95,6 +95,11 @@ nnoremap ,c :%s/\< \>/ /g<Left><Left><Left><Left><Left><Left><Left>
 nnoremap ,<space> :nohlsearch<CR>
 nnoremap ~ %
 
+" map Left to Ctrl+b in cmd mode to have behaviour like in terminal
+cnoremap <C-b> <Left>
+" map Home to Ctrl+a in cmd mode to have behaviour like in terminal
+cnoremap <C-a> <Home>
+
 inoremap ( ()<Left>
 inoremap [ []<Left>
 inoremap { {}<Left>
