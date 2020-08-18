@@ -37,7 +37,7 @@ set tabstop=4                        " set tabs to have 4 spaces
 set shiftwidth=4                     " when using the >> or << commands,
                                      " shift lines by 4 spaces
 set expandtab                        " expand tabs into spaces
-set smarttab 
+set smarttab
 set smartindent
 set number                           " show line numbers
 set relativenumber                   " each line in a file is numbered relative
@@ -51,11 +51,11 @@ set fileformat=unix                  " store the file in a Unix format
 set textwidth=72                     " ensure your line length doesn’t
                                      " go beyond 72 characters
 set encoding=utf-8                   " using utf-8 when working with python
-set ruler		                     " show the cursor position all the time
-set history=50		                 " keep 50 lines of command line history
-set viminfo='20,\"50	             " read/write a .viminfo file, don't store more
-			                         " than 50 lines of registers
-set bs=indent,eol,start		         " allow backspacing over everything in insert mode
+set ruler                            " show the cursor position all the time
+set history=50                       " keep 50 lines of command line history
+set viminfo='20,\"50                 " read/write a .viminfo file, don't store more
+                                     " than 50 lines of registers
+set bs=indent,eol,start              " allow backspacing over everything in insert mode
 set noswapfile                       " don't use swapfile
 set nobackup                         " don't create backup files
 set showcmd                          " show what i'm typing
@@ -94,6 +94,10 @@ nnoremap ,b :ls<CR>:buffer<Space>
 nnoremap ,c :%s/\< \>/ /g<Left><Left><Left><Left><Left><Left><Left>
 nnoremap ,<space> :nohlsearch<CR>
 nnoremap ~ %
+
+" on/off trailing whitespaces visibility
+nnoremap ,l :set list listchars=tab:>-,trail:∙,eol:¶<CR>
+nnoremap ,nl :set nolist<CR>
 
 " map Left to Ctrl+b in cmd mode to have behaviour like in terminal
 cnoremap <C-b> <Left>
