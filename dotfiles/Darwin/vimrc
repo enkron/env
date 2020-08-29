@@ -1,12 +1,12 @@
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'         " let Vundle manage Vundle, required
-Plugin 'enkron/vim-avarice'           " avarice color-scheme.
-Plugin 'vim-syntastic/syntastic'      " check syntax on each save
-Plugin 'sheerun/vim-polyglot'         " a collection of language packs
-Plugin 'fatih/vim-go'                 " golang official plugin
-Plugin 'rust-lang/rust.vim'           " vim configuration for rust
+Plugin 'VundleVim/Vundle.vim'          " let Vundle manage Vundle, required
+Plugin 'rust-lang/rust.vim'            " vim configuration for rust
+Plugin 'enkron/ecs.vim'                " self made color scheme..
+Plugin 'vim-syntastic/syntastic'       " check syntax on each save
+Plugin 'sheerun/vim-polyglot'          " a collection of language packs
+Plugin 'fatih/vim-go'                  " golang official plugin
 "Plugin 'vim-scripts/indentpython.vim' " fixes autoindent behavior
 "Plugin 'davidhalter/jedi-vim'         " understands most of Python's core features
 "Plugin 'nvie/vim-flake8'              " PEP8 checking
@@ -18,7 +18,7 @@ call vundle#end()
 "      Settings      "
 """"""""""""""""""""""
 set t_Co=256
-colorscheme vim-avarice
+colorscheme ecs
 
 set term=${TERM}
 syntax on                            " enable syntax highlighting
@@ -101,6 +101,8 @@ nnoremap ,nl :set nolist<CR>
 
 " map Left to Ctrl+b in cmd mode to have behaviour like in terminal
 cnoremap <C-b> <Left>
+" map Right to Ctrl+f in cmd mode to have behaviour like in terminal
+cnoremap <C-f> <Right>
 " map Home to Ctrl+a in cmd mode to have behaviour like in terminal
 cnoremap <C-a> <Home>
 
