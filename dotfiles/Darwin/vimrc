@@ -125,6 +125,9 @@ noremap <Down> gj
 noremap j gj
 noremap k gk
 
+" maybe later i'll figure out for what this mode is needed..
+nnoremap Q <NOP>
+
 " do not show q: window
 map q: :q
 
