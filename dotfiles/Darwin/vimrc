@@ -93,9 +93,16 @@ let g:rust_keep_autopairs_default = 1
 nnoremap <Space> :w!<CR>
 cnoremap W<CR> :w!<CR>
 
+" switch between buffers
 nnoremap ,b :ls<CR>:buffer<Space>
+
+" ugly change pattern
 nnoremap ,c :%s/\< \>/ /g<Left><Left><Left><Left><Left><Left><Left>
+
+" release search highlighting
 nnoremap ,<space> :nohlsearch<CR>
+
+" switch between bracets pairs (actual for mac keyboard)
 nnoremap ~ %
 
 " on/off trailing whitespaces visibility
