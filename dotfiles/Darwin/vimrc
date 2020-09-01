@@ -89,7 +89,10 @@ let g:rust_keep_autopairs_default = 1
 """"""""""""""""""""""
 "      Mappings      "
 """"""""""""""""""""""
+" the more often i save, the more likely the data will not be lost
 nnoremap <Space> :w!<CR>
+cnoremap W<CR> :w!<CR>
+
 nnoremap ,b :ls<CR>:buffer<Space>
 nnoremap ,c :%s/\< \>/ /g<Left><Left><Left><Left><Left><Left><Left>
 nnoremap ,<space> :nohlsearch<CR>
