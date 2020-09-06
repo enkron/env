@@ -1,8 +1,0 @@
-[default]
-# region=us-east-1
-region=eu-central-1
-output=json
-
-[profile rgn-ccdd]
-region=us-west-2
-output=table
