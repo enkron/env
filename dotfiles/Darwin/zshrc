@@ -98,6 +98,7 @@ alias egrep='egrep --color=auto'
 alias swp="bash ${HOME}/Documents/obs/utils/search-replace.sh"
 alias lsofc='lsof -i |egrep -i "(listen|established)"'
 alias icloud="cd ${HOME}/Library/Mobile\ Documents/com~apple~CloudDocs/"
+alias gpg='gpg --pinentry-mode=loopback --quiet'
 
 #========================================================
 #                       PROMT 
