@@ -49,19 +49,9 @@ source /Users/srj_b/Library/Python/3.7/bin/aws_zsh_completer.sh
 #========================================================
 export JAVA_HOME="/Library/Internet_Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
 
-# setting HOME and PATH vars for maestro cli
-export MAESTRO_CLI_HOME="/usr/local/opt/maestro-cli"
-export PATH="$PATH:$MAESTRO_CLI_HOME/bin"
-
 # setting PATH for user local bin folders
 export PATH="${HOME}/.local/bin:${HOME}/bin:${PATH}"
 export PATH="/usr/local/sbin:${PATH}"
-
-#setting PATH for golang bin files
-export PATH="$PATH:/usr/local/go/bin"
-
-#The GOPATH environment variable specifies the location of your workspace
-export GOPATH="${HOME}/Documents/obs/sandbox/go"
 
 # the cargo's (rust package manager) bin dir
 export PATH="${HOME}/.cargo/bin:${PATH}"
@@ -74,25 +64,12 @@ export PATH
 #export EDITOR="vim"
 export CLICOLOR=1
 
-# support colors in less
-#export LESS_TERMCAP_mb=$'\E[01;31m'
-#export LESS_TERMCAP_md=$'\E[01;31m'
-#export LESS_TERMCAP_me=$'\E[0m'
-#export LESS_TERMCAP_se=$'\E[0m'
-#export LESS_TERMCAP_so=$'\E[01;40;31m'
-#export LESS_TERMCAP_ue=$'\E[0m'
-#export LESS_TERMCAP_us=$'\E[01;32m'
-
 setopt PUSHDSILENT
 
 #========================================================
-#                       ALIAS 
+#                       ALIASES
 #========================================================
-#User's different staff
 alias ls='ls -G'
-#alias ll='ls -Glh'
-#alias la='ls -GA'
-#alias l='ls -GC'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias swp="bash ${HOME}/Documents/obs/utils/search-replace.sh"
@@ -110,7 +87,3 @@ alias gpg='gpg --pinentry-mode=loopback --quiet'
 PS1="[%F{white}%n@%m%f %F{blue}%1~%f]\$ "
 
 umask 0077
-
-#========================================================
-#                        KEY_BINDINGS
-#========================================================

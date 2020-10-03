@@ -6,11 +6,6 @@ Plugin 'rust-lang/rust.vim'             " vim configuration for rust
 Plugin 'enkron/ecs.vim'                 " self made color scheme..
 Plugin 'vim-syntastic/syntastic'        " check syntax on each save
 Plugin 'sheerun/vim-polyglot'           " a collection of language packs
-" Plugin 'fatih/vim-go'                 " golang official plugin
-" Plugin 'vim-scripts/indentpython.vim' " fixes autoindent behavior
-" Plugin 'davidhalter/jedi-vim'         " understands most of Python's core features
-" Plugin 'nvie/vim-flake8'              " PEP8 checking
-" Plugin 'Valloric/YouCompleteMe'       " code completion engine
                                         " doesnt work on mac properly
 call vundle#end()
 
@@ -24,11 +19,6 @@ set term=${TERM}
 syntax on                            " enable syntax highlighting
 
 set omnifunc=syntaxcomplete#Complete
-autocmd FileType python setlocal completeopt-=preview " disable the docstring
-                                                      " window to popup
-                                                      " during completion
-
-" let python_highlight_all=1         " enable python syntax highlighting features
 
 set nocompatible                     " Enables us Vim specific features
 filetype off                         " Reset filetype detection first ...
@@ -67,24 +57,10 @@ set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 """""""""""""""""""""
 "      Plugins      "
 """""""""""""""""""""
-" go.vim
-" let g:go_fmt_command = "goimports"
-" let g:go_autodetect_gopath = 1
-" let g:go_list_type = "quickfix"
-" 
-" let g:go_highlight_types = 1
-" let g:go_highlight_fields = 1
-" let g:go_highlight_functions = 1
-" let g:go_highlight_function_calls = 1
-" let g:go_highlight_extra_types = 1
-" let g:go_highlight_generate_tags = 1
 
 " rust.vim
 let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 1
-
-" syntastic syntax checker
-"let g:syntastic_python_checkers = ['flake8', 'pyflakes']
 
 """"""""""""""""""""""
 "      Mappings      "
