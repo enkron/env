@@ -94,10 +94,10 @@ cnoremap <C-f> <Right>
 " map Home to Ctrl+a in cmd mode to have behaviour like in terminal
 cnoremap <C-a> <Home>
 
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
-inoremap " ""<Left>
+inoremap () ()<Left>
+inoremap [] []<Left>
+inoremap {} {}<Left>
+inoremap "" ""<Left>
 " inoremap ' ''<Left>
 " inoremap ` ``<Left>
 
