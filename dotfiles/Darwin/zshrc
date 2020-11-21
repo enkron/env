@@ -19,42 +19,29 @@ setopt auto_menu         # show completion menu on successive tab press
 setopt complete_in_word
 setopt always_to_end
 
-# Automatically update PATH entries
+# automatically update PATH entries
 zstyle ':completion:*' rehash true
 
-# Keep directories and files separated
+# keep directories and files separated
 zstyle ':completion:*' list-dirs-first true
 
 # zsh completions
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-# pip zsh completion start
-function _pip_completion {
-  local words cword
-  read -Ac words
-  read -cn cword
-  reply=( $( COMP_WORDS="$words[*]" \
-             COMP_CWORD=$(( cword-1 )) \
-             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
-}
+# pip completions
 compctl -K _pip_completion pip3
-# pip zsh completion end
-
-# awscli zsh autocomplete
-autoload -Uz compinit && compinit
-source /Users/srj_b/Library/Python/3.7/bin/aws_zsh_completer.sh
 
 #========================================================
 #                        EXPORT
 #========================================================
-export JAVA_HOME="/Library/Internet_Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
+JAVA_HOME="/Library/Internet_Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
 
 # setting PATH for user local bin folders
-export PATH="${HOME}/.local/bin:${HOME}/bin:${PATH}"
-export PATH="/usr/local/sbin:${PATH}"
+PATH="${HOME}/.local/bin:${HOME}/bin:${PATH}"
+PATH="/usr/local/sbin:${PATH}"
 
 # the cargo's (rust package manager) bin dir
-export PATH="${HOME}/.cargo/bin:${PATH}"
+PATH="${HOME}/.cargo/bin:${PATH}"
 
 export PATH
 
@@ -78,12 +65,39 @@ alias icloud="cd ${HOME}/Library/Mobile\ Documents/com~apple~CloudDocs/"
 alias gpg='gpg --pinentry-mode=loopback --quiet'
 
 #========================================================
+#                       MISC
+#========================================================
+umask 0077
+
+#========================================================
+#                     FUNCTIONS 
+#========================================================
+_pip_completion() {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
+}
+
+_git_branch_info() {
+    local ref
+
+    if [[ "$(command git config --get customzsh.hide-status 2>/dev/null)" != "1" ]]; then
+      ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
+      ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+       echo "(${ref#refs/heads/}) "
+    fi
+}
+
+#========================================================
 #                       PROMT 
 #========================================================
 #This is the default structure of the prompt on many Linux systems
 #export PROMPT='%B%F{240}%1~%f%b %# '
 #PS1="[%B%F{red}%n@%m %1~%f%b]%# "
 #PS1="[%B%F{red}%n@%m %1~%f%b]\$ "
-PS1="[%F{white}%n@%m%f %F{blue}%1~%f]\$ "
+#PS1="[%F{white}%n@%m%f %F{blue}%1~%f]\$ " # my standart promt for common usage
 
-umask 0077
+PS1="%F{66}%l:%L %B%c%b>%f " # expiremental one
