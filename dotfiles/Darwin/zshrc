@@ -3,8 +3,8 @@
 #========================================================
 # enable completion
 # (this option setoff coz extremly slow down zsh)
-#autoload -Uz compinit
-#compinit
+autoload -Uz compinit
+compinit
 
 autoload bashcompinit
 bashcompinit
