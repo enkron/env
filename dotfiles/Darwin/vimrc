@@ -62,6 +62,10 @@ set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 1
 
+" asm.vim
+set filetype=nasm
+let g:asmsyntax = 'nasm'
+
 """"""""""""""""""""""
 "      Mappings      "
 """"""""""""""""""""""
