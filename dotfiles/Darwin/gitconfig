@@ -1,0 +1,11 @@
+[user]
+	name = Sergei Belokon
+	email = srj.belokon@gmail.com
+[alias]
+    st = status -sb
+[color]
+    ui = auto
+[core]
+    editor = vim
+[github]
+    user = enkron
