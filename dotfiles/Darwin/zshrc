@@ -39,6 +39,7 @@ JAVA_HOME="/Library/Internet_Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
 # setting PATH for user local bin folders
 PATH="${HOME}/.local/bin:${HOME}/bin:${PATH}"
 PATH="/usr/local/sbin:${PATH}"
+PATH="${HOME}/opt/bin:${PATH}"
 
 # the cargo's (rust package manager) bin dir
 PATH="${HOME}/.cargo/bin:${PATH}"
