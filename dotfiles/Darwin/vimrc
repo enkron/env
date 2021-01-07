@@ -3,6 +3,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'           " let Vundle manage Vundle, required
 Plugin 'rust-lang/rust.vim'             " vim configuration for rust
+Plugin 'rust-lang/rls'                  " repository for the Rust Language Server (aka RLS)
 Plugin 'enkron/ecs.vim'                 " self made color scheme..
 Plugin 'vim-syntastic/syntastic'        " check syntax on each save
 Plugin 'sheerun/vim-polyglot'           " a collection of language packs

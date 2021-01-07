@@ -1,11 +1,6 @@
 #========================================================
 #                        COMPLETION 
 #========================================================
-# enable completion
-# (this option setoff coz extremly slow down zsh)
-autoload -Uz compinit
-compinit
-
 autoload bashcompinit
 bashcompinit
 
@@ -25,12 +20,18 @@ zstyle ':completion:*' rehash true
 # keep directories and files separated
 zstyle ':completion:*' list-dirs-first true
 
-# zsh completions
-fpath=(/usr/local/share/zsh-completions $fpath)
-
 # pip completions
 compctl -K _pip_completion pip3
 
+# zsh completions
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+# add custom directory for completions scripts
+fpath+=~/.zfunc
+
+# enable completion
+autoload -Uz compinit
+compinit
 #========================================================
 #                        EXPORT
 #========================================================
@@ -60,10 +61,11 @@ setopt PUSHDSILENT
 alias ls='ls -G'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
-alias swp="bash ${HOME}/Documents/obs/utils/search-replace.sh"
 alias lsofc='lsof -i |egrep -i "(listen|established)"'
 alias icloud="cd ${HOME}/Library/Mobile\ Documents/com~apple~CloudDocs/"
 alias gpg='gpg --pinentry-mode=loopback --quiet'
+alias swp="bash ${HOME}/Documents/obs/utils/search-replace.sh"
+alias dr="bash ${HOME}/obs/repos/github.com/enkron/utils/dotfiles_rotation.sh"
 
 #========================================================
 #                       MISC
