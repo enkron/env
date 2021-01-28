@@ -1,13 +1,21 @@
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'           " let Vundle manage Vundle, required
-Plugin 'rust-lang/rust.vim'             " vim configuration for rust
-Plugin 'rust-lang/rls'                  " repository for the Rust Language Server (aka RLS)
-Plugin 'enkron/ecs.vim'                 " self made color scheme..
-Plugin 'vim-syntastic/syntastic'        " check syntax on each save
-Plugin 'sheerun/vim-polyglot'           " a collection of language packs
-                                        " doesnt work on mac properly
+Plugin 'VundleVim/Vundle.vim'                " let Vundle manage Vundle, required
+
+Plugin 'rust-lang/rust.vim'                  " vim configuration for rust
+Plugin 'racer-rust/vim-racer'                " allows vim to use Racer for Rust code completion
+                                             " github.com/racer-rust/racer
+
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'prabirshrestha/asyncomplete.vim'
+Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+
+Plugin 'enkron/ecs.vim'                      " self made color scheme..
+Plugin 'vim-syntastic/syntastic'             " check syntax on each save
+Plugin 'sheerun/vim-polyglot'                " a collection of language packs
+                                             " doesnt work on mac properly
 call vundle#end()
 
 """"""""""""""""""""""
@@ -55,6 +63,8 @@ set hlsearch                         " enable highlight searched patterns
 set laststatus=2                     " show status line always
 set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 
+set hidden                           " turn on 'hidden' mode for buffers
+
 """""""""""""""""""""
 "      Plugins      "
 """""""""""""""""""""
@@ -63,6 +73,16 @@ set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 1
 
+let g:racer_cmd = "${HOME}/.cargo/bin/racer"
+
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
+
 " asm.vim
 set filetype=nasm
 let g:asmsyntax = 'nasm'
@@ -70,7 +90,7 @@ let g:asmsyntax = 'nasm'
 """"""""""""""""""""""
 "      Mappings      "
 """"""""""""""""""""""
-" the more often i save, the more likely the data will not be lost
+" the more often save action occurs, the more likely the data won't be lost
 nnoremap <Space> :w!<CR>
 cnoremap W<CR> :w!<CR>
 
@@ -99,10 +119,10 @@ cnoremap <C-f> <Right>
 " map Home to Ctrl+a in cmd mode to have behaviour like in terminal
 cnoremap <C-a> <Home>
 
-inoremap () ()<Left>
-inoremap [] []<Left>
-inoremap {} {}<Left>
-inoremap "" ""<Left>
+" inoremap () ()<Left>
+" inoremap [] []<Left>
+" inoremap {} {}<Left>
+" inoremap "" ""<Left>
 " inoremap ' ''<Left>
 " inoremap ` ``<Left>
 

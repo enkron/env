@@ -45,6 +45,9 @@ PATH="${HOME}/opt/bin:${PATH}"
 # the cargo's (rust package manager) bin dir
 PATH="${HOME}/.cargo/bin:${PATH}"
 
+# Rust RACER env variable for speedup Vim autocomplition
+export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
+
 export PATH
 
 #note: if env var "EDITOR" have default value "vim"
