@@ -7,10 +7,11 @@ Plugin 'rust-lang/rust.vim'                  " vim configuration for rust
 Plugin 'racer-rust/vim-racer'                " allows vim to use Racer for Rust code completion
                                              " github.com/racer-rust/racer
 
-Plugin 'prabirshrestha/async.vim'
-Plugin 'prabirshrestha/vim-lsp'
-Plugin 'prabirshrestha/asyncomplete.vim'
-Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+Plugin 'prabirshrestha/async.vim'            " normalize async job control api
+Plugin 'prabirshrestha/vim-lsp'              " async Language Server Protocol plugin for vim8
+Plugin 'prabirshrestha/asyncomplete.vim'     " async autocompletion for Vim 8
+Plugin 'prabirshrestha/asyncomplete-lsp.vim' " provide LSP autocompletion source for
+                                             " asyncomplete.vim and vim-lsp.
 
 Plugin 'enkron/ecs.vim'                      " self made color scheme..
 Plugin 'vim-syntastic/syntastic'             " check syntax on each save
