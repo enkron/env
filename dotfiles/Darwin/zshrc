@@ -68,7 +68,7 @@ alias lsofc='lsof -i |egrep -i "(listen|established)"'
 alias icloud="cd ${HOME}/Library/Mobile\ Documents/com~apple~CloudDocs/"
 alias gpg='gpg --pinentry-mode=loopback --quiet'
 alias swp="bash ${HOME}/Documents/obs/utils/search-replace.sh"
-alias dr="bash ${HOME}/obs/repos/github.com/enkron/utils/dotfiles_rotation.sh"
+alias fr="bash ${HOME}/obs/repos/github.com/enkron/utils/dotfiles_rotation.sh"
 
 #========================================================
 #                       MISC

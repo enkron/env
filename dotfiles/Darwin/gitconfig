@@ -8,6 +8,8 @@
     r = remote update origin --prune ; update the local list of remote branches
 [color]
     ui = auto
+[color "branch"]
+    current = cyan
 [core]
     editor = vim
 [push]
