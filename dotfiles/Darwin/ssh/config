@@ -2,6 +2,9 @@ Host *
     StrictHostKeyChecking no
     UserKnownHostsFile=/dev/null
 
+Host 192-168-0-154.local
+    IdentityFile ~/.ssh/id_rsa
+
 Host git-codecommit.*.amazonaws.com
     User APKASO33G3L32LLO7KEK
     IdentityFile ~/.ssh/id_rsa
