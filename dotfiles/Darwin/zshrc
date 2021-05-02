@@ -67,7 +67,7 @@ alias egrep='egrep --color=auto'
 alias lsofc='lsof -i |egrep -i "(listen|established)"'
 alias icloud="cd ${HOME}/Library/Mobile\ Documents/com~apple~CloudDocs/"
 alias gpg='gpg --pinentry-mode=loopback --quiet'
-alias swp="bash ${HOME}/Documents/obs/utils/search-replace.sh"
+alias swp="bash ${HOME}/utils/search-replace.sh"
 alias fr="bash ${HOME}/obs/repos/github.com/enkron/utils/dotfiles_rotation.sh"
 
 #========================================================
