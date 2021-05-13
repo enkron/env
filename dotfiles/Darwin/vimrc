@@ -4,11 +4,13 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'                " let Vundle manage Vundle, required
 
 Plugin 'rust-lang/rust.vim'                  " vim configuration for rust
-Plugin 'racer-rust/vim-racer'                " allows vim to use Racer for Rust code completion
-                                             " github.com/racer-rust/racer
+Plugin 'ycm-core/YouCompleteMe'              " a code-completion engine for Vim
+                                             " after ycm installation
+                                             " navigate to install dir
+                                             " and execute python3 install.py --all
 
 Plugin 'prabirshrestha/async.vim'            " normalize async job control api
-Plugin 'prabirshrestha/vim-lsp'              " async Language Server Protocol plugin for vim8
+Plugin 'prabirshrestha/vim-lsp'              " async Language Server Protocol plugin for Vim8
 Plugin 'prabirshrestha/asyncomplete.vim'     " async autocompletion for Vim 8
 Plugin 'prabirshrestha/asyncomplete-lsp.vim' " provide LSP autocompletion source for
                                              " asyncomplete.vim and vim-lsp.
@@ -76,13 +78,11 @@ set hidden                           " turn on 'hidden' mode for buffers
 let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 1
 
-let g:racer_cmd = "${HOME}/.cargo/bin/racer"
-
-if executable('rls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
-        \ 'whitelist': ['rust'],
+if executable('rust-analyzer')
+  au User lsp_setup call lsp#register_server({
+        \   'name': 'Rust Language Server',
+        \   'cmd': {server_info->['rust-analyzer']},
+        \   'whitelist': ['rust'],
         \ })
 endif
 
