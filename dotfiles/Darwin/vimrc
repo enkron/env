@@ -15,7 +15,7 @@ Plugin 'prabirshrestha/asyncomplete.vim'     " async autocompletion for Vim 8
 Plugin 'prabirshrestha/asyncomplete-lsp.vim' " provide LSP autocompletion source for
                                              " asyncomplete.vim and vim-lsp.
 
-Plugin 'enkron/ecs.vim'                      " self made color scheme..
+Plugin 'enkron/ecs_light.vim'                " self made color scheme..
 Plugin 'vim-syntastic/syntastic'             " check syntax on each save
 Plugin 'sheerun/vim-polyglot'                " a collection of language packs
                                              " doesnt work on mac properly
@@ -27,7 +27,7 @@ call vundle#end()
 "      Settings      "
 """"""""""""""""""""""
 set t_Co=256
-colorscheme ecs
+colorscheme ecs_light
 
 set term=${TERM}
 syntax on                            " enable syntax highlighting

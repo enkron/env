@@ -16,3 +16,5 @@
     default = simple
 [github]
     user = enkron
+[init]
+	defaultBranch = main
