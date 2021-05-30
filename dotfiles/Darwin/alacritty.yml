@@ -20,7 +20,12 @@ env:
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  TERM: xterm-256color
+  #TERM: xterm-256color
+
+  # To be able to use alacritty TERM alacritty terminfo must be used.
+  # Install alacritty info from official repository:
+  # tic -xe alacritty,alacritty-direct extra/alacritty.info
+  TERM: alacritty
 
 window:
   # Window dimensions (changes require restart)
@@ -233,15 +238,15 @@ colors:
     #  foreground: '#1d1f21'
 
   # Normal colors
-  #normal:
-  #  black:   '#1d1f21'
+  normal:
+    black:   '#000000'
   #  red:     '#cc6666'
-  #  green:   '#b5bd68'
+    green:   '#005f00'
   #  yellow:  '#f0c674'
   #  blue:    '#81a2be'
   #  magenta: '#b294bb'
   #  cyan:    '#8abeb7'
-  #  white:   '#c5c8c6'
+  #  white:   '#ffffff'
 
   # Bright colors
   #bright:
@@ -369,10 +374,10 @@ colors:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-#shell:
-#  program: /bin/bash
-#  args:
-#    - --login
+shell:
+  program: /bin/zsh
+  args:
+    - --login
 
 # Startup directory
 #
