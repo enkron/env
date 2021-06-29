@@ -106,6 +106,7 @@ nnoremap ,c :%s/\< \>/ /g<Left><Left><Left><Left><Left><Left><Left>
 nnoremap ,co :%s/\<<C-r>=expand('<cword>')<CR>\>/
 " count number of matches of a pattern
 nnoremap ,gn :%s/\<<C-r>=expand('<cword>')<CR>\>//gn<CR>
+
 " set paste
 nnoremap ,sp :set paste<CR>
 
@@ -119,6 +120,15 @@ nnoremap ~ %
 nnoremap ,l :set list listchars=tab:>-,trail:∙,eol:¶<CR>
 nnoremap ,nl :set nolist<CR>
 
+" obtain the highlighting information under the coursor
+nnoremap ,hi :execute 'hi' synIDattr(synID(line("."), col("."), 1), "name")<CR>
+
+" change behaviour of the `o` and `O` keys: by default these keys enters
+" into the INSERT mode immediately after a call, below binding leaves it
+" in COMMAND mode
+map o o<ESC>
+map <S-o> <S-o><ESC>
+
 " map Left to Ctrl+b in cmd mode to have behaviour like in terminal
 cnoremap <C-b> <Left>
 " map Right to Ctrl+f in cmd mode to have behaviour like in terminal
@@ -128,7 +138,7 @@ cnoremap <C-a> <Home>
 
 " inoremap () ()<Left>
 " inoremap [] []<Left>
-" inoremap {} {}<Left>
+inoremap {} {}<Left>
 " inoremap "" ""<Left>
 " inoremap ' ''<Left>
 " inoremap ` ``<Left>
