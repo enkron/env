@@ -1,0 +1,20 @@
+[user]
+	name = Sergei Belokon
+	email = srj.belokon@gmail.com
+[alias]
+    s = status -sb
+    l = log --graph --pretty=format:'%h %an %ad'
+    b = branch
+    r = remote update origin --prune ; update the local list of remote branches
+[color]
+    ui = auto
+[color "branch"]
+    current = cyan
+[core]
+    editor = vim
+[push]
+    default = simple
+[github]
+    user = enkron
+[init]
+	defaultBranch = main
