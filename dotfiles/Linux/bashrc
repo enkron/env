@@ -47,8 +47,6 @@ export EDITOR=vim
 #========================================================
 alias lsofc='lsof -i |grep -Ei "(listen|established)"'
 alias gpg='gpg --pinentry-mode=loopback --quiet'
-alias swp="bash ${HOME}/utils/search-replace.sh"
-alias fr="bash ${HOME}/obs/repos/github.com/enkron/utils/dotfiles_rotation.sh"
 
 #========================================================
 #                       MISC
