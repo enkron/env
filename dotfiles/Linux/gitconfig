@@ -3,7 +3,7 @@
         email = srj.belokon@gmail.com
 [alias]
         s = status -sb
-        l = log --graph --pretty=format:'%h %an %ad'
+        l = log --pretty=format:'%C(blue)%h%C(reset) %ae %ar%C(auto)%d%n    %C(yellow)%s%C(reset)%n%b'
         b = branch
         r = remote update origin --prune ; update the local list of remote branches
 [color]
