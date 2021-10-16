@@ -18,3 +18,6 @@ export PATH
 # Nano editor is default standart editor unfortunately
 # so change it to Vim
 export EDITOR=vim
+
+# enter GPG passphrase from terminal
+export SECRETS_PINENTRY=loopback
