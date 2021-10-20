@@ -20,7 +20,7 @@ fi
 unset rc
 
 alias lsofc='lsof -i |grep -Ei "(listen|established)"'
-#alias gpg='gpg --pinentry-mode=loopback --quiet'
+alias gpg='gpg --pinentry-mode=loopback --quiet'
 
 # Misc
 umask 0077
