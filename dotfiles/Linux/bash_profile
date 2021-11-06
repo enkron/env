@@ -18,3 +18,7 @@ export PATH
 # Nano editor is default standart editor unfortunately
 # so change it to Vim
 export EDITOR=vim
+
+# Set GPG tty
+GPG_TTY=$(tty)
+export GPG_TTY
