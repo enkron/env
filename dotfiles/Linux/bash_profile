@@ -12,7 +12,10 @@ then
 fi
 
 # setup environment for Rust lang
-. "$HOME/.cargo/env"
+if [[ -f "$HOME/.cargo/env" ]]; then
+    . "$HOME/.cargo/env"
+fi
+
 export PATH
 
 # Nano editor is default standart editor unfortunately
@@ -22,3 +25,6 @@ export EDITOR=vim
 # Set GPG tty
 GPG_TTY=$(tty)
 export GPG_TTY
+
+# A socket path variable for swaymsg app 
+export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
