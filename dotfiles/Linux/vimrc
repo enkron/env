@@ -153,7 +153,7 @@ nnoremap ~ %
 nnoremap ,l :set list listchars=tab:>-,trail:∙,eol:¶<CR>
 nnoremap ,nl :set nolist<CR>
 
-" obtain the highlighting information under the coursor
+" obtain highlighting information under the coursor
 nnoremap ,hi :execute 'hi' synIDattr(synID(line("."), col("."), 1), "name")<CR>
 
 " change behaviour of the `o` and `O` keys: by default these keys enters
@@ -198,4 +198,7 @@ nnoremap ,rr :RustRun<CR>
 
 " Vundle mappings
 nnoremap ,vu :PluginUpdate<CR>
+
+" reload vim configuration file
+nnoremap ,rc :source ~/.vimrc<CR>
 " }}}
