@@ -64,16 +64,41 @@ set noswapfile                       " don't use swapfile
 set nobackup                         " don't create backup files
 set showcmd                          " show what i'm typing
 set hlsearch                         " enable highlight searched patterns
+set hidden                           " turn on 'hidden' mode for buffers
+set nowrap                           " do not wrap lines
+                                     " allow long lines to extend as far as the line goes
+set incsearch                        " while searching though a file incrementally
+                                     " highlight matching characters as you type
+set ignorecase                       " ignore capital letters during search
+set smartcase                        " override the ignorecase option if searching for capital letters
+                                     " this will allow to search specifically for capital letters
+set showmode                         " show the mode you are on the last line.
 
-set laststatus=2                     " show status line always
+""""""""""""""""""""""
+"     Statusline     "
+""""""""""""""""""""""
+set laststatus=2                     " show the status on the second to last line
 set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 
-set hidden                           " turn on 'hidden' mode for buffers
+""""""""""""""""""""""
+"    Vim scripts     "
+""""""""""""""""""""""
+" allow to fold long files to hide sections of text
+" by default `marker` is mapped to '{{{ }}}' chars
+" for example: " FOLDING SECTION --- {{{ a section code goes here }}}
+" zo - opens a single fold under the cursor.
+" zc - closes the fold under the cursor.
+" zR - opens all folds.
+" zM - closes all folds.
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
 
 """""""""""""""""""""
-"      Plugins      "
+" Plugins settings  "
 """""""""""""""""""""
-
 " rust.vim
 let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 1
@@ -101,6 +126,9 @@ let g:asmsyntax = 'nasm'
 """"""""""""""""""""""
 "      Mappings      "
 """"""""""""""""""""""
+" nnoremap – allows to map keys in normal mode
+" inoremap – allows to map keys in insert mode
+" vnoremap – allows to map keys in visual mode
 " the more often save action occurs, the more likely the data won't be lost
 nnoremap <Space> :w!<CR>
 cnoremap W<CR> :w!<CR>
@@ -170,12 +198,8 @@ nnoremap Q <NOP>
 " do not show q: window
 nnoremap q: <NOP>
 
-""""""""""""""""""""""
-"   Rust Mappings    "
-""""""""""""""""""""""
+" Rust mappings
 nnoremap ,rr :RustRun<CR>
 
-""""""""""""""""""""""
-"  Vundle Mappings   "
-""""""""""""""""""""""
+" Vundle mappings
 nnoremap ,vu :PluginUpdate<CR>
