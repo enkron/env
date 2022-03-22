@@ -76,8 +76,13 @@ set showmode                         " show the mode you are on the last line.
 " }}}
 
 " Statusline ------------------------------------------------------- {{{
-set laststatus=2                     " show the status on the second to last line
-set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
+set laststatus=2                                                    " show the status on the second to last line
+set statusline=                                                     " clear status line when vimrc is reloaded
+set statusline+=\ %F\ %M\ filetype:\ %Y\ %R                         " statusline left side
+set statusline+=%=                                                  " devider to separate left/right sides
+set statusline+=\ unicode(hex:0x%B,\ dec:%b)\ row:%l\ col:%c\ %9p%% " statusline right side
+" old status line left as a backup
+" set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 " }}}
 
 " Vim scripts ------------------------------------------------------ {{{
