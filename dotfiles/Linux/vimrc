@@ -1,3 +1,4 @@
+" Plugins ---------------------------------------------------------- {{{
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -22,10 +23,9 @@ Plugin 'sheerun/vim-polyglot'                " a collection of language packs
 
 Plugin 'cespare/vim-toml'                    " toml syntax for Vim (>= 8)
 call vundle#end()
+" }}}
 
-""""""""""""""""""""""
-"      Settings      "
-""""""""""""""""""""""
+" General settings ------------------------------------------------- {{{
 set t_Co=256
 colorscheme ecs_light
 
@@ -73,16 +73,14 @@ set ignorecase                       " ignore capital letters during search
 set smartcase                        " override the ignorecase option if searching for capital letters
                                      " this will allow to search specifically for capital letters
 set showmode                         " show the mode you are on the last line.
+" }}}
 
-""""""""""""""""""""""
-"     Statusline     "
-""""""""""""""""""""""
+" Statusline ------------------------------------------------------- {{{
 set laststatus=2                     " show the status on the second to last line
 set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
+" }}}
 
-""""""""""""""""""""""
-"    Vim scripts     "
-""""""""""""""""""""""
+" Vim scripts ------------------------------------------------------ {{{
 " allow to fold long files to hide sections of text
 " by default `marker` is mapped to '{{{ }}}' chars
 " for example: " FOLDING SECTION --- {{{ a section code goes here }}}
@@ -94,11 +92,9 @@ augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
+" }}}
 
-
-"""""""""""""""""""""
-" Plugins settings  "
-"""""""""""""""""""""
+" Plugins settings ------------------------------------------------- {{{
 " rust.vim
 let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 1
@@ -122,10 +118,9 @@ endif
 " asm.vim
 set filetype=nasm
 let g:asmsyntax = 'nasm'
+" }}}
 
-""""""""""""""""""""""
-"      Mappings      "
-""""""""""""""""""""""
+" Key mappings ----------------------------------------------------- {{{
 " nnoremap – allows to map keys in normal mode
 " inoremap – allows to map keys in insert mode
 " vnoremap – allows to map keys in visual mode
@@ -203,3 +198,4 @@ nnoremap ,rr :RustRun<CR>
 
 " Vundle mappings
 nnoremap ,vu :PluginUpdate<CR>
+" }}}
