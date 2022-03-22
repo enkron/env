@@ -34,8 +34,8 @@ syntax on                            " enable syntax highlighting
 
 set omnifunc=syntaxcomplete#Complete
 
-set nocompatible                     " Enables us Vim specific features
-filetype off                         " Reset filetype detection first ...
+set nocompatible                     " enables to use Vim specific features
+filetype off                         " reset filetype detection first ...
 filetype plugin indent on            " ... and enable filetype detection
 set tabstop=4                        " set tabs to have 4 spaces
 set shiftwidth=4                     " when using the >> or << commands,
