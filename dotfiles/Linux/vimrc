@@ -137,37 +137,39 @@ let g:asmsyntax = 'nasm'
 " nnoremap – allows to map keys in normal mode
 " inoremap – allows to map keys in insert mode
 " vnoremap – allows to map keys in visual mode
+let mapleader=',' " by default mapleader variable is set to '\'
+
 " the more often save action occurs, the more likely the data won't be lost
 nnoremap <Space> :w!<CR>
 cnoremap W<CR> :w!<CR>
 
 " switch between buffers
-nnoremap ,b :ls<CR>:buffer<Space>
+nnoremap <leader>b :ls<CR>:buffer<Space>
 
 " ugly change pattern
-nnoremap ,c :%s/\< \>/ /g<Left><Left><Left><Left><Left><Left><Left>
+nnoremap <leader>c :%s/\< \>/ /g<Left><Left><Left><Left><Left><Left><Left>
 " replace all occurences of a word where a cursor is
-nnoremap ,co :%s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
+nnoremap <leader>co :%s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
 " replace all occurences of a word on a current row only
-nnoremap ,cl :.s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
+nnoremap <leader>cl :.s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
 " count number of matches of a pattern
-nnoremap ,gn :%s/\<<C-r>=expand('<cword>')<CR>\>//gn<CR>
+nnoremap <leader>gn :%s/\<<C-r>=expand('<cword>')<CR>\>//gn<CR>
 
 " set paste
-nnoremap ,sp :set paste<CR>
+nnoremap <leader>sp :set paste<CR>
 
 " release search highlighting
-nnoremap ,<space> :nohlsearch<CR>
+nnoremap <leader><space> :nohlsearch<CR>
 
 " switch between bracets pairs (actual for mac keyboard)
 nnoremap ~ %
 
 " on/off trailing whitespaces visibility
-nnoremap ,l :set list listchars=tab:>-,trail:∙,eol:¶<CR>
-nnoremap ,nl :set nolist<CR>
+nnoremap <leader>l :set list listchars=tab:>-,trail:∙,eol:¶<CR>
+nnoremap <leader>nl :set nolist<CR>
 
 " obtain highlighting information under the coursor
-nnoremap ,hi :execute 'hi' synIDattr(synID(line("."), col("."), 1), "name")<CR>
+nnoremap <leader>hi :execute 'hi' synIDattr(synID(line("."), col("."), 1), "name")<CR>
 
 " change behaviour of the `o` and `O` keys: by default these keys enters
 " into the INSERT mode immediately after a call, below binding leaves it
@@ -207,11 +209,11 @@ nnoremap Q <NOP>
 nnoremap q: <NOP>
 
 " Rust mappings
-nnoremap ,rr :RustRun<CR>
+nnoremap <leader>rr :RustRun<CR>
 
 " Vundle mappings
-nnoremap ,vu :PluginUpdate<CR>
+nnoremap <leader>vu :PluginUpdate<CR>
 
 " reload vim configuration file
-nnoremap ,rc :source ~/.vimrc<CR>
+nnoremap <leader>rc :source ~/.vimrc<CR>
 " }}}
