@@ -84,11 +84,12 @@ set showmode                         " show the mode you are on the last line.
 " %l - display a row number
 " %c - display a column number
 " %p%% - show a cursor percentage from a top of a file
+" %{&fo} - format options (eg. wrapping, margins etc)
 set laststatus=2                        " show the status on the second to last line
 set statusline=                         " clear status line when vimrc is reloaded
-set statusline+=\ %F\ \->\ %Y\ mod:[%M] " statusline left side
+set statusline+=\ %F\ \->\ %Y\ mod:[%M]\ fo:[%{&fo}] " statusline left side
 set statusline+=%=                      " devider to separate left/right sides
-set statusline+=\ unicode(hex:0x%B,\ dec:%b)\ row:%l\ col:%c\ %9p%% " statusline right side
+set statusline+=\ unicode(hex:0x%B,\ dec:%b)\ row:%l\ col:%c\ %4p%% " statusline right side
 " old status line left as a backup
 " set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 " }}}
