@@ -178,6 +178,16 @@ nnoremap <leader>hi :execute 'hi' synIDattr(synID(line("."), col("."), 1), "name
 map o o<ESC>
 map <S-o> <S-o><ESC>
 
+" format all long lines in a file without affecting short lines
+" tw (textwidth) option could be set for a new formatting option
+" check existing tw -> :setl tw?
+" reset current tw to defaults -> :setl tw&
+nmap <leader>f :g/./ normal gqq<CR><ESC> :nohlsearch<CR>``
+
+" most of the Linux terminals sends the escape by default when pressing
+" alt/meta+normal_mode_key
+imap <M-h> <ESC>
+
 " map Left to Ctrl+b in cmd mode to have behaviour like in terminal
 cnoremap <C-b> <Left>
 " map Right to Ctrl+f in cmd mode to have behaviour like in terminal
@@ -207,7 +217,9 @@ noremap k gk
 " maybe later i'll figure out for what this mode is needed..
 nnoremap Q <NOP>
 " do not show q: window
-nnoremap q: <NOP>
+" upd(24-Mar-22): understood at last: q: - shows the history of last
+" commands, also 'q:' suffix works within gq+(line_num/G) command
+" nnoremap q: <NOP>
 
 " Rust mappings
 nnoremap <leader>rr :RustRun<CR>
@@ -216,5 +228,5 @@ nnoremap <leader>rr :RustRun<CR>
 nnoremap <leader>vu :PluginUpdate<CR>
 
 " reload vim configuration file
-nnoremap <leader>rc :source ~/.vimrc<CR>
+" nnoremap <leader>rc :source<space>~/.vimrc<CR>
 " }}}
