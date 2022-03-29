@@ -219,6 +219,7 @@ nnoremap Q <NOP>
 " do not show q: window
 " upd(24-Mar-22): understood at last: q: - shows the history of last
 " commands, also 'q:' suffix works within gq+(line_num/G) command
+" eg. `gq3<CR>` - formats next 3 lines according to the `tw` value
 " nnoremap q: <NOP>
 
 " Rust mappings
