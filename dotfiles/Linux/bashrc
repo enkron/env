@@ -30,8 +30,11 @@ unset rc
 # Compress a history file
 # below script could be added to the `cron` for example or executed after each login
 function del_duplicates() {
+    read -ra SB <<< $(wc -l $HISTFILE)
     awk 'NR==FNR && !/^#/{lines[$0]=FNR;next} lines[$0]==FNR' "$HISTFILE" "$HISTFILE" \
         > "$HISTFILE.compressed" && mv "$HISTFILE.compressed" "$HISTFILE"
+    read -ra SA <<< $(wc -l $HISTFILE)
+    echo $(( ${SB[0]} - ${SA[0]} )) duplicates removed
 }
 
 alias lsofc='lsof -i |grep -Ei "(listen|established)"'
