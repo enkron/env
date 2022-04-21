@@ -17,11 +17,12 @@ Plugin 'prabirshrestha/asyncomplete-lsp.vim' " provide LSP autocompletion source
                                              " asyncomplete.vim and vim-lsp.
 
 Plugin 'enkron/ecs_light.vim'                " self made color scheme..
-Plugin 'vim-syntastic/syntastic'             " check syntax on each save
+" Plugin 'vim-syntastic/syntastic'             " check syntax on each save
 Plugin 'sheerun/vim-polyglot'                " a collection of language packs
                                              " doesnt work on mac properly
 
 Plugin 'cespare/vim-toml'                    " toml syntax for Vim (>= 8)
+Plugin 'Raimondi/delimitMate'                " automatic closing of quotes, parenthesis, brackets, etc
 call vundle#end()
 " }}}
 
