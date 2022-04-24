@@ -38,6 +38,7 @@ function del_duplicates() {
 }
 
 alias lsofc='lsof -i |grep -Ei "(listen|established)"'
+alias clearup="printf '\033[2J'" # clean space above a terminal prompt
 
 # Misc
 umask 0077
