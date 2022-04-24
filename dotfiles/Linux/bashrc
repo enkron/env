@@ -8,14 +8,6 @@ fi
 # systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
-# NOTE: commands from different sessions will be mixed in a history file
-HISTFILESIZE=400000 # ensure a history file is big enough
-HISTSIZE=10000 # limit the number of these lines to be retained in memory
-# `PROMPT_COMMAND` - contains a command to be executed before any new prompt is shown
-# `history -a` - an immediate write of all new history lines
-PROMPT_COMMAND="${PROMPT_COMMAND:-:} ; history -a"
-shopt -s histappend
-
 # User specific aliases and functions
 if [ -d ~/.bashrc.d ]; then
 	for rc in ~/.bashrc.d/*; do
@@ -42,13 +34,3 @@ alias clearup="printf '\033[2J'" # clean space above a terminal prompt
 
 # Misc
 umask 0077
-
-# Prompt
-#PS1='[\u@\h \W]\$ ' # a standart Linux promt
-PS1='\W\$ '
-# turn on/off NordLynx VPN indicator
-if [ -d "/proc/sys/net/ipv4/conf/nordlynx" ]; then
-    PS1='\e[32;1mܘ\e[0m\W\$ '
-else
-    PS1='\e[31;1mܘ\e[0m \W\$ '
-fi

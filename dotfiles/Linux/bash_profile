@@ -28,3 +28,23 @@ export GPG_TTY
 
 # A socket path variable for swaymsg app 
 export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
+
+# NOTE: commands from different sessions will be mixed in a history file
+export HISTFILESIZE=400000 # ensure a history file is big enough
+export HISTSIZE=10000 # limit the number of these lines to be retained in memory
+# `PROMPT_COMMAND` - contains a command to be executed before any new prompt is shown
+# `history -a` - an immediate write of all new history lines
+PROMPT_COMMAND="${PROMPT_COMMAND:-:} ; history -a"
+shopt -s histappend
+
+export PROMPT_COMMAND
+
+# Prompt
+#PS1='[\u@\h \W]\$ ' # a standart Linux promt
+PS1='\W\$ '
+# turn on/off NordLynx VPN indicator
+if [ -d "/proc/sys/net/ipv4/conf/nordlynx" ]; then
+    PS1='\e[32;1mܘ\e[0m\W\$ '
+else
+    PS1='\e[31;1mܘ\e[0m \W\$ '
+fi
