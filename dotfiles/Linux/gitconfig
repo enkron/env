@@ -4,7 +4,7 @@
         signingkey = 9602C3B5B79665D7
 [alias]
         s = status -sb
-        l = log --pretty=format:'%C(white)%ae %ar%C(reset)%n%C(bold)%h%C(reset) %s%C(auto)%d%n%+b'
+        l = log --pretty=format:'%C(italic)%ae %ar%C(reset)%n%C(bold)%C(reverse)%h%C(reset) %s%C(auto)%d%n%+b'
         b = branch
         r = remote update origin --prune ; update the local list of remote branches
         c = commit
