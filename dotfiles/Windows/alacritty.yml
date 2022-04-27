@@ -131,7 +131,7 @@ font:
     family: Hack
 
     # The `style` can be specified to pick a specific face.
-    #style: Bold
+    style: Bold
 
   # Italic font face
   italic:
@@ -142,7 +142,7 @@ font:
     family: Hack
 
     # The `style` can be specified to pick a specific face.
-    #style: Italic
+    style: Italic
 
   # Bold italic font face
   bold_italic:
@@ -153,7 +153,7 @@ font:
     family: Hack
 
     # The `style` can be specified to pick a specific face.
-    #style: Bold Italic
+    style: Bold Italic
 
   # Point size
   size: 8.5
@@ -186,7 +186,7 @@ font:
   #builtin_box_drawing: true
 
 # If `true`, bold text is drawn using the bright color variants.
-#draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
 # Colors (Tomorrow Night)
 colors:
@@ -280,22 +280,22 @@ colors:
   #  background: CellForeground
 
   # Normal colors
-  #normal:
+  normal:
   #  black:   '#1d1f21'
   #  red:     '#cc6666'
-  #  green:   '#b5bd68'
-  #  yellow:  '#f0c674'
+    green:   '#008000'
+    yellow:  '#9e824c'
   #  blue:    '#81a2be'
   #  magenta: '#b294bb'
   #  cyan:    '#8abeb7'
   #  white:   '#c5c8c6'
 
   # Bright colors
-  #bright:
+  bright:
   #  black:   '#666666'
   #  red:     '#d54e53'
-  #  green:   '#b9ca4a'
-  #  yellow:  '#e7c547'
+    green:   '#008000'
+    yellow:  '#9e824c'
   #  blue:    '#7aa6da'
   #  magenta: '#c397d8'
   #  cyan:    '#70c0b1'
