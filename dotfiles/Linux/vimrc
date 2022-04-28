@@ -22,7 +22,7 @@ Plugin 'sheerun/vim-polyglot'                " a collection of language packs
                                              " doesnt work on mac properly
 
 Plugin 'cespare/vim-toml'                    " toml syntax for Vim (>= 8)
-Plugin 'Raimondi/delimitMate'                " automatic closing of quotes, parenthesis, brackets, etc
+Plugin 'jiangmiao/auto-pairs'                " insert or delete brackets, parens, quotes in pair
 call vundle#end()
 " }}}
 
