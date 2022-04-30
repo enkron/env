@@ -27,8 +27,10 @@ call vundle#end()
 " }}}
 
 " General settings ------------------------------------------------- {{{
-set t_Co=256
-colorscheme ecs_light
+if &term != "linux"
+    set t_Co=256
+    colorscheme ecs_light
+endif
 
 set term=${TERM}
 syntax on                            " enable syntax highlighting
