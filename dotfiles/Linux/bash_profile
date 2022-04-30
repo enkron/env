@@ -38,13 +38,3 @@ PROMPT_COMMAND="${PROMPT_COMMAND:-:} ; history -a"
 shopt -s histappend
 
 export PROMPT_COMMAND
-
-# Prompt
-#PS1='[\u@\h \W]\$ ' # a standart Linux promt
-PS1='\W\$ '
-# turn on/off NordLynx VPN indicator
-#if [ -d "/proc/sys/net/ipv4/conf/nordlynx" ]; then
-#    PS1='\e[32;1mܘ\e[0m\W\$ '
-#else
-#    PS1='\e[31;1mܘ\e[0m \W\$ '
-#fi
