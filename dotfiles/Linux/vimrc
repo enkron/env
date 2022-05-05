@@ -151,7 +151,7 @@ cnoremap W<CR> :w!<CR>
 nnoremap <leader>b :ls<CR>:buffer<Space>
 
 " ugly change pattern
-nnoremap <leader>c :%s/\< \>/ /g<Left><Left><Left><Left><Left><Left><Left>
+nnoremap <leader>c :%s/\<\>/ /g<Left><Left><Left><Left><Left><Left>
 " replace all occurences of a word where a cursor is
 nnoremap <leader>co :%s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
 " replace all occurences of a word on a current row only
