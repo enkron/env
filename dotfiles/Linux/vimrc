@@ -56,7 +56,11 @@ set relativenumber                   " each line in a file is numbered relative
 set showmatch                        " show the matching part
                                      " of the pair for [] {} and ()
 set cursorline                       " show a visual line under the cursor's current line
-set cursorlineopt=number,screenline  " settings for how 'cursorline' is displayed
+
+if v:version >= 801                  " `v: name` - variable predefined by Vim
+    set cursorlineopt=number,screenline  " settings for how 'cursorline' is displayed
+endif
+
 set fileformat=unix                  " store the file in a Unix format
 set textwidth=72                     " ensure your line length doesn’t
                                      " go beyond 72 characters
