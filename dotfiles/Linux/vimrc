@@ -5,10 +5,14 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'                " let Vundle manage Vundle, required
 
 Plugin 'rust-lang/rust.vim'                  " vim configuration for rust
-Plugin 'ycm-core/YouCompleteMe'              " a code-completion engine for Vim
+
+if v:version >= 801
+    Plugin 'ycm-core/YouCompleteMe'          " a code-completion engine for Vim
                                              " after ycm installation
                                              " navigate to install dir
                                              " and execute python3 install.py --all
+    Plugin 'cespare/vim-toml'                " toml syntax for Vim (>= 8)
+endif
 
 Plugin 'prabirshrestha/async.vim'            " normalize async job control api
 Plugin 'prabirshrestha/vim-lsp'              " async Language Server Protocol plugin for Vim8
@@ -21,7 +25,6 @@ Plugin 'enkron/ecs_light.vim'                " self made color scheme..
 Plugin 'sheerun/vim-polyglot'                " a collection of language packs
                                              " doesnt work on mac properly
 
-Plugin 'cespare/vim-toml'                    " toml syntax for Vim (>= 8)
 Plugin 'jiangmiao/auto-pairs'                " insert or delete brackets, parens, quotes in pair
 call vundle#end()
 " }}}
