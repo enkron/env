@@ -20,3 +20,8 @@
         user = enkron
 [init]
         defaultBranch = main
+[merge]
+    ff = only ; ensure that all the merges are of this type (fast-forward only)
+              ; The advantage is the generally linear commit history.
+              ; This simplifies bisecting and makes the history and commit log
+              ; much easier to understand.
