@@ -27,7 +27,7 @@ GPG_TTY=$(tty)
 export GPG_TTY
 
 # A socket path variable for swaymsg app 
-export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
+#export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
 
 # NOTE: commands from different sessions will be mixed in a history file
 export HISTFILESIZE=400000 # ensure a history file is big enough
