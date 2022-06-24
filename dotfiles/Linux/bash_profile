@@ -1,40 +1,15 @@
 # .bash_profile
+# can be used instead of ~/.profile, but it is read by bash only, not
+# by any other shell. This is a logical place to include ~/.bashrc if
+# the shell is interactive.
+#
+# based on below answer:
+# https://superuser.com/questions/183870/difference-between-bashrc-and-bash-profile
 
-# Get the aliases and functions
-if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
+if [ -r ~/.profile ]; then
+	. ~/.profile;
 fi
 
-# User specific environment and startup programs
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
-
-# setup environment for Rust lang
-if [[ -f "$HOME/.cargo/env" ]]; then
-    . "$HOME/.cargo/env"
-fi
-
-export PATH
-
-# Nano editor is default standart editor unfortunately
-# so change it to Vim
-export EDITOR=vim
-
-# Set GPG tty
-GPG_TTY=$(tty)
-export GPG_TTY
-
-# A socket path variable for swaymsg app 
-#export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
-
-# NOTE: commands from different sessions will be mixed in a history file
-export HISTFILESIZE=400000 # ensure a history file is big enough
-export HISTSIZE=10000 # limit the number of these lines to be retained in memory
-# `PROMPT_COMMAND` - contains a command to be executed before any new prompt is shown
-# `history -a` - an immediate write of all new history lines
-PROMPT_COMMAND="${PROMPT_COMMAND:-:} ; history -a"
-shopt -s histappend
-
-export PROMPT_COMMAND
+case "$-" in
+	*i*) if [ -r ~/.bashrc ]; then . ~/.bashrc; fi;;
+esac

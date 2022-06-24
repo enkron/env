@@ -1,12 +1,12 @@
 # .bashrc
+# executed for an interactive non-login shell. Put the commands that should
+# run every time a new shell is launching here. This include: aliases and
+# functions, custom prompts, history customizations, and so on.
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
-
-# systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
 
 # User specific aliases and functions
 if [ -d ~/.bashrc.d ]; then
@@ -44,3 +44,8 @@ PS1='\W\$ '
 #else
 #    PS1='\e[31;1mܘ\e[0m \W\$ '
 #fi
+
+# `PROMPT_COMMAND` - contains a command to be executed before any new prompt is shown
+# `history -a` - an immediate write of all new history lines
+PROMPT_COMMAND="${PROMPT_COMMAND:-:} ; history -a"
+shopt -s histappend

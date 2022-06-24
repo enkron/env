@@ -1,0 +1,46 @@
+# .profile
+# uses to run commands that should run only once, such as
+# customizing the $PATH environment variable etc.
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+
+# setup environment for Rust lang
+if [[ -f "$HOME/.cargo/env" ]]; then
+    . "$HOME/.cargo/env"
+fi
+
+export PATH
+
+# Nano editor is default standart editor unfortunately (at least in fedora as
+# know) thus change it to Vim
+export EDITOR=vim
+
+# systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# Set GPG tty
+GPG_TTY=$(tty)
+export GPG_TTY
+
+# A socket path variable for swaymsg app 
+#export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
+
+# NOTE: commands from different sessions will be mixed in a history file
+export HISTFILESIZE=400000 # ensure a history file is big enough
+export HISTSIZE=10000 # limit the number of these lines to be retained in memory
+
+# Colorize `less`
+# below exports are for Arch based distro for now
+# TODO: add test condition if the /usr/bin/src-hilite-lesspipe.sh exists before
+# export below variables
+#export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
+#export LESS=" -R "
