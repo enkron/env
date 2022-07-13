@@ -38,11 +38,9 @@ export HISTFILESIZE=400000 # ensure a history file is big enough
 export HISTSIZE=10000 # limit the number of these lines to be retained in memory
 
 # Colorize `less`
-# below exports are for Arch based distro for now
-# TODO: add test condition if the /usr/bin/src-hilite-lesspipe.sh exists before
-# export below variables
-#export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
-#export LESS=" -R "
+LESSPIPE_SCRIPT_PATH="/usr/bin/src-hilite-lesspipe.sh"
+test -r "${LESSPIPE_SCRIPT_PATH}" && \
+    { LESSOPEN="| ${LESSPIPE_SCRIPT_PATH} %s"; LESS=" -R "; export LESSOPEN; export LESS }
 
 # Colorize `ls` output
 # bd = (BLOCK, BLK)   Block device (buffered) special file
