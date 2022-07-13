@@ -40,7 +40,7 @@ export HISTSIZE=10000 # limit the number of these lines to be retained in memory
 # Colorize `less`
 LESSPIPE_SCRIPT_PATH="/usr/bin/src-hilite-lesspipe.sh"
 test -r "${LESSPIPE_SCRIPT_PATH}" && \
-    { LESSOPEN="| ${LESSPIPE_SCRIPT_PATH} %s"; LESS=" -R "; export LESSOPEN; export LESS }
+    { LESSOPEN="| ${LESSPIPE_SCRIPT_PATH} %s"; LESS=" -R "; export LESSOPEN; export LESS; }
 
 # Colorize `ls` output
 # bd = (BLOCK, BLK)   Block device (buffered) special file
