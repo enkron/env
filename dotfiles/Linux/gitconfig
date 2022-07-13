@@ -27,3 +27,4 @@
                   ; much easier to understand.
 [pager]
         branch = false
+        diff = false
