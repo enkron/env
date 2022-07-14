@@ -64,4 +64,6 @@ test -r "${LESSPIPE_SCRIPT_PATH}" && \
 # *.extension =   Every file using this extension e.g. *.rpm = files with the ending .rpm
 #
 # for more info look into the man page: dir_colors (5)
-LS_COLORS=$LS_COLORS:'di=0;35:'; export LS_COLORS
+# in the current Arch installation `ls` already has colors enabled and
+# can be setup with `--color` flag
+#LS_COLORS=$LS_COLORS:'di=0;35:'; export LS_COLORS
