@@ -282,10 +282,11 @@ colors:
   #  background: CellForeground
 
   # Normal colors
-  #normal:
+  normal:
   #  black:   '#1d1f21'
   #  red:     '#cc6666'
   #  green:   '#b5bd68'
+    green:   '#008000' # original -> #b5bd68
   #  yellow:  '#f0c674'
   #  blue:    '#81a2be'
   #  magenta: '#b294bb'
