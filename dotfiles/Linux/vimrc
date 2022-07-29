@@ -75,7 +75,7 @@ set nobackup                         " don't create backup files
 set showcmd                          " show what i'm typing
 set hlsearch                         " enable highlight searched patterns
 set hidden                           " turn on 'hidden' mode for buffers
-set nowrap                           " do not wrap lines
+"set nowrap                          " do not wrap lines
                                      " allow long lines to extend as far as the line goes
 set incsearch                        " while searching though a file incrementally
                                      " highlight matching characters as you type
