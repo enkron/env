@@ -118,6 +118,15 @@ augroup filetype_vim
 augroup END
 " }}}
 
+" Vim functions ---------------------------------------------------- {{{
+" Below function allows to avoid entering the `INSERT` mode while splitting a
+" long line (Vim doesn't have this type of method by default)
+function! SplitLine()
+    s/^\(\s*\)\(.\{-}\)\(\s*\)\(\%#\)\(\s*\)\(.*\)/\1\2\r\1\4\6
+    call histdel("/", -1)
+endfunction
+" }}}
+
 " Plugins settings ------------------------------------------------- {{{
 " rust.vim
 let g:rustfmt_autosave = 1
@@ -209,7 +218,7 @@ cnoremap <C-a> <Home>
 
 " inoremap () ()<Left>
 " inoremap [] []<Left>
-inoremap {} {}<Left>
+" inoremap {} {}<Left>
 " inoremap "" ""<Left>
 " inoremap ' ''<Left>
 " inoremap ` ``<Left>
@@ -242,4 +251,7 @@ nnoremap <leader>vu :PluginUpdate<CR>
 
 " reload vim configuration file
 " nnoremap <leader>rc :source<space>~/.vimrc<CR>
+
+" Split long lines in `NORMAL` mode
+nnoremap <leader>sl :<C-u>call SplitLine()<CR>
 " }}}
