@@ -168,7 +168,7 @@ cnoremap W<CR> :w!<CR>
 " switch between buffers
 nnoremap <leader>b :ls<CR>:buffer<Space>
 " switch between last buffers
-nnoremap <leader>bb :b#<CR>
+nnoremap <leader>ll :b#<CR>
 
 " ugly change pattern
 nnoremap <leader>c :%s///g<Left><Left><Left>
