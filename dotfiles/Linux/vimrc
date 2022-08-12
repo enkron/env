@@ -12,6 +12,8 @@ if v:version >= 801
                                              " navigate to install dir
                                              " and execute python3 install.py --all
     Plugin 'cespare/vim-toml'                " toml syntax for Vim (>= 8)
+    Plugin 'dense-analysis/ale'              " providing linting (syntax
+                                             " checking and semantic errors)
 endif
 
 Plugin 'prabirshrestha/async.vim'            " normalize async job control api
