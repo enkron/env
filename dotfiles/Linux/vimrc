@@ -254,6 +254,10 @@ nnoremap <leader>vu :PluginUpdate<CR>
 " reload vim configuration file
 " nnoremap <leader>rc :source<space>~/.vimrc<CR>
 
-" Split long lines in `NORMAL` mode
+" split long lines in `NORMAL` mode
 nnoremap <leader>sl :<C-u>call SplitLine()<CR>
+
+" add a semi-colon to the end of a line,
+" return the cursor to its original spot
+inoremap ;; <C-o>mp<C-o>A;<C-o>`p
 " }}}
