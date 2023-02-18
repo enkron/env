@@ -24,7 +24,7 @@ alias clearup="printf '\033[2J'" # clean space above a terminal prompt
 alias ls='ls --color=auto'
 
 # Ubuntu aliases
-test -f $(which xclip) && alias xclip='xclip -selection clipboard'
+test command -v xclip &>/dev/null && alias xclip='xclip -selection clipboard'
 
 # Misc
 umask 0077
@@ -45,7 +45,7 @@ PROMPT_COMMAND="${PROMPT_COMMAND:-:} ; history -a"
 shopt -s histappend
 
 # Activate `pyenv`
-if [ -f $(which pyenv) ]; then
+if command -v pyenv &> /dev/null; then
     export pyenv_root="$HOME/.pyenv"
     command -v pyenv >/dev/null || export PATH="$pyenv_root/bin:$PATH"
     eval "$(pyenv init -)"
