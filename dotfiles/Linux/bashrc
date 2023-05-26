@@ -23,9 +23,6 @@ alias lsofc='lsof -i |grep -Ei "(listen|established)"'
 alias clearup="printf '\033[2J'" # clean space above a terminal prompt
 alias ls='ls --color=auto'
 
-# Ubuntu aliases
-test command -v xclip &>/dev/null && alias xclip='xclip -selection clipboard'
-
 # Misc
 umask 0077
 
