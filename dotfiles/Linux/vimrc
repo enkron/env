@@ -153,6 +153,14 @@ endif
 " asm.vim
 set filetype=nasm
 let g:asmsyntax = 'nasm'
+
+" ALE syntax checking and semantic errors
+" python
+let g:ale_linters = {'python': ['ruff', 'mypy']}
+
+" rust
+let g:ale_linters = {'rust': ['cargo']}
+let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
 " }}}
 
 " Key mappings ----------------------------------------------------- {{{
