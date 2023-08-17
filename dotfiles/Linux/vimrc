@@ -27,7 +27,11 @@ Plugin 'enkron/ecs_light.vim'                " self made color scheme..
 Plugin 'sheerun/vim-polyglot'                " a collection of language packs
                                              " doesnt work on mac properly
 
-Plugin 'jiangmiao/auto-pairs'                " insert or delete brackets, parens, quotes in pair
+" Plugin 'jiangmiao/auto-pairs'                " insert or delete brackets, parens, quotes in pair
+if v:version >= 730
+Plugin 'Yggdroot/indentLine'                 " display vertical lines at each indentation level
+                                             " for code indented with spaces
+endif
 call vundle#end()
 " }}}
 
