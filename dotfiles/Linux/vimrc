@@ -172,10 +172,11 @@ let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
 " nnoremap – allows to map keys in normal mode
 " inoremap – allows to map keys in insert mode
 " vnoremap – allows to map keys in visual mode
-let mapleader=',' " by default mapleader variable is set to '\'
+let mapleader=' ' " by default mapleader variable is set to '\'
 
-" the more often save action occurs, the more likely the data won't be lost
-nnoremap <Space> :w!<CR>
+" the more often save action occurs, the more likely the data won't be
+" lost
+" nnoremap <Space> :w!<CR>
 cnoremap W<CR> :w!<CR>
 
 " switch between buffers
@@ -279,4 +280,7 @@ inoremap ;; <C-o>mp<C-o>A;<C-o>`p
 " It's a useful feature when writing code in Rust
 inoremap ?? <C-o>mp<C-o>A?<C-o>`p
 inoremap }} <C-o>mp<C-o>A}<C-o>`p
+
+" sync syntax highlighting (sometimes vim gets confused in a long file)
+nnoremap <leader>sf :syntax sync fromstart<CR>
 " }}}
