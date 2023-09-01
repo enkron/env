@@ -89,6 +89,7 @@ set incsearch                        " while searching though a file incremental
 " set smartcase                      " override the ignorecase option if searching for capital letters
                                      " this will allow to search specifically for capital letters
 set showmode                         " show the mode you are on the last line.
+set cole=0                           " do not conceal hidden text
 " }}}
 
 " Statusline ------------------------------------------------------- {{{
@@ -155,8 +156,8 @@ if executable('rust-analyzer')
 endif
 
 " asm.vim
-set filetype=nasm
-let g:asmsyntax = 'nasm'
+" set filetype=nasm
+" let g:asmsyntax = 'nasm'
 
 " ALE syntax checking and semantic errors
 " python
@@ -277,4 +278,5 @@ inoremap ;; <C-o>mp<C-o>A;<C-o>`p
 " return the cursor to its original spot.
 " It's a useful feature when writing code in Rust
 inoremap ?? <C-o>mp<C-o>A?<C-o>`p
+inoremap }} <C-o>mp<C-o>A}<C-o>`p
 " }}}
