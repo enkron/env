@@ -5,7 +5,7 @@
 [alias]
         s = status -sb
         l = log --pretty=format:'%C(italic)%ae %ar%C(reset)%n%C(bold)%C(reverse)%h%C(reset) %s%C(auto)%d%n%+b'
-        b = branch --sort=-committerdate
+        b = branch --sort=committerdate
         r = remote update origin --prune ; update the local list of remote branches
         c = commit
 [color]
