@@ -282,5 +282,9 @@ inoremap ?? <C-o>mp<C-o>A?<C-o>`p
 inoremap }} <C-o>mp<C-o>A}<C-o>`p
 
 " sync syntax highlighting (sometimes vim gets confused in a long file)
-nnoremap <leader>sf :syntax sync fromstart<CR>
+nnoremap <leader>ss :syntax sync fromstart<CR>
+
+" LSP plugin pop up window scrolling
+nnoremap <buffer> <expr><C-u> lsp#scroll(-4)
+nnoremap <buffer> <expr><C-d> lsp#scroll(+4)
 " }}}
