@@ -22,6 +22,8 @@ unset rc
 alias lsofc='lsof -i |grep -Ei "(listen|established)"'
 alias clearup="printf '\033[2J'" # clean space above a terminal prompt
 alias ls='ls --color=auto'
+alias diff='diff --color=auto'
+alias xclip='xclip -sel clipboard'
 
 # Misc
 umask 0077
