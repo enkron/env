@@ -27,10 +27,14 @@ Plugin 'enkron/ecs_light.vim'                " self made color scheme..
 Plugin 'sheerun/vim-polyglot'                " a collection of language packs
                                              " doesnt work on mac properly
 
-" Plugin 'jiangmiao/auto-pairs'                " insert or delete brackets, parens, quotes in pair
+" Plugin 'jiangmiao/auto-pairs'              " insert or delete brackets, parens, quotes in pair
 if v:version >= 730
-Plugin 'Yggdroot/indentLine'                 " display vertical lines at each indentation level
+    Plugin 'Yggdroot/indentLine'             " display vertical lines at each indentation level
                                              " for code indented with spaces
+endif
+if v:version >= 820
+    Plugin 'wfxr/minimap.vim'                " fast minimap
+                                             " (https://github.com/wfxr/code-minimap is required)
 endif
 call vundle#end()
 " }}}
@@ -259,8 +263,9 @@ nnoremap Q <NOP>
 " eg. `gq3<CR>` - formats next 3 lines according to the `tw` value
 " nnoremap q: <NOP>
 
-" Rust mappings
-nnoremap <leader>rr :RustRun<CR>
+" open/close minimap (minimap plugin required)
+nnoremap <leader>mo :Minimap<CR>
+nnoremap <leader>mc :MinimapClose<CR>
 
 " Vundle mappings
 nnoremap <leader>vu :PluginUpdate<CR>
