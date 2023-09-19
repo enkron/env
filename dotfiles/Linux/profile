@@ -18,10 +18,7 @@ if [[ -f "$HOME/.cargo/env" ]]; then
     . "$HOME/.cargo/env"
 fi
 
-export PATH
-
-# Nano editor is default standart editor unfortunately (at least in fedora as
-# know) thus change it to Vim
+# Setup default editor
 export EDITOR=vim
 
 # systemctl's auto-paging feature:
@@ -68,3 +65,28 @@ test -r "${LESSPIPE_SCRIPT_PATH}" && \
 # in the current Arch installation `ls` already has colors enabled and
 # can be setup with `--color` flag
 #LS_COLORS=$LS_COLORS:'di=0;35:'; export LS_COLORS
+
+# setup pyenv
+PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# setup environment for nvm
+NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# setup environment for wasmedge runtime
+WASMEDGE_HOME="${HOME}/.wasmedge"
+[ -s "$WASMEDGE_HOME/env" ] && . "${WASMEDGE_HOME}/env"
+
+# setup Groovy lang
+GROOVY_VERSION=4.0.13
+GROOVY_HOME="/opt/groovy-${GROOVY_VERSION}"
+[ -s "$GROOVY_HOME/bin/groovy" ] && PATH="${PATH}:${GROOVY_HOME}/bin"
+
+# setup Go lang
+GOLANG_HOME=/usr/local/go
+[ -s "$GOLANG_HOME/bin/go" ] && PATH="${PATH}:${GOLANG_HOME}/bin"
+
+export PATH
