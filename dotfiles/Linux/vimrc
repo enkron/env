@@ -197,7 +197,7 @@ nnoremap <leader>cl :.s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
 " count number of matches of a pattern
 nnoremap <leader>gn :%s/\<<C-r>=expand('<cword>')<CR>\>//gn<CR>
 
-" set paste
+" put vim in paste mode
 nnoremap <leader>sp :set paste<CR>
 
 " release search highlighting
