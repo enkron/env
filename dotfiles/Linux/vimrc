@@ -93,7 +93,6 @@ set incsearch                        " while searching though a file incremental
 " set smartcase                      " override the ignorecase option if searching for capital letters
                                      " this will allow to search specifically for capital letters
 set showmode                         " show the mode you are on the last line.
-set cole=0                           " do not conceal hidden text
 " }}}
 
 " Statusline ------------------------------------------------------- {{{
@@ -127,6 +126,9 @@ augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
+
+" Override conceal level which could be set by some plugin
+autocmd BufEnter * set conceallevel=0
 " }}}
 
 " Vim functions ---------------------------------------------------- {{{
