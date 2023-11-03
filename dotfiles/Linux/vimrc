@@ -298,5 +298,5 @@ nnoremap <buffer> <expr><C-p> lsp#scroll(-4)
 nnoremap <buffer> <expr><C-n> lsp#scroll(+4)
 
 " Reload undo history
-nmap <leader>ue :setl undoreload=0 \|edit<CR>
+nmap <leader>ee :setl undoreload=0 \|edit<CR>
 " }}}
