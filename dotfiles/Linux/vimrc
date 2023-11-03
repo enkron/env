@@ -145,9 +145,11 @@ endfunction
 let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 1
 
+" register LSP language server.
+" Use :help lsp#register_server() for more info
 if executable('rust-analyzer')
   au User lsp_setup call lsp#register_server({
-        \   'name': 'Rust Language Server',
+        \   'name': 'Rust language server',
         \   'cmd': {server_info->['rust-analyzer']},
         \   'whitelist': ['rust'],
         \   'initialization_options': {
