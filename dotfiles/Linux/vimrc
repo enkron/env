@@ -131,7 +131,7 @@ endfunction
 " Plugins settings ------------------------------------------------- {{{
 " rust.vim
 let g:rustfmt_autosave = 1
-let g:rust_keep_autopairs_default = 1
+let g:rust_keep_autopairs_default = 0
 
 " register LSP language server.
 " Use :help lsp#register_server() for more info
@@ -190,7 +190,7 @@ nnoremap <leader>cl :.s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
 nnoremap <leader>gn :%s/\<<C-r>=expand('<cword>')<CR>\>//gn<CR>
 
 " put vim in paste mode
-nnoremap <leader>sp :set paste<CR>
+" nnoremap <leader>sp :set paste<CR>
 
 " release search highlighting
 nnoremap <leader><space> :nohlsearch<CR>
