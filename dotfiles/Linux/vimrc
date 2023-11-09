@@ -14,11 +14,11 @@ if v:version >= 730
 endif
 if v:version >= 801
     " Plugin 'dense-analysis/ale' " providing linting (syntax checking and semantic errors)
-    Plugin 'cespare/vim-toml' " toml syntax support
     Plugin 'prabirshrestha/async.vim' " normalize async job control api
     Plugin 'prabirshrestha/vim-lsp' " async Language Server Protocol
     Plugin 'prabirshrestha/asyncomplete.vim' " async autocompletion
     Plugin 'prabirshrestha/asyncomplete-lsp.vim' " LSP autocompletion source for asyncomplete.vim and vim-lsp.
+    Plugin 'cespare/vim-toml' " toml syntax support
 endif
 if v:version >= 820
     " fast minimap (https://github.com/wfxr/code-minimap is required)
@@ -133,8 +133,8 @@ endfunction
 let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 0
 
-" register LSP language server.
-" Use :help lsp#register_server() for more info
+" register LSP language server.  Use :help lsp#register_server() for
+" more info
 if executable('rust-analyzer')
   au User lsp_setup call lsp#register_server({
         \   'name': 'Rust language server',
@@ -142,7 +142,9 @@ if executable('rust-analyzer')
         \   'whitelist': ['rust'],
         \   'initialization_options': {
         \     'cargo': {
-        \       'loadOutDirsFromCheck': v:true,
+        \       'buildScripts': {
+        \         'enable': v:true,
+        \       },
         \     },
         \     'procMacro': {
         \       'enable': v:true,
@@ -156,12 +158,17 @@ endif
 " let g:asmsyntax = 'nasm'
 
 " ALE syntax checking and semantic errors
-" python
-let g:ale_linters = {'python': ['ruff', 'mypy']}
-
-" rust
-let g:ale_linters = {'rust': ['cargo']}
-let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
+" let g:ale_completion_enabled = 1
+" let g:ale_hover_to_floating_preview = 1
+" let g:ale_fix_on_save = 1
+" let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
+" let g:ale_linters = {
+" \   'rust': ['cargo', 'analyzer'],
+" \   'python': ['ruff', 'mypy'],
+" \}
+" let g:ale_fixers = {
+" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+" \}
 " }}}
 
 " Key mappings ----------------------------------------------------- {{{
