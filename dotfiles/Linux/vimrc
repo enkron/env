@@ -13,11 +13,11 @@ if v:version >= 730
     Plugin 'Yggdroot/indentLine'
 endif
 if v:version >= 801
-    " Plugin 'dense-analysis/ale' " providing linting (syntax checking and semantic errors)
-    Plugin 'prabirshrestha/async.vim' " normalize async job control api
-    Plugin 'prabirshrestha/vim-lsp' " async Language Server Protocol
-    Plugin 'prabirshrestha/asyncomplete.vim' " async autocompletion
-    Plugin 'prabirshrestha/asyncomplete-lsp.vim' " LSP autocompletion source for asyncomplete.vim and vim-lsp.
+    Plugin 'dense-analysis/ale' " providing linting (syntax checking and semantic errors)
+    " Plugin 'prabirshrestha/async.vim' " normalize async job control api
+    " Plugin 'prabirshrestha/vim-lsp' " async Language Server Protocol
+    " Plugin 'prabirshrestha/asyncomplete.vim' " async autocompletion
+    " Plugin 'prabirshrestha/asyncomplete-lsp.vim' " LSP autocompletion source for asyncomplete.vim and vim-lsp.
     Plugin 'cespare/vim-toml' " toml syntax support
 endif
 if v:version >= 820
@@ -34,10 +34,8 @@ if &term != "linux"
 endif
 
 set term=${TERM}
+
 syntax on                            " enable syntax highlighting
-
-set omnifunc=syntaxcomplete#Complete
-
 set nocompatible                     " enables to use Vim specific features
 filetype off                         " reset filetype detection first ...
 filetype plugin indent on            " ... and enable filetype detection
@@ -81,6 +79,7 @@ set incsearch                        " while searching though a file incremental
 " set smartcase                      " override the ignorecase option if searching for capital letters
                                      " this will allow to search specifically for capital letters
 set showmode                         " show the mode you are on the last line.
+set completeopt=menu,menuone,popup,noselect,noinsert " autocomplete with popup windows
 " }}}
 
 " Statusline ------------------------------------------------------- {{{
@@ -133,42 +132,43 @@ endfunction
 let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 0
 
-" register LSP language server.  Use :help lsp#register_server() for
-" more info
-if executable('rust-analyzer')
-  au User lsp_setup call lsp#register_server({
-        \   'name': 'Rust language server',
-        \   'cmd': {server_info->['rust-analyzer']},
-        \   'whitelist': ['rust'],
-        \   'initialization_options': {
-        \     'cargo': {
-        \       'buildScripts': {
-        \         'enable': v:true,
-        \       },
-        \     },
-        \     'procMacro': {
-        \       'enable': v:true,
-        \     },
-        \   },
-        \ })
-endif
+"" register LSP language server.  Use :help lsp#register_server() for
+"" more info
+"if executable('rust-analyzer')
+"" https://github.com/rust-lang/rust-analyzer
+"  au User lsp_setup call lsp#register_server({
+"        \   'name': 'Rust language server',
+"        \   'cmd': {server_info->['rust-analyzer']},
+"        \   'whitelist': ['rust'],
+"        \   'initialization_options': {
+"        \     'cargo': {
+"        \       'buildScripts': {
+"        \         'enable': v:true,
+"        \       },
+"        \     },
+"        \     'procMacro': {
+"        \       'enable': v:true,
+"        \     },
+"        \   },
+"        \ })
+"endif
 
 " asm.vim
 " set filetype=nasm
 " let g:asmsyntax = 'nasm'
 
 " ALE syntax checking and semantic errors
-" let g:ale_completion_enabled = 1
-" let g:ale_hover_to_floating_preview = 1
-" let g:ale_fix_on_save = 1
-" let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
-" let g:ale_linters = {
-" \   'rust': ['cargo', 'analyzer'],
-" \   'python': ['ruff', 'mypy'],
-" \}
-" let g:ale_fixers = {
-" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-" \}
+let g:ale_completion_enabled = 1
+let g:ale_hover_to_floating_preview = 0
+let g:ale_fix_on_save = 1
+let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
+let g:ale_linters = {
+\   'rust': ['cargo', 'analyzer'],
+\   'python': ['ruff', 'mypy'],
+\}
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\}
 " }}}
 
 " Key mappings ----------------------------------------------------- {{{
@@ -285,9 +285,9 @@ inoremap }} <C-o>mp<C-o>A}<C-o>`p
 " sync syntax highlighting (sometimes vim gets confused in a long file)
 nnoremap <leader>ss :syntax sync fromstart<CR>
 
-" LSP plugin pop up window scrolling
-nnoremap <buffer> <expr><C-p> lsp#scroll(-4)
-nnoremap <buffer> <expr><C-n> lsp#scroll(+4)
+" vim-lsp plugin pop up window scrolling
+" nnoremap <buffer> <expr><C-p> lsp#scroll(-4)
+" nnoremap <buffer> <expr><C-n> lsp#scroll(+4)
 
 " Reload undo history
 nmap <leader>ee :setl undoreload=0 \|edit<CR>
