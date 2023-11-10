@@ -125,6 +125,28 @@ function! SplitLine()
     s/^\(\s*\)\(.\{-}\)\(\s*\)\(\%#\)\(\s*\)\(.*\)/\1\2\r\1\4\6
     call histdel("/", -1)
 endfunction
+
+function! ScrollPopup(nlines)
+    let winids = popup_list()
+    if len(winids) == 0
+        return
+    endif
+
+    let prop = popup_getpos(winids[0])
+    if prop.visible != 1
+        return
+    endif
+
+    let firstline = prop.firstline + a:nlines
+    let buf_lastline = str2nr(trim(win_execute(winids[0], "echo line('$')")))
+    if firstline < 1
+        let firstline = 1
+    elseif prop.lastline + a:nlines > buf_lastline
+        let firstline = buf_lastline + prop.firstline - prop.lastline
+    endif
+
+    call popup_setoptions(winids[0], {'firstline': firstline})
+endfunction
 " }}}
 
 " Plugins settings ------------------------------------------------- {{{
@@ -159,7 +181,7 @@ let g:rust_keep_autopairs_default = 0
 
 " ALE syntax checking and semantic errors
 let g:ale_completion_enabled = 1
-let g:ale_hover_to_floating_preview = 0
+let g:ale_hover_to_floating_preview = 1
 let g:ale_fix_on_save = 1
 let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
 let g:ale_linters = {
@@ -281,9 +303,9 @@ inoremap }} <C-o>mp<C-o>A}<C-o>`p
 " sync syntax highlighting (sometimes vim gets confused in a long file)
 nnoremap <leader>ss :syntax sync fromstart<CR>
 
-" vim-lsp plugin pop up window scrolling
-" nnoremap <buffer> <expr><C-p> lsp#scroll(-4)
-" nnoremap <buffer> <expr><C-n> lsp#scroll(+4)
+" popup window scrolling
+nnoremap <buffer> <C-n> :call ScrollPopup(3)<CR>
+nnoremap <buffer> <C-p> :call ScrollPopup(-3)<CR>
 
 " Reload undo history
 nmap <leader>ee :setl undoreload=0 \|edit<CR>
