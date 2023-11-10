@@ -313,7 +313,7 @@ nmap <leader>ee :setl undoreload=0 \|edit<CR>
 " vim ale goto definition
 nnoremap <leader>gt :ALEGoToDefinition<CR>
 " vim ale hover window
-nnoremap <leader>ho :ALEHover<CR>
+nnoremap <leader>p :ALEHover<CR>
 
 " open/close minimap (minimap plugin required)
 nnoremap <leader>mo :Minimap<CR>
