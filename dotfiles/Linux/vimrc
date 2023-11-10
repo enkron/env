@@ -259,10 +259,6 @@ nnoremap Q <NOP>
 " eg. `gq3<CR>` - formats next 3 lines according to the `tw` value
 " nnoremap q: <NOP>
 
-" open/close minimap (minimap plugin required)
-nnoremap <leader>mo :Minimap<CR>
-nnoremap <leader>mc :MinimapClose<CR>
-
 " Vundle mappings
 nnoremap <leader>vu :PluginUpdate<CR>
 
@@ -291,4 +287,13 @@ nnoremap <leader>ss :syntax sync fromstart<CR>
 
 " Reload undo history
 nmap <leader>ee :setl undoreload=0 \|edit<CR>
+
+" vim ale goto definition
+nnoremap <leader>gt :ALEGoToDefinition<CR>
+" vim ale hover window
+nnoremap <leader>ho :ALEHover<CR>
+
+" open/close minimap (minimap plugin required)
+nnoremap <leader>mo :Minimap<CR>
+nnoremap <leader>mc :MinimapClose<CR>
 " }}}
