@@ -153,6 +153,7 @@ endfunction
 " rust.vim
 let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 0
+let g:rust_fold = 1
 
 "" register LSP language server.  Use :help lsp#register_server() for
 "" more info
