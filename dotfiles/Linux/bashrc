@@ -52,11 +52,22 @@ if command -v pyenv &> /dev/null; then
 fi
 
 # Compress a history file
-# below script could be added to the `cron` for example or executed after each login
+# below script could be added to the `cron` for example or executed
+# after each login
 del_duplicates() {
     read -ra SB <<< $(wc -l $HISTFILE)
     awk 'NR==FNR && !/^#/{lines[$0]=FNR;next} lines[$0]==FNR' "$HISTFILE" "$HISTFILE" \
         > "$HISTFILE.compressed" && mv "$HISTFILE.compressed" "$HISTFILE"
     read -ra SA <<< $(wc -l $HISTFILE)
     echo $(( ${SB[0]} - ${SA[0]} )) duplicates removed
+}
+
+colourize_args() {
+	local bold_blue="\033[36;1m"
+	local reset_colour="\033[0m"
+
+	echo $@ |while read line; do
+	    echo -e $bold_blue$line
+	done
+	echo -en $reset_colour
 }
