@@ -43,14 +43,6 @@ PS1='\W\$ '
 PROMPT_COMMAND="${PROMPT_COMMAND:-:} ; history -a"
 shopt -s histappend
 
-# Activate `pyenv`
-if command -v pyenv &> /dev/null; then
-    export pyenv_root="$HOME/.pyenv"
-    command -v pyenv >/dev/null || export PATH="$pyenv_root/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-
 # Compress a history file
 # below script could be added to the `cron` for example or executed
 # after each login
