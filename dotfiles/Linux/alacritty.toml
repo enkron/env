@@ -1,0 +1,36 @@
+[colors.normal]
+green = "#008000"
+
+[colors.primary]
+background = "#ffffff"
+foreground = "#000000"
+
+[cursor]
+blink_interval = 450
+thickness = 0.35
+
+[cursor.style]
+blinking = "Always"
+shape = "Underline"
+
+[font]
+size = 10.0
+
+[font.bold]
+family = "Hack"
+style = "Bold"
+
+[font.bold_italic]
+family = "Hack"
+style = "Bold Italic"
+
+[font.italic]
+family = "Hack"
+style = "Italic"
+
+[font.normal]
+family = "Hack"
+style = "Regular"
+
+[window]
+decorations = "none"
