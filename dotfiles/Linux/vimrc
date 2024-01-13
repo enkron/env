@@ -32,8 +32,6 @@ call vundle#end()
 if &term != "linux"
     set t_Co=256
     colorscheme ecs_light
-else
-    colorscheme ecs
 endif
 
 set term=${TERM}

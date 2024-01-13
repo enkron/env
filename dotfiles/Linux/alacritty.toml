@@ -1,9 +1,9 @@
+import = [
+    "~/.config/alacritty/themes/ecs_light.toml"
+]
+
 [colors.normal]
 green = "#008000"
-
-[colors.primary]
-background = "#ffffff"
-foreground = "#000000"
 
 [cursor]
 blink_interval = 450
