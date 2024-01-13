@@ -312,6 +312,9 @@ nnoremap <buffer> <C-p> :call ScrollPopup(-3)<CR>
 " Reload undo history
 nmap <leader>ee :setl undoreload=0 \|edit<CR>
 
+" Source ~/.vimrc
+nmap <leader>rc :source $MYVIMRC<CR>
+
 " vim ale goto definition
 nnoremap <leader>gt :ALEGoToDefinition<CR>
 " vim ale hover window
