@@ -6,6 +6,7 @@ Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'rust-lang/rust.vim' " vim configuration for rust
 Plugin 'jiangmiao/auto-pairs' " insert or delete brackets, parens, quotes in pair
 Plugin 'enkron/ecs_light.vim' " my color scheme
+Plugin 'enkron/ecs.vim' " my dark color scheme
 Plugin 'sheerun/vim-polyglot' " collection of language packs
 if v:version >= 730
     " display vertical lines at each indentation level for code indented
@@ -31,6 +32,8 @@ call vundle#end()
 if &term != "linux"
     set t_Co=256
     colorscheme ecs_light
+else
+    colorscheme ecs
 endif
 
 set term=${TERM}
