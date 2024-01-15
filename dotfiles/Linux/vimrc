@@ -8,11 +8,11 @@ Plugin 'jiangmiao/auto-pairs' " insert or delete brackets, parens, quotes in pai
 Plugin 'enkron/ecs_light.vim' " my color scheme
 Plugin 'enkron/ecs.vim' " my dark color scheme
 Plugin 'sheerun/vim-polyglot' " collection of language packs
-if v:version >= 730
-    " display vertical lines at each indentation level for code indented
-    " with spaces
-    Plugin 'Yggdroot/indentLine'
-endif
+" if v:version >= 730
+"     " display vertical lines at each indentation level for code indented
+"     " with spaces
+"     Plugin 'Yggdroot/indentLine'
+" endif
 if v:version >= 801
     Plugin 'dense-analysis/ale' " providing linting (syntax checking and semantic errors)
     " Plugin 'prabirshrestha/async.vim' " normalize async job control api
