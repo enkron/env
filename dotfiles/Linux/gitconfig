@@ -3,11 +3,14 @@
         email = srj.belokon@gmail.com
         signingkey = 9602C3B5B79665D7
 [alias]
-        s = status -sb
-        l = log --pretty=format:'%C(italic)%ae %ar%C(reset)%n%C(bold)%C(reverse)%h%C(reset) %s%C(auto)%d%n%+b'
+        a = add
         b = branch --sort=committerdate
-        r = remote update origin --prune ; update the local list of remote branches
         c = commit
+        d = diff
+        l = log --pretty=format:'%C(italic)%ae %ar%C(reset)%n%C(bold)%C(reverse)%h%C(reset) %s%C(auto)%d%n%+b'
+        r = restore
+        s = status -sb
+        t = tag
 [color]
         ui = auto
 [color "branch"]
@@ -29,7 +32,7 @@
         branch = false
         diff = false
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+        required = true
