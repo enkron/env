@@ -313,7 +313,7 @@ nnoremap <buffer> <C-p> :call ScrollPopup(-3)<CR>
 nmap <leader>ee :setl undoreload=0 \|edit<CR>
 
 " Source ~/.vimrc
-nmap <leader>rc :source $MYVIMRC<CR>
+nmap <leader>rc :source $MYVIMRC<CR>:nohlsearch<CR>
 
 " vim ale goto definition
 nnoremap <leader>gt :ALEGoToDefinition<CR>
