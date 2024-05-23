@@ -30,7 +30,6 @@
                   ; much easier to understand.
 [pager]
         branch = false
-        diff = false
 [filter "lfs"]
         clean = git-lfs clean -- %f
         smudge = git-lfs smudge -- %f
