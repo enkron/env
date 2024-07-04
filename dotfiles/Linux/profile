@@ -39,9 +39,9 @@ export HISTSIZE=10000 # limit the number of these lines to be retained in memory
 # eg. on Debian:
 # sudo apt install libsource-highlight-common source-highlight
 # dpkg -L libsource-highlight-common |grep lesspipe
-LESSPIPE_SCRIPT_PATH="/usr/share/source-highlight/src-hilite-lesspipe.sh"
-test -r "${LESSPIPE_SCRIPT_PATH}" && \
-    { LESSOPEN="| ${LESSPIPE_SCRIPT_PATH} %s"; LESS=" -R "; export LESSOPEN; export LESS; }
+# LESSPIPE_SCRIPT_PATH="/usr/share/source-highlight/src-hilite-lesspipe.sh"
+# test -r "${LESSPIPE_SCRIPT_PATH}" && \
+#     { LESSOPEN="| ${LESSPIPE_SCRIPT_PATH} %s"; LESS=" -R "; export LESSOPEN; export LESS; }
 
 # Colorize `ls` output
 # bd = (BLOCK, BLK)   Block device (buffered) special file
