@@ -27,7 +27,7 @@ export EDITOR=vim
 # Set GPG tty
 GPG_TTY=$(tty); export GPG_TTY
 
-# A socket path variable for swaymsg app 
+# A socket path variable for swaymsg app
 #export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
 
 # NOTE: commands from different sessions will be mixed in a history file
@@ -36,7 +36,10 @@ export HISTSIZE=10000 # limit the number of these lines to be retained in memory
 
 # Colorize `less`
 # look for the `source-highlight` package
-LESSPIPE_SCRIPT_PATH="/usr/bin/src-hilite-lesspipe.sh"
+# eg. on Debian:
+# sudo apt install libsource-highlight-common source-highlight
+# dpkg -L libsource-highlight-common |grep lesspipe
+LESSPIPE_SCRIPT_PATH="/usr/share/source-highlight/src-hilite-lesspipe.sh"
 test -r "${LESSPIPE_SCRIPT_PATH}" && \
     { LESSOPEN="| ${LESSPIPE_SCRIPT_PATH} %s"; LESS=" -R "; export LESSOPEN; export LESS; }
 
