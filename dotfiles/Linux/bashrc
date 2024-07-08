@@ -44,9 +44,7 @@ PROMPT_COMMAND="${PROMPT_COMMAND:-:} ; history -a"
 shopt -s histappend
 
 # Compress a history file
-# below script could be added to the `cron` for example or executed
-# after each login
-del_duplicates() {
+erasedups() {
     read -ra SB <<< $(wc -l $HISTFILE)
     awk 'NR==FNR && !/^#/{lines[$0]=FNR;next} lines[$0]==FNR' "$HISTFILE" "$HISTFILE" \
         > "$HISTFILE.compressed" && mv "$HISTFILE.compressed" "$HISTFILE"
