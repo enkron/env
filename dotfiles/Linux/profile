@@ -30,9 +30,20 @@ GPG_TTY=$(tty); export GPG_TTY
 # A socket path variable for swaymsg app
 #export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
 
+# ensure a history file is big enough
 # NOTE: commands from different sessions will be mixed in a history file
-export HISTFILESIZE=400000 # ensure a history file is big enough
-export HISTSIZE=10000 # limit the number of these lines to be retained in memory
+export HISTFILESIZE=400000
+
+# limit the number of these lines to be retained in memory
+export HISTSIZE=10000
+
+# `ignorespace`: lines which begin with a space character are not saved in the history list
+# `ignoredups`: causes lines which match the previous history entry to not be saved.
+# `ignoreboth`: shorthand for `ignorespace` & `ignoredups`
+# `erasedups`: causes all previous lines matching the current line to be
+# removed from the history list before that line is saved.
+# https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html#index-HISTCONTROL
+export HISTCONTROL='ignoreboth:erasedups'
 
 # Colorize `less`
 # look for the `source-highlight` package
