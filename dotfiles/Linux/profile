@@ -107,6 +107,9 @@ GOLANG_HOME=/usr/local/go
 [ -s "$GOLANG_HOME/bin/go" ] && PATH="${PATH}:${GOLANG_HOME}/bin"
 
 # `fzf` conf (github.com/junegunn/fzf)
-[[ -s  $(which fzf)  ]] && export FZF_DEFAULT_OPTS='--height 40% --layout reverse'
+if [[ -s  $(which fzf)  ]]; then
+    export FZF_DEFAULT_OPTS='--height 40% --layout reverse'
+    eval "$(fzf --bash)"
+fi
 
 export PATH
