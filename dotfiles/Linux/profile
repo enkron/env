@@ -108,7 +108,7 @@ GOLANG_HOME=/usr/local/go
 
 # `fzf` conf (github.com/junegunn/fzf)
 if [[ -s  $(which fzf)  ]]; then
-    export FZF_DEFAULT_OPTS='--height 40% --layout reverse'
+    export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --info=inline-right --color=16 --pointer=""'
     eval "$(fzf --bash)"
 fi
 
