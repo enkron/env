@@ -84,21 +84,17 @@ set completeopt=menu,menuone,popup,noselect,noinsert " autocomplete with popup w
 " }}}
 
 " Statusline ------------------------------------------------------- {{{
-" %F - display a full path of a current file
-" %M - modified flag shows if file is unsaved
-" %Y - type of a file in a buffer
-" %b - show an ascii/unicode char under a cursor
-" %B - show a hexadecimal char under a cursor
-" %l - display a row number
-" %c - display a column number
-" %p%% - show a cursor percentage from a top of a file
-" %{&fo} - format options (eg. wrapping, margins etc)
 set laststatus=2                        " show the status on the second to last line
 set statusline=                         " clear status line when vimrc is reloaded
-set statusline+=\ %F\ \->\ %Y\ mod:[%M]\ fo:[%{&fo}] " statusline left side
-set statusline+=%=                      " devider to separate left/right sides
-set statusline+=\ unicode(hex:0x%B,\ dec:%b)\ row:%l\ col:%c\ %4p%% " statusline right side
-" old status line left as a backup
+set statusline+=%1*\%{&ff}%y\ %*
+set statusline+=%2*\»\ %*
+set statusline+=%3*\%n%m\%*
+set statusline+=%1*\%=%t\ %*
+set statusline+=%=
+set statusline+=%1*\%4l/%*
+set statusline+=%5*\%L%*
+set statusline+=%2*\ «\ %*
+set statusline+=%4*\ 0x%B\/%c\%*
 " set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
 " }}}
 
