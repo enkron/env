@@ -17,6 +17,7 @@
         current = cyan
 [core]
         editor = vim
+        pager = delta
 [push]
         default = simple
 [github]
@@ -28,6 +29,7 @@
                   ; The advantage is the generally linear commit history.
                   ; This simplifies bisecting and makes the history and commit log
                   ; much easier to understand.
+        conflictstyle = diff3
 [pager]
         branch = false
 [filter "lfs"]
@@ -35,3 +37,20 @@
         smudge = git-lfs smudge -- %f
         process = git-lfs filter-process
         required = true
+[interactive]
+        diffFilter = delta --color-only
+[delta]
+        navigate = true ; use n & N to move between diff sections
+        features = decorations
+[delta "decorations"]
+        minus-style = red
+        plus-style = green
+        zero-style = '"#808080" auto'
+        file-style = '"#808080" bold'
+        file-decoration-style = omit
+        file-modified-label = ~
+        hunk-header-decoration-style = omit
+        hunk-header-line-number-style = omit
+        hunk-header-style = omit
+[diff]
+        colorMoved = default
