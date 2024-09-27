@@ -7,7 +7,11 @@
     b = branch --sort=committerdate
     c = commit
     d = diff
-    l = log --pretty=format:'%C(italic)%ae %ar%C(reset)%n%C(bold)%C(reverse)%h%C(reset) %s%C(auto)%d%n%+b'
+    l = log \
+        --pretty=format:'%C(italic)%ae \
+%C(bold)%ad%C(reset)%n%C(bold)%C(reverse)%h%C(reset) \
+%s%C(auto)%d%n%+b' \
+        --date=local
     r = restore
     s = status -sb
     t = tag
