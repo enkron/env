@@ -1,16 +1,19 @@
 /* hide native tab bar */
-/*
+
 #TabsToolbar {
     visibility: collapse;
 }
-*/
 
 /* hide a titlebar */
 #titlebar {
-  visibility: collapse;
+  display: none;
 }
 
 /* hide a sidebar header */
 #sidebar-header {
+  visibility: collapse !important;
+}
+
+#tabbrowser-tabs {
   visibility: collapse !important;
 }
