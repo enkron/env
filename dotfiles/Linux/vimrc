@@ -289,15 +289,9 @@ nnoremap <leader>vu :PluginUpdate<CR>
 " split long lines in `NORMAL` mode
 nnoremap <leader>sl :<C-u>call SplitLine()<CR>
 
-" add a semi-colon to the end of a line,
-" return the cursor to its original spot
-inoremap ;; <C-o>mp<C-o>A;<C-o>`p
-
 " add a `?` to the end of the line,
 " return the cursor to its original spot.
-" It's a useful feature when writing code in Rust
 inoremap ?? <C-o>mp<C-o>A?<C-o>`p
-inoremap }} <C-o>mp<C-o>A}<C-o>`p
 
 " sync syntax highlighting (sometimes vim gets confused in a long file)
 nnoremap <leader>ss :syntax sync fromstart<CR>
