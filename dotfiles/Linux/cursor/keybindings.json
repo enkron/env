@@ -2,21 +2,21 @@
     {
       "key": "alt+l",
       "command": "extension.vim_escape",
-      "when": "editorTextFocus && vim.mode != 'Normal'"
+      "when": "editorTextFocus"
     },
     {
       "key": "alt+h",
       "command": "extension.vim_escape",
-      "when": "editorTextFocus && vim.mode != 'Normal'"
+      "when": "editorTextFocus"
     },
     {
       "key": "alt+j",
       "command": "extension.vim_escape",
-      "when": "editorTextFocus && vim.mode != 'Normal'"
+      "when": "editorTextFocus"
     },
     {
       "key": "alt+k",
       "command": "extension.vim_escape",
-      "when": "editorTextFocus && vim.mode != 'Normal'"
+      "when": "editorTextFocus"
     }
 ]
