@@ -1,0 +1,22 @@
+[
+    {
+      "key": "alt+l",
+      "command": "extension.vim_escape",
+      "when": "editorTextFocus && vim.mode != 'Normal'"
+    },
+    {
+      "key": "alt+h",
+      "command": "extension.vim_escape",
+      "when": "editorTextFocus && vim.mode != 'Normal'"
+    },
+    {
+      "key": "alt+j",
+      "command": "extension.vim_escape",
+      "when": "editorTextFocus && vim.mode != 'Normal'"
+    },
+    {
+      "key": "alt+k",
+      "command": "extension.vim_escape",
+      "when": "editorTextFocus && vim.mode != 'Normal'"
+    }
+]
