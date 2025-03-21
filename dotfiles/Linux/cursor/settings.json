@@ -10,4 +10,6 @@
     "editor.fontFamily": "'Hack', Consolas, 'Courier New', monospace",
     "vim.cursorStylePerMode.normal": "underline",
     "vim.smartRelativeLine": true,
+    "vim.useSystemClipboard": true,
+    "vim.vimrc.enable": true,
 }
