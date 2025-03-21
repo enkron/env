@@ -7,6 +7,7 @@
     "editor.minimap.renderCharacters": false,
     "editor.minimap.size": "proportional",
     "editor.fontSize": 12,
+    "editor.fontFamily": "'Hack', Consolas, 'Courier New', monospace",
     "vim.cursorStylePerMode.normal": "underline",
     "vim.smartRelativeLine": true,
 }
