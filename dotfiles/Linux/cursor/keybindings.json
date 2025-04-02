@@ -18,5 +18,16 @@
       "key": "alt+k",
       "command": "extension.vim_escape",
       "when": "editorTextFocus"
+    },
+    {
+      "key": "ctrl+m",
+      "command": "type",
+      "args": { "text": "\n" },
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "ctrl+m",
+      "command": "acceptSelectedSuggestion",
+      "when": "suggestWidgetVisible && textInputFocus"
     }
 ]
