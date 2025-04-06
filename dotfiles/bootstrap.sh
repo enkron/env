@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $(uname -s) == 'Darwin' ]]; then
+if [ $(uname -s) = 'Darwin' ]; then
 	ln -s ~/Library/Mobile\ Documents/com~apple~CloudDocs ~/icloud
 fi
 
