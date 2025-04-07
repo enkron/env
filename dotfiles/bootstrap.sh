@@ -1,9 +1,8 @@
 #!/bin/sh
 
-
 install_nix() {
-    curl --proto =https --tlsv1.2 -sSf -L https://install.determinate.systems/nix |\
-        sh -s -- install --no-confirm
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |\
+        sh -s -- install --determinate --no-confirm
 }
 
 if [ $(uname -s) = 'Darwin' ]; then
