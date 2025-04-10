@@ -1,5 +1,5 @@
 {
-  description = "minimal dev environment";
+  description = "Minimal dev environment";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 
