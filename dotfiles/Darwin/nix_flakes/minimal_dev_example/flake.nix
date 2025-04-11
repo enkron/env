@@ -16,5 +16,15 @@
           starship
         ];
       };
+
+      packages.${system}.default = pkgs.buildEnv {
+        name = "dev-tools";
+        paths = with pkgs; [
+          git
+          neovim
+          ripgrep
+          starship
+        ];
+      };
     };
 }
