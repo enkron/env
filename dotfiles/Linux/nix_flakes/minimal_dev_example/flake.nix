@@ -14,11 +14,12 @@
         python310 = pkgs.mkShell {
           nativeBuildInputs = [
             (pkgs.python310.withPackages (p: [
-              p.virtualenv
               p.pip
               p.setuptools
+              p.virtualenv
               p.wheel
             ]))
+            pkgs.poetry
           ];
         };
       };
