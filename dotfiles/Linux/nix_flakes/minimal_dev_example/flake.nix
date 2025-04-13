@@ -2,7 +2,10 @@
   description = "Example of dev shells with different python versions";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    #nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+
+    # Latest commit hash with the poetry v1.7.1
+    nixpkgs.url = "github:NixOS/nixpkgs/087f43a1fa052b17efd441001c4581813c34bc19";
   };
 
   outputs = { self, nixpkgs }:
