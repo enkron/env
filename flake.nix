@@ -39,6 +39,7 @@
           name = "Basic toolset";
           paths = with pkgs; [
             bat
+            delta
             ripgrep
           ] ++ [
             pkgs-kubectl130.kubectl
