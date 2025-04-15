@@ -1,5 +1,5 @@
 {
-  description = "Example of dev shells with different python versions";
+  description = "Example profiles with the development shells";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
@@ -32,11 +32,19 @@
         };
       };
 
-      packages.${system}.default = pkgs.buildEnv {
-        name = "Basic toolset";
-        paths = with pkgs; [
-          bat
-        ];
+      packages.${system} = {
+        base = pkgs.buildEnv {
+          name = "Basic toolset";
+          paths = with pkgs; [
+            bat
+          ];
+        };
+
+        exp = pkgs.buildEnv {
+          name = "Experimental toolset";
+          paths = with pkgs; [
+          ];
+        };
       };
     };
 }

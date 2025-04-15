@@ -1,0 +1,44 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1744440957,
+        "narHash": "sha256-FHlSkNqFmPxPJvy+6fNLaNeWnF1lZSgqVCl/eWaJRc4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "26d499fc9f1d567283d5d56fcf367edd815dba1d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-24.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-poetry171": {
+      "locked": {
+        "lastModified": 1707949678,
+        "narHash": "sha256-0uAexTw59D0ZMKV++O94EtXm3b1ugXV8zJ//59m9An0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "087f43a1fa052b17efd441001c4581813c34bc19",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "087f43a1fa052b17efd441001c4581813c34bc19",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-poetry171": "nixpkgs-poetry171"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
