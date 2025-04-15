@@ -6,7 +6,14 @@ install_nix() {
 }
 
 if [ $(uname -s) = 'Darwin' ]; then
+    # Add link to the Icloud storage on the filesystem
 	ln -s ~/Library/Mobile\ Documents/com~apple~CloudDocs ~/icloud
+
+    # Disable MacOS press and hold feature in the Cursor app to allow
+    # continuous key movement in Vim mode
+    if [ -x $(which cursor) ]; then
+        defaults write $(osascript -e 'id of app "Cursor"') ApplePressAndHoldEnabled -bool false
+    fi
 fi
 
 mkdir -p ~/rps/github.com
