@@ -21,7 +21,7 @@
       pkgs-kubectl130 = import nixpkgs-kubectl130 { inherit system; };
     in {
       devShells.${system} = {
-        python310 = pkgs.mkShell {
+        work = pkgs.mkShell {
           nativeBuildInputs = [
             (pkgs.python310.withPackages (p: [
               p.pip
