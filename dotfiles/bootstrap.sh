@@ -52,6 +52,18 @@ if [ "$(uname -s)" = 'Darwin' ]; then
     fi
 fi
 
+if [ "$(uname -s)" = 'Linux' ]; then
+    if command -v cursor >/dev/null 2>&1; then
+        cursor_config_path="${HOME}/.config/Cursor/User"
+
+        log info "Linking Cursor keybindings"
+        ln -sf "${REPOS_HOME}/env/dotfiles/cursor/keybindings.json" "${cursor_config_path}/keybindings.json"
+
+        log info "Linking Cursor settings"
+        ln -sf "${REPOS_HOME}/env/dotfiles/cursor/settings.json" "${cursor_config_path}/settings.json"
+    fi
+fi
+
 log info "Linking gitconfig"
 ln -sf "${REPOS_HOME}/env/dotfiles/gitconfig" "${HOME}/.gitconfig"
 
