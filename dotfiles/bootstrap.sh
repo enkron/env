@@ -2,11 +2,6 @@
 
 REPOS_HOME="${HOME}/rps/github.com"
 
-install_nix() {
-    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | \
-        sh -s -- install --determinate --no-confirm
-}
-
 log() {
     case "$1" in
         info)
@@ -22,6 +17,11 @@ log() {
             echo "\033[1;37m[LOG]\033[0m $2"
             ;;
     esac
+}
+
+install_nix() {
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | \
+        sh -s -- install --determinate --no-confirm
 }
 
 if [ -d "${REPOS_HOME}/env" ]; then
