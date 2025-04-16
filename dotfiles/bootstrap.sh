@@ -1,6 +1,6 @@
 #!/bin/sh
 
-REPOS_HOME="${HOME}/rps/github.com"
+REPOS_HOME="${HOME}/rps/github.com/enkron"
 
 log() {
     case "$1" in
