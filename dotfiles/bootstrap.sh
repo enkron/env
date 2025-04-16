@@ -28,8 +28,8 @@ if [ "$(uname -s)" = 'Darwin' ]; then
     fi
 fi
 
-ln -sf "${REPOS_HOME}/env/dotfiles/Linux/gitconfig" "${HOME}/.gitconfig"
-ln -sf "${REPOS_HOME}/env/dotfiles/Linux/vimrc" "${HOME}/.vimrc"
+ln -sf "${REPOS_HOME}/env/dotfiles/gitconfig" "${HOME}/.gitconfig"
+ln -sf "${REPOS_HOME}/env/dotfiles/vimrc" "${HOME}/.vimrc"
 
 if [ -d "${HOME}/.vim/bundle/Vundle.vim" ]; then
     echo "Vundle.vim already exists, skipping clone step"

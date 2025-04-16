@@ -23,7 +23,7 @@ if v:version >= 801
 endif
 if v:version >= 820
     " fast minimap (https://github.com/wfxr/code-minimap is required)
-    Plugin 'wfxr/minimap.vim'
+    " Plugin 'wfxr/minimap.vim'
 endif
 Plugin 'tpope/vim-obsession.git' " reconstruct accustomed vim layout (:h mksession)
 call vundle#end()
@@ -32,7 +32,7 @@ call vundle#end()
 " General settings ------------------------------------------------- {{{
 if &term != "linux"
     set t_Co=256
-    colorscheme ecs_light
+    colorscheme ecs
 endif
 
 set term=${TERM}
