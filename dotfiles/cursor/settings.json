@@ -1,6 +1,5 @@
 {
     "window.commandCenter": 1,
-    "workbench.colorTheme": "Default Light Modern",
     "editor.cursorStyle": "underline",
     "editor.minimap.enabled": true,
     "editor.minimap.showSlider": "mouseover",
@@ -12,4 +11,5 @@
     "vim.smartRelativeLine": true,
     "vim.useSystemClipboard": true,
     "vim.vimrc.enable": true,
+    "workbench.colorTheme": "Cursor Dark Midnight",
 }
