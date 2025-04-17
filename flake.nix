@@ -40,6 +40,7 @@
           paths = with pkgs; [
             bat
             delta
+            fzf
             ripgrep
           ] ++ [
             pkgs-kubectl130.kubectl
