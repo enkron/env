@@ -11,7 +11,8 @@
 
   outputs = { self, nixpkgs, nixpkgs-poetry171, nixpkgs-kubectl130 }:
     let
-      forAllSystems = f: nixpkgs.lib.genAttrs ([ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ]) f;
+      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      forAllSystems = f: nixpkgs.lib.genAttrs (systems) f;
 
 
       pkgs = forAllSystems(system: import nixpkgs { inherit system; });
