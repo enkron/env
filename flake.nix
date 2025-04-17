@@ -11,16 +11,16 @@
 
   outputs = { self, nixpkgs, nixpkgs-poetry171, nixpkgs-kubectl130 }:
     let
-      system = "x86_64-linux";
+      forAllSystems = f: nixpkgs.lib.genAttrs ([ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ]) f;
 
-      # Standard packages repository for the python 3.10 and other tools
-      pkgs = import nixpkgs { inherit system; };
+
+      pkgs = forAllSystems(system: import nixpkgs { inherit system; });
       # Pinned packages repository to the poetry v1.7.1
-      pkgs-poetry171 = import nixpkgs-poetry171 { inherit system; };
+      pkgs-poetry171 = forAllSystems(system: import nixpkgs-poetry171 { inherit system; });
       # Pinned packages repository to the kubectl v1.30.1
-      pkgs-kubectl130 = import nixpkgs-kubectl130 { inherit system; };
-    in {
-      devShells.${system} = {
+      pkgs-kubectl130 = forAllSystems(system: import nixpkgs-kubectl130 { inherit system; });
+
+      devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
         work = pkgs.mkShell {
           nativeBuildInputs = [
             (pkgs.python310.withPackages (p: [
@@ -34,7 +34,7 @@
         };
       };
 
-      packages.${system} = {
+      sysPkgs = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
         base = pkgs.buildEnv {
           name = "Basic toolset";
           paths = with pkgs; [
@@ -54,5 +54,8 @@
           ];
         };
       };
+    in {
+      devShells = forAllSystems devShell;
+      packages = forAllSystems sysPkgs;
     };
 }
