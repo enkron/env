@@ -1,5 +1,5 @@
 {
-  description = "Example profiles with the development shells";
+  description = "Default profiles with the development shell";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
@@ -20,39 +20,47 @@
       # Pinned packages repository to the kubectl v1.30.1
       pkgs-kubectl130 = forAllSystems(system: import nixpkgs-kubectl130 { inherit system; });
 
-      devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
-        work = pkgs.mkShell {
-          nativeBuildInputs = [
-            (pkgs.python310.withPackages (p: [
-              p.pip
-              p.setuptools
-              p.virtualenv
-              p.wheel
-            ]))
-            pkgs-poetry171.poetry
-          ];
-        };
-      };
-
-      sysPkgs = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
-        base = pkgs.buildEnv {
-          name = "Basic toolset";
-          paths = with pkgs; [
-            bat
-            delta
-            fzf
-            ripgrep
-          ] ++ [
-            pkgs-kubectl130.kubectl
-          ];
+      devShell = system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          poetryPkgs = nixpkgs-poetry171.legacyPackages.${system};
+        in {
+          work = pkgs.mkShell {
+            nativeBuildInputs = [
+              (pkgs.python310.withPackages (p: [
+                p.pip
+                p.setuptools
+                p.virtualenv
+                p.wheel
+              ]))
+              poetryPkgs.poetry
+            ];
+          };
         };
 
-        exp = pkgs.buildEnv {
-          name = "Experimental toolset";
-          paths = with pkgs; [
-            # Other experimental tools
-          ];
-        };
+        sysPkgs = system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          kubectlPkgs = nixpkgs-kubectl130.legacyPackages.${system};
+        in {
+          base = pkgs.buildEnv {
+            name = "Basic toolset";
+            paths = with pkgs; [
+              bat
+              delta
+              fzf
+              ripgrep
+            ] ++ [
+              kubectlPkgs.kubectl
+            ];
+          };
+
+          exp = pkgs.buildEnv {
+            name = "Experimental toolset";
+            paths = with pkgs; [
+              # Other experimental tools
+            ];
+          };
       };
     in {
       devShells = forAllSystems devShell;
