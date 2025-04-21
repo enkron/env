@@ -50,16 +50,22 @@
               bat
               delta
               fzf
+              kubectl
               ripgrep
-            ] ++ [
-              kubectlPkgs.kubectl
+              terraform
             ];
           };
 
-          exp = pkgs.buildEnv {
-            name = "Experimental toolset";
+          work = pkgs.buildEnv {
+            name = "Work toolset";
             paths = with pkgs; [
-              # Other experimental tools
+              bat
+              delta
+              fzf
+              ripgrep
+              terraform
+            ] ++ [
+              kubectlPkgs.kubectl
             ];
           };
       };
