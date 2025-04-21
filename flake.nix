@@ -1,5 +1,5 @@
 {
-  description = "Example profiles with the development shells";
+  description = "Default profiles with the development shell";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
@@ -11,48 +11,66 @@
 
   outputs = { self, nixpkgs, nixpkgs-poetry171, nixpkgs-kubectl130 }:
     let
-      system = "x86_64-linux";
+      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      forAllSystems = f: nixpkgs.lib.genAttrs (systems) f;
 
-      # Standard packages repository for the python 3.10 and other tools
-      pkgs = import nixpkgs { inherit system; };
+
+      pkgs = forAllSystems(system: import nixpkgs { inherit system; });
       # Pinned packages repository to the poetry v1.7.1
-      pkgs-poetry171 = import nixpkgs-poetry171 { inherit system; };
+      pkgs-poetry171 = forAllSystems(system: import nixpkgs-poetry171 { inherit system; });
       # Pinned packages repository to the kubectl v1.30.1
-      pkgs-kubectl130 = import nixpkgs-kubectl130 { inherit system; };
+      pkgs-kubectl130 = forAllSystems(system: import nixpkgs-kubectl130 { inherit system; });
+
+      devShell = system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          poetryPkgs = nixpkgs-poetry171.legacyPackages.${system};
+        in {
+          work = pkgs.mkShell {
+            nativeBuildInputs = [
+              (pkgs.python310.withPackages (p: [
+                p.pip
+                p.setuptools
+                p.virtualenv
+                p.wheel
+              ]))
+              poetryPkgs.poetry
+            ];
+          };
+        };
+
+        sysPkgs = system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          kubectlPkgs = nixpkgs-kubectl130.legacyPackages.${system};
+        in {
+          base = pkgs.buildEnv {
+            name = "Basic toolset";
+            paths = with pkgs; [
+              bat
+              delta
+              fzf
+              kubectl
+              ripgrep
+              terraform
+            ];
+          };
+
+          work = pkgs.buildEnv {
+            name = "Work toolset";
+            paths = with pkgs; [
+              bat
+              delta
+              fzf
+              ripgrep
+              terraform
+            ] ++ [
+              kubectlPkgs.kubectl
+            ];
+          };
+      };
     in {
-      devShells.${system} = {
-        work = pkgs.mkShell {
-          nativeBuildInputs = [
-            (pkgs.python310.withPackages (p: [
-              p.pip
-              p.setuptools
-              p.virtualenv
-              p.wheel
-            ]))
-            pkgs-poetry171.poetry
-          ];
-        };
-      };
-
-      packages.${system} = {
-        base = pkgs.buildEnv {
-          name = "Basic toolset";
-          paths = with pkgs; [
-            bat
-            delta
-            fzf
-            ripgrep
-          ] ++ [
-            pkgs-kubectl130.kubectl
-          ];
-        };
-
-        exp = pkgs.buildEnv {
-          name = "Experimental toolset";
-          paths = with pkgs; [
-            # Other experimental tools
-          ];
-        };
-      };
+      devShells = forAllSystems devShell;
+      packages = forAllSystems sysPkgs;
     };
 }
