@@ -1,6 +1,10 @@
 {
   description = "Default profiles with the development shell";
 
+  nixConfig = {
+    allowUnfree = true;
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     # Pinned to the commit where poetry v1.7.1 is available
