@@ -15,4 +15,7 @@
     "window.density.editorTabHeight": "compact",
     "window.autoDetectColorScheme": true,
     "workbench.preferredLightColorTheme": "Default Light Modern",
+    "chat.commandCenter.enabled": false,
+    "window.commandCenter": false,
+    "window.menuBarVisibility": "compact"
 }
