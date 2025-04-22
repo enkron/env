@@ -1,10 +1,6 @@
 {
   description = "Default profiles with the development shell";
 
-  nixConfig = {
-    allowUnfree = true;
-  };
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     # Pinned to the commit where poetry v1.7.1 is available
@@ -45,7 +41,8 @@
 
         sysPkgs = system:
         let
-          pkgs = nixpkgs.legacyPackages.${system};
+          # Allow packages with non-free licencing scheme
+          pkgs = import nixpkgs { system = system; config.allowUnfree = true;  };
           kubectlPkgs = nixpkgs-kubectl130.legacyPackages.${system};
         in {
           base = pkgs.buildEnv {
@@ -56,7 +53,7 @@
               fzf
               kubectl
               ripgrep
-              #terraform
+              terraform
             ];
           };
 
@@ -67,7 +64,7 @@
               delta
               fzf
               ripgrep
-              #terraform
+              terraform
             ] ++ [
               kubectlPkgs.kubectl
             ];
