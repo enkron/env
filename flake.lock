@@ -16,7 +16,23 @@
         "type": "github"
       }
     },
-    "nixpkgs-kubectl130": {
+    "nixpkgs-kubectl130-darwin": {
+      "locked": {
+        "lastModified": 1735022709,
+        "narHash": "sha256-rPBX/B/kLG3jM7MQvdkWQ24jPxM+Yr0aHUM7G2vMeS4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "cca4f8e59e9479ced4f02f33530be367220d5826",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "cca4f8e59e9479ced4f02f33530be367220d5826",
+        "type": "github"
+      }
+    },
+    "nixpkgs-kubectl130-linux": {
       "locked": {
         "lastModified": 1735021538,
         "narHash": "sha256-JpbXCLrmjhmsy9qkYkq5Pr3U5aZVuXjQGUnv5tAyMZs=",
@@ -51,7 +67,8 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "nixpkgs-kubectl130": "nixpkgs-kubectl130",
+        "nixpkgs-kubectl130-darwin": "nixpkgs-kubectl130-darwin",
+        "nixpkgs-kubectl130-linux": "nixpkgs-kubectl130-linux",
         "nixpkgs-poetry171": "nixpkgs-poetry171"
       }
     }
