@@ -54,6 +54,7 @@
               kubectl
               ripgrep
               #terraform
+              tmux
             ];
           };
 
@@ -65,6 +66,7 @@
               fzf
               ripgrep
               #terraform
+              tmux
             ] ++ [
               kubectlPkgs.kubectl
             ];
