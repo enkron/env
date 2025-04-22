@@ -53,7 +53,7 @@
               fzf
               kubectl
               ripgrep
-              terraform
+              #terraform
             ];
           };
 
@@ -64,7 +64,7 @@
               delta
               fzf
               ripgrep
-              terraform
+              #terraform
             ] ++ [
               kubectlPkgs.kubectl
             ];
