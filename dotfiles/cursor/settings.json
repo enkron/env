@@ -10,7 +10,9 @@
     "vim.smartRelativeLine": true,
     "vim.useSystemClipboard": true,
     "vim.vimrc.enable": true,
-    "workbench.colorTheme": "Cursor Dark Midnight",
     "workbench.layoutControl.enabled": false,
     "workbench.navigationControl.enabled": false,
+    "window.density.editorTabHeight": "compact",
+    "window.autoDetectColorScheme": true,
+    "workbench.preferredLightColorTheme": "Default Light Modern",
 }
