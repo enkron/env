@@ -53,12 +53,13 @@
           base = pkgs.buildEnv {
             name = "Basic toolset";
             paths = with pkgs; [
+              #terraform
               bat
               delta
               fzf
+              helm
               kubectl
               ripgrep
-              #terraform
               tmux
             ];
           };
@@ -66,11 +67,12 @@
           work = pkgs.buildEnv {
             name = "Work toolset";
             paths = with pkgs; [
+              #terraform
               bat
               delta
               fzf
+              helm
               ripgrep
-              #terraform
               tmux
             ] ++ [
               kubectlPkgs.kubectl
