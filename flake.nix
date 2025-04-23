@@ -57,8 +57,8 @@
               bat
               delta
               fzf
-              helm
               kubectl
+              kubernetes-helm
               ripgrep
               tmux
             ];
@@ -71,7 +71,7 @@
               bat
               delta
               fzf
-              helm
+              kubernetes-helm
               ripgrep
               tmux
             ] ++ [
