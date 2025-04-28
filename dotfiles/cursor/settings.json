@@ -17,5 +17,6 @@
     "workbench.preferredLightColorTheme": "Default Light Modern",
     "chat.commandCenter.enabled": false,
     "window.commandCenter": false,
-    "window.menuBarVisibility": "compact"
+    "window.menuBarVisibility": "compact",
+    "git.openRepositoryInParentFolders": "always"
 }
