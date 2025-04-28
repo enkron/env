@@ -70,13 +70,22 @@ ln -sf "${REPOS_HOME}/env/dotfiles/gitconfig" "${HOME}/.gitconfig"
 log info "Linking vimrc"
 ln -sf "${REPOS_HOME}/env/dotfiles/vimrc" "${HOME}/.vimrc"
 
-log info "Cloning Vundle.vim"
 if [ -d "${HOME}/.vim/bundle/Vundle.vim" ]; then
     log warning "Vundle.vim already exists, skipping clone step"
 else
     log info "Cloning Vundle.vim"
     git clone https://github.com/VundleVim/Vundle.vim.git "${HOME}/.vim/bundle/Vundle.vim"
 fi
+
+if [ -d "${HOME}/.tmux/plugins/tpm" ]; then
+    log warning "TPM already exists, skipping clone step"
+else
+    log info "Cloning TPM"
+    git clone https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
+fi
+
+log info "Linking tmux.conf"
+ln -sf "${REPOS_HOME}/env/dotfiles/tmux.conf" "${HOME}/.tmux.conf"
 
 if command -v nix >/dev/null 2>&1; then
     log warning "nix already installed, skipping installation step"
