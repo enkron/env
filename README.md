@@ -1,10 +1,8 @@
-personal environment stuff
+# Personal Environment Setup
 
-dotfiles:
-    vimrc:
-        [Vundle](https://github.com/VundleVim/Vundle.vim) plugin manager:
-            git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+To set environment on the new machine load bootstrap script.
+The script recognizes Linux and Darwin systems.
 
-TODO: create Makefile with new machine startup activities
-      - create soft links with main dirs (obs, env, rs, utils etc)
-      ...
+```bash
+    curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/enkron/env/refs/heads/master/dotfiles/bootstrap.sh | sh
+```
