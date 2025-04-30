@@ -28,15 +28,15 @@
           poetryPkgs = nixpkgs-poetry171.legacyPackages.${system};
         in {
           work = pkgs.mkShell {
-            nativeBuildInputs = [
-              (pkgs.python310.withPackages (p: [
+            nativeBuildInputs = with pkgs; [
+              ruff
+              poetryPkgs.poetry
+              (python310.withPackages (p: [
                 p.pip
                 p.setuptools
                 p.virtualenv
                 p.wheel
               ]))
-              poetryPkgs.poetry
-              pkgs.ruff
             ];
           };
         };
