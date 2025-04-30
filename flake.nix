@@ -36,6 +36,7 @@
                 p.wheel
               ]))
               poetryPkgs.poetry
+              pkgs.ruff
             ];
           };
         };
