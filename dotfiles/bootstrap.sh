@@ -50,6 +50,10 @@ if [ "$(uname -s)" = 'Darwin' ]; then
         log info "Linking Cursor settings"
         ln -sf "${REPOS_HOME}/env/dotfiles/cursor/settings.json" "${cursor_config_path}/settings.json"
     fi
+
+    # Setup zshrc file in the user's home
+    log info "Linking zshrc"
+    ln -sf "${REPOS_HOME}/env/dotfiles/Darwin/zshrc" "${HOME}/.zshrc"
 fi
 
 if [ "$(uname -s)" = 'Linux' ]; then
