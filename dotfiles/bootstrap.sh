@@ -27,6 +27,9 @@ install_nix() {
 if [ -d "${REPOS_HOME}/env" ]; then
     log warning "env repository already exists, skipping clone step"
 else
+    # The ssh keys must be added before running the script in order to fetch the repository
+    #
+    # TODO: add check if the repository exists, clone the https endpoint otherwise
     log info "Cloning env repository"
     git clone git@github.com:enkron/env.git "${REPOS_HOME}/env"
 fi
