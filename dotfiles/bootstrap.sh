@@ -5,16 +5,16 @@ REPOS_HOME="${HOME}/rps/github.com/enkron"
 log() {
     case "$1" in
         info)
-            echo "\033[1;32m[INFO]\033[0m $2"
+            printf "\033[1;32minfo:\033[0m %s\n" "$2"
             ;;
         warning)
-            echo "\033[1;33m[WARNING]\033[0m $2"
+            printf "\033[1;33mwarning:\033[0m %s\n" "$2"
             ;;
         error)
-            echo "\033[1;31m[ERROR]\033[0m $2"
+            printf "\033[1;31merror:\033[0m %s\n" "$2"
             ;;
         *)
-            echo "\033[1;37m[LOG]\033[0m $2"
+            printf "\033[1;37mdebug:\033[0m %s\n" "$2"
             ;;
     esac
 }
