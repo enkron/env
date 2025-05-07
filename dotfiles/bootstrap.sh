@@ -29,7 +29,7 @@ if [ -d "${REPOS_HOME}/env" ]; then
 else
     # The ssh keys must be added before running the script in order to fetch the repository
     #
-    # TODO: add check if the repository exists, clone the https endpoint otherwise
+    # TODO: check if the repository is accessible by ssh, clone the https endpoint otherwise
     log info "Cloning env repository"
     git clone git@github.com:enkron/env.git "${REPOS_HOME}/env"
 fi
