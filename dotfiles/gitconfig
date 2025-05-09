@@ -46,9 +46,12 @@
 [delta]
     navigate = true ; use n & N to move between diff sections
     features = decorations
+    word-diff = true
 [delta "decorations"]
     minus-style = red
     plus-style = green
+    minus-emph-style = bold white red
+    plus-emph-style = bold white green
     zero-style = '"#808080" auto'
     file-style = '"#808080" bold'
     file-decoration-style = omit
