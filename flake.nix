@@ -38,12 +38,22 @@
                 p.wheel
               ]))
             ];
+
+            # ruff & poetry dependencies are pulled from the 'pkgs' where they built with the default
+            # python version (which is currently 3.12 on macOS nixpkgs).
+            # When the dev shell is built it's pointing to the latest python interpreter, we want the
+            # default python version set to 3.10 (by the project requirements) thus apply the shell hook
+            # to set the PATH to the needed version.
+            shellHook = ''
+              export PATH=${pkgs.python310}/bin:$PATH
+              export PYTHONPATH=${pkgs.python310}/lib/python3.10/site-packages:$PYTHONPATH
+            '';
           };
         };
 
       sysPkgs = system:
         let
-          # Allow packages with non-free licencing scheme
+          # Allow packages with non-free licensing scheme
           pkgs = import nixpkgs { system = system; config.allowUnfree = true;  };
           kubectlPkgs =
             if pkgs.stdenv.isDarwin then
