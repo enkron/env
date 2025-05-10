@@ -1,3 +1,14 @@
+HISTFILE=~/.zsh_history
+HISTSIZE=10000 # History in memory
+SAVEHIST=10000 # Lines in the HISTFILE
+
+#setopt extended_history # Adds timestamps and exit statuses to each entry saved in HISTFILE
+#setopt share_history # Share history between sessions
+setopt hist_ignore_dups # Ignore duplicate commands
+setopt hist_reduce_blanks # Trim excess blanks
+setopt hist_verify # Ask for confirmation before executing a history-expanded command
+setopt inc_append_history # Write to the history file after each command
+
 # Setting up fzf shell integration
 if command -v fzf >/dev/null 2>&1; then
     export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --info=inline-right --color=16 --pointer=""'
