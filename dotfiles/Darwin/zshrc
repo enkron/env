@@ -9,6 +9,24 @@ setopt hist_reduce_blanks # Trim excess blanks
 setopt hist_verify # Ask for confirmation before executing a history-expanded command
 setopt inc_append_history # Write to the history file after each command
 
+# Enable completion system
+autoload -Uz compinit
+compinit
+
+# Use caching to speed up completion startup
+[[ -d ~/.zsh/cache ]] || mkdir -p ~/.zsh/cache
+
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' cache-path ~/.zsh/cache
+
+# Show completion menu when multiple options exist
+zstyle ':completion:*' menu select
+
+# Optional: group results (e.g., files vs directories)
+zstyle ':completion:*' group-name ''
+
+setopt auto_menu # Show completion menu on successive tab
+
 # Setting up fzf shell integration
 if command -v fzf >/dev/null 2>&1; then
     export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --info=inline-right --color=16 --pointer=""'
