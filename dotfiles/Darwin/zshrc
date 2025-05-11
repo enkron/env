@@ -1,6 +1,7 @@
 HISTFILE=~/.zsh_history
 HISTSIZE=10000 # History in memory
 SAVEHIST=10000 # Lines in the HISTFILE
+PS1="%F{red}»%f "
 
 #setopt extended_history # Adds timestamps and exit statuses to each entry saved in HISTFILE
 #setopt share_history # Share history between sessions
