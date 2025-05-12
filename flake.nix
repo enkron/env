@@ -83,6 +83,7 @@
               bat
               delta
               fzf
+              groovy
               kubernetes-helm
               ripgrep
               tmux
