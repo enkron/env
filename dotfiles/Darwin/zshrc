@@ -3,12 +3,21 @@ HISTSIZE=10000 # History in memory
 SAVEHIST=10000 # Lines in the HISTFILE
 PS1="%F{red}»%f "
 
-#setopt extended_history # Adds timestamps and exit statuses to each entry saved in HISTFILE
-#setopt share_history # Share history between sessions
-setopt hist_ignore_dups # Ignore duplicate commands
-setopt hist_reduce_blanks # Trim excess blanks
-setopt hist_verify # Ask for confirmation before executing a history-expanded command
-setopt inc_append_history # Write to the history file after each command
+#setopt EXTENDED_HISTORY # Adds timestamps and exit statuses to each entry saved in HISTFILE
+setopt HIST_APPEND # Append history, instead of overwriting it
+setopt HIST_IGNORE_ALL_DUPS # Ignore duplicate commands
+setopt HIST_IGNORE_SPACE # Ignore commands that start with a space
+setopt HIST_REDUCE_BLANKS # Trim excess blanks
+setopt HIST_SAVE_NO_DUPS # Prevent saving duplicates to history
+setopt HIST_VERIFY # Ask for confirmation before executing a history-expanded command
+setopt INC_APPEND_HISTORY # Write to the history file after each command
+setopt SHARE_HISTORY # Share history between sessions
+
+# Ensure immediate history updates
+precmd() {
+  history -a &>/dev/null # Append history after every command
+  history -n &>/dev/null # Read new history from the history file
+}
 
 # Shell completions user dir
 [[ -d "$HOME/.zsh/zfunc" ]] || mkdir -p "$HOME/.zsh/zfunc"
@@ -28,8 +37,8 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ''
 
 # Fast completion (no description)
-zstyle ':completion:*' verbose no
-zstyle ':completion:*' format '%d'
+#zstyle ':completion:*' verbose no
+#zstyle ':completion:*' format '%d'
 zstyle ':completion:*' group-name ''
 
 # Skip unnecessary prompt recalculations
