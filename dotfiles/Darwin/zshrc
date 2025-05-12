@@ -14,9 +14,8 @@ setopt inc_append_history # Write to the history file after each command
 [[ -d "$HOME/.zsh/zfunc" ]] || mkdir -p "$HOME/.zsh/zfunc"
 fpath+=("$HOME/.zsh/zfunc")
 
-# Enable completion system
-autoload -Uz compinit && compinit
-autoload -Uz +X bashcompinit && bashcompinit # Zsh function that sets up Bash-style completion
+autoload -Uz +X compinit && compinit # Enable completion system
+autoload -Uz +X bashcompinit && bashcompinit # Enable bash-style completion
 
 # Use caching to speed up completion startup
 [[ -d "$HOME/.zsh/cache" ]] || mkdir -p "$HOME/.zsh/cache"
