@@ -28,6 +28,12 @@ zstyle ':completion:*' group-name ''
 
 setopt auto_menu # Show completion menu on successive tab
 
+# Shell completions
+[[ -d ~/.zsh/zfunc ]] || mkdir -p ~/.zsh/zfunc
+fpath+=~/.zsh/zfunc
+
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 # Setting up fzf shell integration
 if command -v fzf >/dev/null 2>&1; then
     export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --info=inline-right --color=16 --pointer=""'
