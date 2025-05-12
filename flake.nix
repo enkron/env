@@ -78,7 +78,6 @@
           work = pkgs.buildEnv {
             name = "Work toolset";
             paths = with pkgs; [
-              #terraform
               awscli2
               bat
               delta
@@ -86,6 +85,7 @@
               groovy
               kubernetes-helm
               ripgrep
+              terraform
               tmux
             ] ++ [
               kubectlPkgs.kubectl
