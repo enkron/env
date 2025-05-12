@@ -14,10 +14,10 @@ setopt INC_APPEND_HISTORY # Write to the history file after each command
 setopt SHARE_HISTORY # Share history between sessions
 
 # Ensure immediate history updates
-precmd() {
-  history -a &>/dev/null # Append history after every command
-  history -n &>/dev/null # Read new history from the history file
-}
+#precmd() {
+#  history -a &>/dev/null # Append history after every command
+#  history -n &>/dev/null # Read new history from the history file
+#}
 
 # Shell completions user dir
 [[ -d "$HOME/.zsh/zfunc" ]] || mkdir -p "$HOME/.zsh/zfunc"
