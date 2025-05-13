@@ -46,15 +46,20 @@ zstyle ':completion:*' rehash true
 
 setopt auto_menu # Show completion menu on successive tab
 
-# Setting up fzf shell integration
+# fzf shell integration
 if command -v fzf >/dev/null 2>&1; then
     export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --info=inline-right --color=16 --pointer=""'
     . <(fzf --zsh)
 fi
 
-# Setting up terraform shell completion
+# terraform shell completion
 if command -v terraform >/dev/null 2>&1; then
     complete -o nospace -C "$(command -v terraform)" terraform
+fi
+
+# awscli shell completion
+if command -v aws >/dev/null 2>&1; then
+    complete -o nospace -C "$(command -v aws_completer)" aws
 fi
 
 # Avoid duplicates in PATH
