@@ -60,8 +60,11 @@ if v:version >= 801                  " `v: name` - variable predefined by Vim
 endif
 
 set fileformat=unix                  " store the file in a Unix format
-set textwidth=72                     " ensure your line length doesn’t
-                                     " go beyond 72 characters
+set textwidth=99                     " set global width default
+augroup MarkdownTextWidth
+    autocmd!
+    autocmd FileType markdown setlocal textwidth=79 " specific width for markdown
+augroup END
 set encoding=utf-8                   " using utf-8 when working with python
 set ruler                            " show the cursor position all the time
 set history=50                       " keep 50 lines of command line history
