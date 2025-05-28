@@ -64,14 +64,16 @@
           base = pkgs.buildEnv {
             name = "Basic toolset";
             paths = with pkgs; [
-              #terraform
               bat
               delta
               fzf
               kubectl
               kubernetes-helm
+              nmap
               ripgrep
+              terraform
               tmux
+              zig
             ];
           };
 
@@ -84,9 +86,11 @@
               fzf
               groovy
               kubernetes-helm
+              nmap
               ripgrep
               terraform
               tmux
+              zig
             ] ++ [
               kubectlPkgs.kubectl
             ];
