@@ -2,7 +2,7 @@
   description = "Default profiles with the development shell";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     # Pinned to the commit where poetry v1.7.1 is available
     nixpkgs-poetry171.url = "github:NixOS/nixpkgs/087f43a1fa052b17efd441001c4581813c34bc19";
     # Pinned to the commit where kubectl v1.30.1 is available
