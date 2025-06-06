@@ -3,6 +3,10 @@ HISTSIZE=10000 # History in memory
 SAVEHIST=10000 # Lines in the HISTFILE
 PS1="%F{red}»%f "
 
+# Customize `ls` colours
+export CLICOLOR=1
+export LSCOLORS=BxAhHxDxCxegedabagaced
+
 #setopt EXTENDED_HISTORY # Adds timestamps and exit statuses to each entry saved in HISTFILE
 setopt HIST_APPEND # Append history, instead of overwriting it
 setopt HIST_IGNORE_ALL_DUPS # Ignore duplicate commands
