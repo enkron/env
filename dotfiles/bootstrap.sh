@@ -24,6 +24,33 @@ install_nix() {
         sh -s -- install --determinate --no-confirm
 }
 
+# As of Determinate Systems 3.6.2 version installer requires login to the
+# Flakehub account to upgrade the nix version using the `sudo determinate-nixd upgrade`
+# command. This function is a workaround to upgrade nix.
+upgrade_nix() {
+    if ! command -v nix >/dev/null 2>&1; then
+        log error "nix is not installed, cannot upgrade"
+        exit 1
+    fi
+
+    log info "Upgrading nix"
+    sudo rm /nix/receipt.json && install_nix
+}
+
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --upgrade-nix)
+            upgrade_nix
+            exit 0
+            ;;
+        *)
+            log error "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+    shift
+done
+
 if [ -d "${REPOS_HOME}/env" ]; then
     log warning "env repository already exists, skipping clone step"
 else
