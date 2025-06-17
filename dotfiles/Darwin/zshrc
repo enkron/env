@@ -1,7 +1,7 @@
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000 # History in memory
 SAVEHIST=10000 # Lines in the HISTFILE
-PS1="%F{red}»%f "
+PS1="%F{#5f87af}»%f "
 
 # Customize `ls` colours
 export CLICOLOR=1
