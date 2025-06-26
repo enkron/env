@@ -52,7 +52,12 @@ setopt auto_menu # Show completion menu on successive tab
 
 # fzf shell integration
 if command -v fzf >/dev/null 2>&1; then
-    export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --info=inline-right --color=16 --pointer=""'
+    export FZF_DEFAULT_OPTS="--height=40% \
+--layout=reverse \
+--info=inline-right \
+--color=16 \
+--pointer=\"\" \
+--cycle"
     . <(fzf --zsh)
 fi
 
