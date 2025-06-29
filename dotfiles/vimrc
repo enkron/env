@@ -93,7 +93,7 @@ set statusline=                         " clear status line when vimrc is reload
 set statusline+=%1*\%{&ff}%y\ %*
 set statusline+=%2*\»\ %*
 set statusline+=%3*\%n%m\%*
-set statusline+=%1*\%=%t\ %*
+set statusline+=%1*\:%t\ %*
 set statusline+=%=
 set statusline+=%1*\%4l/%*
 set statusline+=%5*\%L%*
