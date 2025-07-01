@@ -3,14 +3,20 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+
     # Pinned to the commit where poetry v1.7.1 is available
     nixpkgs-poetry171.url = "github:NixOS/nixpkgs/087f43a1fa052b17efd441001c4581813c34bc19";
+
     # Pinned to the commit where kubectl v1.30.1 is available
     nixpkgs-kubectl130-linux.url = "github:NixOS/nixpkgs/6eb01a67e1fc558644daed33eaeb937145e17696";
     nixpkgs-kubectl130-darwin.url = "github:NixOS/nixpkgs/cca4f8e59e9479ced4f02f33530be367220d5826";
+
+    # In order for python310 package to work correctly `sphinx` dependency must be < 8.2.3 version
+    # (this version doesn't support python3.10). Therefore pinning nixpkgs url to the previous hash
+    nixpkgs-sphinx747.url = "github:NixOS/nixpkgs/a684c58d46ebbede49f280b653b9e56100aa3877";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-poetry171, nixpkgs-kubectl130-linux, nixpkgs-kubectl130-darwin }:
+  outputs = { self, nixpkgs, nixpkgs-poetry171, nixpkgs-kubectl130-linux, nixpkgs-kubectl130-darwin, nixpkgs-sphinx747 }:
     let
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (systems) f;
@@ -26,12 +32,13 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
           poetryPkgs = nixpkgs-poetry171.legacyPackages.${system};
+          sphinxPkgs = nixpkgs-sphinx747.legacyPackages.${system};
         in {
           work = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
               ruff
               poetryPkgs.poetry
-              (python310.withPackages (p: [
+              (sphinxPkgs.python310.withPackages (p: [
                 p.pip
                 p.setuptools
                 p.virtualenv
@@ -45,8 +52,8 @@
             # default python version set to 3.10 (by the project requirements) thus apply the shell hook
             # to set the PATH to the needed version.
             shellHook = ''
-              export PATH=${pkgs.python310}/bin:$PATH
-              export PYTHONPATH=${pkgs.python310}/lib/python3.10/site-packages:$PYTHONPATH
+              export PATH=${sphinxPkgs.python310}/bin:$PATH
+              export PYTHONPATH=${sphinxPkgs.python310}/lib/python3.10/site-packages:$PYTHONPATH
             '';
           };
         };
