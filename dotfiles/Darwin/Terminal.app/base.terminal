@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BackgroundAlphaInactive</key>
+	<real>0.6385621488764045</real>
+	<key>BackgroundBlur</key>
+	<real>0.42019838781169289</real>
+	<key>BackgroundBlurInactive</key>
+	<real>0.42028616871056934</real>
+	<key>BackgroundColor</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGjCwwTVSRudWxs0w0ODxAREldO
+	U1doaXRlXE5TQ29sb3JTcGFjZVYkY2xhc3NPEBMwLjAzMjAxMzI5MDIzIDAuOTIAEAOA
+	AtIUFRYXWiRjbGFzc25hbWVYJGNsYXNzZXNXTlNDb2xvcqIWGFhOU09iamVjdAgRGiQp
+	MjdJTFFTV11kbHmAlpian6qzu74AAAAAAAABAQAAAAAAAAAZAAAAAAAAAAAAAAAAAAAA
+	xw==
+	</data>
+	<key>BackgroundSettingsForInactiveWindows</key>
+	<true/>
+	<key>Bell</key>
+	<false/>
+	<key>CursorBlink</key>
+	<true/>
+	<key>CursorColor</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGlCwwVGSBVJG51bGzUDQ4PEBES
+	ExRXTlNXaGl0ZVxOU0NvbG9yU3BhY2VfEBJOU0N1c3RvbUNvbG9yU3BhY2VWJGNsYXNz
+	QjEAEAOAAoAE0hYQFxhUTlNJRBACgAPSGhscHVokY2xhc3NuYW1lWCRjbGFzc2VzXE5T
+	Q29sb3JTcGFjZaIeH1xOU0NvbG9yU3BhY2VYTlNPYmplY3TSGhshIldOU0NvbG9yoiEf
+	CBEaJCkyN0lMUVNZX2hwfZKZnJ6goqesrrC1wMnW2ebv9PwAAAAAAAABAQAAAAAAAAAj
+	AAAAAAAAAAAAAAAAAAAA/w==
+	</data>
+	<key>CursorType</key>
+	<integer>1</integer>
+	<key>Font</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGkCwwVFlUkbnVsbNQNDg8QERIT
+	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNAKgAAAAAAABAQgAKAA15TRk1v
+	bm8tUmVndWxhctIXGBkaWiRjbGFzc25hbWVYJGNsYXNzZXNWTlNGb250ohkbWE5TT2Jq
+	ZWN0CBEaJCkyN0lMUVNYXmdud36FjpCSlKOos7zDxgAAAAAAAAEBAAAAAAAAABwAAAAA
+	AAAAAAAAAAAAAADP
+	</data>
+	<key>FontAntialias</key>
+	<true/>
+	<key>FontWidthSpacing</key>
+	<real>1.004032258064516</real>
+	<key>ProfileCurrentVersion</key>
+	<real>2.0699999999999998</real>
+	<key>VisualBell</key>
+	<false/>
+	<key>name</key>
+	<string>base</string>
+	<key>shellExitAction</key>
+	<integer>1</integer>
+	<key>type</key>
+	<string>Window Settings</string>
+	<key>useOptionAsMetaKey</key>
+	<true/>
+</dict>
+</plist>
