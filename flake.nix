@@ -91,6 +91,7 @@
               bat
               delta
               fzf
+              git-lfs
               groovy
               kubernetes-helm
               nmap
