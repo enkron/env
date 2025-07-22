@@ -95,6 +95,7 @@
               groovy
               kubernetes-helm
               nmap
+              podman
               ripgrep
               terraform
               tmux
