@@ -61,6 +61,9 @@
         let
           # Allow packages with non-free licensing scheme
           pkgs = import nixpkgs { system = system; config.allowUnfree = true;  };
+
+          # Previous version of the `kubectl` (1.31) had different git hashes for Darwin/Linux
+          # platforms.
           kubectlPkgs =
             if pkgs.stdenv.isDarwin then
               nixpkgs-kubectl132.legacyPackages.${system}
