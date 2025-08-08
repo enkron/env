@@ -103,6 +103,7 @@
               terraform
               tmux
               zig
+              zstd
             ] ++ [
               kubectlPkgs.kubectl
             ];
