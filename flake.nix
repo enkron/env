@@ -91,6 +91,7 @@
             paths = with pkgs; [
               awscli2
               bat
+              codex
               delta
               fzf
               git-lfs
