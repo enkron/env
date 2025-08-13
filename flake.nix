@@ -89,9 +89,9 @@
           work = pkgs.buildEnv {
             name = "Work toolset";
             paths = with pkgs; [
+              #codex
               awscli2
               bat
-              codex
               delta
               fzf
               git-lfs
