@@ -98,6 +98,7 @@
               groovy
               kubernetes-helm
               nmap
+              nodejs_24
               podman
               ripgrep
               terraform
