@@ -90,15 +90,16 @@
             name = "Work toolset";
             paths = with pkgs; [
               #codex
+              #nodejs_24
               awscli2
               bat
               delta
+              fd
               fzf
               git-lfs
               groovy
               kubernetes-helm
               nmap
-              nodejs_24
               podman
               ripgrep
               terraform
