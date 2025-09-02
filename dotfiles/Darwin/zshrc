@@ -61,14 +61,19 @@ if command -v fzf >/dev/null 2>&1; then
     . <(fzf --zsh)
 fi
 
-# terraform shell completion
+# Load shell completion for terraform
 if command -v terraform >/dev/null 2>&1; then
     complete -o nospace -C "$(command -v terraform)" terraform
 fi
 
-# awscli shell completion
+# Load shell completion for awscli
 if command -v aws >/dev/null 2>&1; then
     complete -o nospace -C "$(command -v aws_completer)" aws
+fi
+
+# Load shell completion for 1Password CLI
+if command -v op >/dev/null 2>&1; then
+    eval "$(op completion zsh)"; compdef _op op
 fi
 
 # Avoid duplicates in PATH
