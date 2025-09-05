@@ -76,6 +76,13 @@ if command -v op >/dev/null 2>&1; then
     eval "$(op completion zsh)"; compdef _op op
 fi
 
+# Aliases
+# Prefer Podman over Docker in this environment. Docker is largely deprecated
+# here and typically requires root/VM on macOS; use rootless Podman instead.
+if command -v podman >/dev/null 2>&1; then
+    alias docker='podman'
+fi
+
 # Avoid duplicates in PATH
 typeset -U path
 export PATH
