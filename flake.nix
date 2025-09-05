@@ -17,7 +17,10 @@
 
   outputs = { self, nixpkgs, nixpkgs-poetry171, nixpkgs-kubectl132, nixpkgs-sphinx747 }:
     let
-      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      # Use the standard set of platforms that flakes expose by default.
+      # lib.systems.flakeExposed keeps outputs consistent across common systems
+      # without hardcoding a manual list.
+      systems = nixpkgs.lib.systems.flakeExposed;
       forAllSystems = f: nixpkgs.lib.genAttrs (systems) f;
 
 
@@ -27,33 +30,22 @@
       # # Pinned packages repository to the kubectl v1.30.1
       # pkgs-kubectl130 = forAllSystems(system: import nixpkgs-kubectl132 { inherit system; });
 
-      devShell = system:
+      # Provide a default dev shell and avoid PATH/PYTHONPATH shims.
+      # Best practice: use `packages` with an explicit Python 3.10 derivation so
+      # `python` resolves predictably without a shellHook.
+      devShellsFor = system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
           poetryPkgs = nixpkgs-poetry171.legacyPackages.${system};
           sphinxPkgs = nixpkgs-sphinx747.legacyPackages.${system};
+          py310 = sphinxPkgs.python310;
         in {
-          work = pkgs.mkShell {
-            nativeBuildInputs = with pkgs; [
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              (py310.withPackages (p: [ p.pip p.setuptools p.virtualenv p.wheel ]))
               ruff
               poetryPkgs.poetry
-              (sphinxPkgs.python310.withPackages (p: [
-                p.pip
-                p.setuptools
-                p.virtualenv
-                p.wheel
-              ]))
             ];
-
-            # ruff & poetry dependencies are pulled from the 'pkgs' where they built with the default
-            # python version (which is currently 3.12 on macOS nixpkgs).
-            # When the dev shell is built it's pointing to the latest python interpreter, we want the
-            # default python version set to 3.10 (by the project requirements) thus apply the shell hook
-            # to set the PATH to the needed version.
-            shellHook = ''
-              export PATH=${sphinxPkgs.python310}/bin:$PATH
-              export PYTHONPATH=${sphinxPkgs.python310}/lib/python3.10/site-packages:$PYTHONPATH
-            '';
           };
         };
 
@@ -62,28 +54,23 @@
           # Allow packages with non-free licensing scheme
           pkgs = import nixpkgs { system = system; config.allowUnfree = true;  };
 
-          # Previous version of the `kubectl` (1.31) had different git hashes for Darwin/Linux
-          # platforms.
-          kubectlPkgs =
-            if pkgs.stdenv.isDarwin then
-              nixpkgs-kubectl132.legacyPackages.${system}
-            else
-              nixpkgs-kubectl132.legacyPackages.${system};
+          # Pin kubectl to a specific nixpkgs revision and use it consistently
+          # across all systems to avoid cross-platform hash drift.
+          kubectlPkgs = nixpkgs-kubectl132.legacyPackages.${system};
         in {
           base = pkgs.buildEnv {
             name = "Basic toolset";
-            paths = with pkgs; [
+            paths = (with pkgs; [
               bat
               delta
               fzf
-              kubectl
               kubernetes-helm
               nmap
               ripgrep
               terraform
               tmux
               zig
-            ];
+            ]) ++ [ kubectlPkgs.kubectl ];
           };
 
           work = pkgs.buildEnv {
@@ -112,7 +99,23 @@
           };
         };
     in {
-      devShells = forAllSystems devShell;
+      # Enter with `nix develop` (defaults to the `default` shell).
+      devShells = forAllSystems devShellsFor;
       packages = forAllSystems sysPkgs;
+
+      # Formatter used by `nix fmt`.
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
+      # Lightweight checks suitable for CI: ensure bootstrap script parses.
+      checks = forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system}; in {
+          bootstrap-sh-syntax = pkgs.runCommand "bootstrap-sh-syntax" {} ''
+            set -euo pipefail
+            sh -n ${self}/dotfiles/bootstrap.sh >/dev/null
+            mkdir -p "$out"
+            touch "$out"/passed
+          '';
+        }
+      );
     };
 }
