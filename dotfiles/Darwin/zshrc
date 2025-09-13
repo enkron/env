@@ -83,6 +83,22 @@ if command -v podman >/dev/null 2>&1; then
     alias docker='podman'
 fi
 
+# Functions
+# Erase from top of screen to cursor.
+# Save cursor position, move cursor down one line, restore cursor position.
+# Finally redraw prompt + input buffer
+clear_above() {
+    print -Pn "\e7"
+    print -Pn "\e[B"
+    print -Pn "\e[1J"
+    print -Pn "\e8"
+
+    zle redisplay
+}
+
+zle -N clear-above clear_above
+bindkey '^K' clear-above
+
 # Avoid duplicates in PATH
 typeset -U path
 export PATH
