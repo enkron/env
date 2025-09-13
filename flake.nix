@@ -68,6 +68,7 @@
         paths =
           (with pkgs; [
             bat
+            claude-code
             delta
             fzf
             kubernetes-helm
