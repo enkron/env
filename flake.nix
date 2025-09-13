@@ -72,6 +72,7 @@
             fzf
             kubernetes-helm
             nmap
+            nodejs_24
             ripgrep
             terraform
             tmux
