@@ -85,13 +85,9 @@ fi
 
 # Functions
 # Erase from top of screen to cursor.
-# Save cursor position, move cursor down one line, restore cursor position.
-# Finally redraw prompt + input buffer
+# Redraw prompt + input buffer.
 clear_above() {
-    print -Pn "\e7"
-    print -Pn "\e[B"
     print -Pn "\e[1J"
-    print -Pn "\e8"
 
     zle redisplay
 }
