@@ -70,6 +70,7 @@
             bat
             delta
             fzf
+            gnupg
             kubernetes-helm
             nmap
             nodejs_24
