@@ -93,6 +93,7 @@
             fd
             fzf
             git-lfs
+            gnupg
             groovy
             kubernetes-helm
             nmap
