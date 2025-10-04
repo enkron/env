@@ -61,6 +61,7 @@ if command -v fzf >/dev/null 2>&1; then
     . <(fzf --zsh)
 fi
 
+# Shell completions
 # Load shell completion for terraform
 if command -v terraform >/dev/null 2>&1; then
     complete -o nospace -C "$(command -v terraform)" terraform
@@ -75,6 +76,16 @@ fi
 if command -v op >/dev/null 2>&1; then
     eval "$(op completion zsh)"; compdef _op op
 fi
+
+# Setup environment for Rust lang
+if [[ -f "$HOME/.cargo/env" ]]; then
+    . "$HOME/.cargo/env"
+    test -f "$HOME/.zsh/zfunc/_rustup" || rustup completions zsh > "$HOME/.zsh/zfunc/_rustup"
+    test -f "$HOME/.zsh/zfunc/_cargo" || rustup completions zsh cargo > "$HOME/.zsh/zfunc/_cargo"
+fi
+
+# Setup completions for kubectl
+test -f "$HOME/.zsh/zfunc/_kubectl" || kubectl completion zsh > "$HOME/.zsh/zfunc/_kubectl"
 
 # Aliases
 # Prefer Podman over Docker in this environment. Docker is largely deprecated
