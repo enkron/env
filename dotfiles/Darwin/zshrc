@@ -94,6 +94,11 @@ if command -v podman >/dev/null 2>&1; then
     alias docker='podman'
 fi
 
+# If there's no `claude` tool in the system, then use temporary `npx` package.
+if ! command -v claude >/dev/null 2>&1; then
+    alias claude='npx @anthropic-ai/claude-code'
+fi
+
 # Functions
 # Erase from top of screen to cursor.
 # Redraw prompt + input buffer.
