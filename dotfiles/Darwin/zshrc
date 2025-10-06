@@ -99,6 +99,11 @@ if ! command -v claude >/dev/null 2>&1; then
     alias claude='npx @anthropic-ai/claude-code'
 fi
 
+# If there's no `codex` tool in the system, then use temporary `npx` package.
+if ! command -v codex >/dev/null 2>&1; then
+    alias codex='npx @openai/codex'
+fi
+
 # Functions
 # Erase from top of screen to cursor.
 # Redraw prompt + input buffer.
