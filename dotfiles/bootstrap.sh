@@ -35,7 +35,10 @@ upgrade_nix() {
     fi
 
     log info "Upgrading nix"
-    sudo rm /nix/receipt.json && install_nix
+    # Update 7.X.2025: a corresponding workaround for the anonymous upgrades is merged, therefore
+    # it's now possible to upgrade Determinate Nix using standard method.
+    #sudo rm /nix/receipt.json && install_nix
+    sudo determinate-nixd upgrade
 }
 
 while [ "$#" -gt 0 ]; do
