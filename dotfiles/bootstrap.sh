@@ -90,6 +90,10 @@ if [ "$(uname -s)" = 'Darwin' ]; then
     # Setup zshrc file in the user's home
     log info "Linking zshrc"
     ln -sf "${REPOS_HOME}/env/dotfiles/Darwin/zshrc" "${HOME}/.zshrc"
+
+    log info "Installing fonts"
+    # Setup "Hack" font family
+    cp -R "${REPOS_HOME}/env/fonts/hack-v3.003-ttf" "${HOME}/Library/Fonts/Hack"
 fi
 
 if [ "$(uname -s)" = 'Linux' ]; then
