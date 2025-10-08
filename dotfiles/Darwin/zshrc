@@ -113,8 +113,10 @@ clear_above() {
     zle redisplay
 }
 
+# Remap Ctrl+L to clear terminal screen above prompt
+# (temporary maybe until i found new shortcut)
 zle -N clear-above clear_above
-bindkey '^K' clear-above
+bindkey '^L' clear-above
 
 # Avoid duplicates in PATH
 typeset -U path
