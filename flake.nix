@@ -2,7 +2,8 @@
   description = "Default profiles with the development shell";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05"; # Stable channel
+    #nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # Nightly channel
 
     # Pinned to the commit where poetry v1.7.1 is available
     nixpkgs-poetry171.url = "github:NixOS/nixpkgs/087f43a1fa052b17efd441001c4581813c34bc19";
@@ -63,6 +64,9 @@
       # across all systems to avoid cross-platform hash drift.
       kubectlPkgs = nixpkgs-kubectl132.legacyPackages.${system};
     in {
+      # Some packages are commented due to:
+      # 1. Too outdated version on stable channel.
+      # 2. Failing to build on stable channel.
       base = pkgs.buildEnv {
         name = "Basic toolset";
         paths =
@@ -87,6 +91,7 @@
         paths = with pkgs;
           [
             #codex
+            #jujutsu
             awscli2
             bat
             delta
