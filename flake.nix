@@ -2,8 +2,8 @@
   description = "Default profiles with the development shell";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05"; # Stable channel
-    #nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # Nightly channel
+    #nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05"; # Stable channel
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # Nightly channel
 
     # Pinned to the commit where poetry v1.7.1 is available
     nixpkgs-poetry171.url = "github:NixOS/nixpkgs/087f43a1fa052b17efd441001c4581813c34bc19";
