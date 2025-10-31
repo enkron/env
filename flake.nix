@@ -105,6 +105,7 @@
             nodejs_24
             podman
             ripgrep
+            rustup
             terraform
             tmux
             zig
