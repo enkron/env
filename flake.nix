@@ -72,6 +72,7 @@
         paths =
           (with pkgs; [
             bat
+            claude-code
             delta
             fzf
             gnupg
