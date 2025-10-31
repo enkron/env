@@ -91,10 +91,10 @@
         name = "Work toolset";
         paths = with pkgs;
           [
-            #codex
             #jujutsu
             awscli2
             bat
+            codex
             delta
             fd
             fzf
