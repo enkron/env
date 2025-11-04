@@ -91,7 +91,6 @@
         name = "Work toolset";
         paths = with pkgs;
           [
-            #jujutsu
             awscli2
             bat
             codex
@@ -101,6 +100,7 @@
             git-lfs
             gnupg
             groovy
+            jujutsu
             kubernetes-helm
             nmap
             nodejs_24
