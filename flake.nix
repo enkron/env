@@ -80,6 +80,7 @@
             nmap
             nodejs_24
             ripgrep
+            rustup
             terraform
             tmux
             zig
