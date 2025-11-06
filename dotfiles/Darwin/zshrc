@@ -80,6 +80,10 @@ fi
 # Setup environment for Rust lang
 if [[ -f "$HOME/.cargo/env" ]]; then
     . "$HOME/.cargo/env"
+fi
+
+# Setup shell completions for Rust lang
+if command -v rustup >/dev/null 2>&1; then
     test -f "$HOME/.zsh/zfunc/_rustup" || rustup completions zsh > "$HOME/.zsh/zfunc/_rustup"
     test -f "$HOME/.zsh/zfunc/_cargo" || rustup completions zsh cargo > "$HOME/.zsh/zfunc/_cargo"
 fi
