@@ -88,8 +88,15 @@ if command -v rustup >/dev/null 2>&1; then
     test -f "$HOME/.zsh/zfunc/_cargo" || rustup completions zsh cargo > "$HOME/.zsh/zfunc/_cargo"
 fi
 
-# Setup completions for kubectl
-test -f "$HOME/.zsh/zfunc/_kubectl" || kubectl completion zsh > "$HOME/.zsh/zfunc/_kubectl"
+# Setup shell completions for kubectl
+if command -v kubectl >/dev/null 2>&1; then
+    test -f "$HOME/.zsh/zfunc/_kubectl" || kubectl completion zsh > "$HOME/.zsh/zfunc/_kubectl"
+fi
+
+# Setup shell completions for Jujutsu
+if command -v jj >/dev/null 2>&1; then
+    test -f "$HOME/.zsh/zfunc/_jj" || jj util completion zsh > ~/.zsh/zfunc/_jj
+fi
 
 # Aliases
 # Prefer Podman over Docker in this environment. Docker is largely deprecated
