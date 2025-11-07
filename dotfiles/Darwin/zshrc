@@ -1,11 +1,17 @@
+# Conigure shell history options
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000 # History in memory
 SAVEHIST=10000 # Lines in the HISTFILE
+
+# Set shell prompt
 PS1="%F{red}»%f "
 
 # Customize `ls` colours
 export CLICOLOR=1
 export LSCOLORS=BxAhHxDxCxegedabagaced
+
+# Configure default editor to Vim
+export EDITOR=vim
 
 #setopt EXTENDED_HISTORY # Adds timestamps and exit statuses to each entry saved in HISTFILE
 setopt HIST_APPEND # Append history, instead of overwriting it
