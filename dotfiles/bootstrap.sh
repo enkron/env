@@ -108,10 +108,10 @@ if [ "$(uname -s)" = 'Linux' ]; then
     fi
 fi
 
-log info "Linking gitconfig"
+log info "Linking Git configuration"
 ln -sf "${REPOS_HOME}/env/dotfiles/gitconfig" "${HOME}/.gitconfig"
 
-log info "Linking vimrc"
+log info "Linking Vim configuration"
 ln -sf "${REPOS_HOME}/env/dotfiles/vimrc" "${HOME}/.vimrc"
 
 if [ -d "${HOME}/.vim/bundle/Vundle.vim" ]; then
@@ -124,12 +124,16 @@ fi
 if [ -d "${HOME}/.tmux/plugins/tpm" ]; then
     log warning "TPM already exists, skipping clone step"
 else
-    log info "Cloning TPM"
+    log info "Cloning Tmux Plugin Manager"
     git clone https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
 fi
 
-log info "Linking tmux.conf"
+log info "Linking Tmux configuration"
 ln -sf "${REPOS_HOME}/env/dotfiles/tmux.conf" "${HOME}/.tmux.conf"
+
+log info "Linking Jujutsu configuration"
+mkdir -p "${HOME}/.config/jj"
+ln -sf "${REPOS_HOME}/env/dotfiles/jj.toml" "${HOME}/.config/config.toml"
 
 if command -v nix >/dev/null 2>&1; then
     log warning "nix already installed, skipping installation step"
