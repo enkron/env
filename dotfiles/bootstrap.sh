@@ -133,7 +133,7 @@ ln -sf "${REPOS_HOME}/env/dotfiles/tmux.conf" "${HOME}/.tmux.conf"
 
 log info "Linking Jujutsu configuration"
 mkdir -p "${HOME}/.config/jj"
-ln -sf "${REPOS_HOME}/env/dotfiles/jj.toml" "${HOME}/.config/config.toml"
+ln -sf "${REPOS_HOME}/env/dotfiles/jj.toml" "${HOME}/.config/jj/config.toml"
 
 if command -v nix >/dev/null 2>&1; then
     log warning "nix already installed, skipping installation step"
