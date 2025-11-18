@@ -100,6 +100,7 @@
             fzf
             git-lfs
             gnupg
+            go
             groovy
             jujutsu
             kubernetes-helm
