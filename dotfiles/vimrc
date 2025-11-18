@@ -7,6 +7,14 @@ Plugin 'rust-lang/rust.vim' " vim configuration for rust
 Plugin 'jiangmiao/auto-pairs' " insert or delete brackets, parens, quotes in pair
 Plugin 'enkron/ecs_light.vim' " my color scheme
 Plugin 'enkron/ecs.vim' " my dark color scheme
+
+" vim-polyglot
+" Disable Vim Polyglot plugin for Zig lang.
+" vim-polyglot’s Zig ftplugin's trying to parse Zig `zig env` output as JSON, but Zig 0.15+ no
+" longer outputs JSON, instead it outputs Zig source-style structs, which cannot be decoded by Vim
+" json_decode().
+" This setting must be set up before the vim-polyglot is loaded.
+let g:polyglot_disabled = ['zig']
 Plugin 'sheerun/vim-polyglot' " collection of language packs
 " if v:version >= 730
 "     " display vertical lines at each indentation level for code indented
@@ -26,6 +34,7 @@ if v:version >= 820
     " Plugin 'wfxr/minimap.vim'
 endif
 Plugin 'tpope/vim-obsession.git' " reconstruct accustomed vim layout (:h mksession)
+Plugin 'ziglang/zig.vim' " file detection and syntax highlighting for the zig programming language.
 call vundle#end()
 " }}}
 
