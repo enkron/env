@@ -224,10 +224,12 @@ function! s:zls_cmd() abort
     return []
 endfunction
 
+let s:zls_missing_warning = 0
+
 function! s:register_zls() abort
     let l:cmd = s:zls_cmd()
     if empty(l:cmd)
-        echom 'ZLS not found; run :ZlsInstall to build it or install it via your package manager.'
+        let s:zls_missing_warning = 1
         return
     endif
     call lsp#register_server({
@@ -236,6 +238,15 @@ function! s:register_zls() abort
     \   'root_uri': function('s:lsp_root_uri', [['build.zig', '.git/']]),
     \   'allowlist': ['zig'],
     \ })
+endfunction
+
+function! s:warn_missing_zls() abort
+    if s:zls_missing_warning
+        echohl WarningMsg
+        echom 'ZLS not found; run :ZlsInstall to build it or install it via your package manager.'
+        echohl None
+        let s:zls_missing_warning = 0
+    endif
 endfunction
 
 function! s:register_rust_analyzer() abort
@@ -271,6 +282,7 @@ endfunction
 augroup custom_lsp_servers
     autocmd!
     autocmd User lsp_setup call s:register_all_lsp_servers()
+    autocmd FileType zig call s:warn_missing_zls()
 augroup END
 
 function! s:run_or_throw(cmd) abort
