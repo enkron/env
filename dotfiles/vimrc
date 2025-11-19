@@ -348,10 +348,11 @@ command! ZlsInstall call s:zls_install()
 " Trigger highlight after 300ms instead of Vim’s default 4s
 set updatetime=300
 
-" Highlight color
-highlight LspReferenceText  cterm=bold ctermbg=237 guibg=#3a3d41
-highlight LspReferenceRead  cterm=bold ctermbg=237 guibg=#3a3d41
-highlight LspReferenceWrite cterm=bold ctermbg=237 guibg=#3a3d41
+" Highlight color (vim-lsp uses lowercase `lspReference`)
+highlight LspReferenceText  cterm=bold ctermbg=88 guibg=#990000
+highlight LspReferenceRead  cterm=bold ctermbg=88 guibg=#990000
+highlight LspReferenceWrite cterm=bold ctermbg=88 guibg=#990000
+highlight! link lspReference LspReferenceText
 
 " Automatically clear highlights when cursor moves
 augroup LspReferenceHighlight
