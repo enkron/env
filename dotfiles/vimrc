@@ -230,6 +230,9 @@ function! s:register_zls() abort
     let l:cmd = s:zls_cmd()
     if empty(l:cmd)
         let s:zls_missing_warning = 1
+        if &filetype ==# 'zig'
+            call s:warn_missing_zls()
+        endif
         return
     endif
     call lsp#register_server({
