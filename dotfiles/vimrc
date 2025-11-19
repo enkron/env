@@ -289,7 +289,13 @@ augroup custom_lsp_servers
 augroup END
 
 function! s:run_or_throw(cmd) abort
-    let l:output = system(a:cmd)
+    if type(a:cmd) == type([])
+        let l:parts = map(copy(a:cmd), {_, v -> shellescape(v)})
+        let l:command = join(l:parts, ' ')
+    else
+        let l:command = a:cmd
+    endif
+    let l:output = system(l:command)
     if v:shell_error != 0
         throw printf('Command failed (%d): %s%s%s',
                     \ v:shell_error,
@@ -337,6 +343,22 @@ function! s:zls_install() abort
 endfunction
 
 command! ZlsInstall call s:zls_install()
+
+" LSP reference highlighting
+" Trigger highlight after 300ms instead of Vim’s default 4s
+set updatetime=300
+
+" Highlight color
+highlight LspReferenceText  cterm=bold ctermbg=237 guibg=#3a3d41
+highlight LspReferenceRead  cterm=bold ctermbg=237 guibg=#3a3d41
+highlight LspReferenceWrite cterm=bold ctermbg=237 guibg=#3a3d41
+
+" Automatically clear highlights when cursor moves
+augroup LspReferenceHighlight
+    autocmd!
+    autocmd CursorMoved  * silent! call lsp#ui#vim#clear_references()
+    autocmd CursorMovedI * silent! call lsp#ui#vim#clear_references()
+augroup END
 " }}}
 
 " }}}
