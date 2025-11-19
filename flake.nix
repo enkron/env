@@ -84,6 +84,7 @@
             terraform
             tmux
             zig
+            zls
           ])
           ++ [kubectlPkgs.kubectl];
       };
@@ -112,6 +113,7 @@
             terraform
             tmux
             zig
+            zls
             zstd
           ]
           ++ [
