@@ -1,40 +1,33 @@
 " Plugins ---------------------------------------------------------- {{{
-"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
-Plugin 'rust-lang/rust.vim' " vim configuration for rust
-Plugin 'jiangmiao/auto-pairs' " insert or delete brackets, parens, quotes in pair
-Plugin 'enkron/ecs_light.vim' " my color scheme
-Plugin 'enkron/ecs.vim' " my dark color scheme
 
-" vim-polyglot
-" Disable Vim Polyglot plugin for Zig lang.
-" vim-polyglot’s Zig ftplugin's trying to parse Zig `zig env` output as JSON, but Zig 0.15+ no
-" longer outputs JSON, instead it outputs Zig source-style structs, which cannot be decoded by Vim
-" json_decode().
-" This setting must be set up before the vim-polyglot is loaded.
-let g:polyglot_disabled = ['zig']
-Plugin 'sheerun/vim-polyglot' " collection of language packs
-" if v:version >= 730
-"     " display vertical lines at each indentation level for code indented
-"     " with spaces
-"     Plugin 'Yggdroot/indentLine'
-" endif
-if v:version >= 801
-    Plugin 'dense-analysis/ale' " providing linting (syntax checking and semantic errors)
-    " Plugin 'prabirshrestha/async.vim' " normalize async job control api
-    " Plugin 'prabirshrestha/vim-lsp' " async Language Server Protocol
-    " Plugin 'prabirshrestha/asyncomplete.vim' " async autocompletion
-    " Plugin 'prabirshrestha/asyncomplete-lsp.vim' " LSP autocompletion source for asyncomplete.vim and vim-lsp.
-    Plugin 'cespare/vim-toml' " toml syntax support
-endif
-if v:version >= 820
-    " fast minimap (https://github.com/wfxr/code-minimap is required)
-    " Plugin 'wfxr/minimap.vim'
-endif
-Plugin 'tpope/vim-obsession.git' " reconstruct accustomed vim layout (:h mksession)
-Plugin 'ziglang/zig.vim' " file detection and syntax highlighting for the zig programming language.
+" Package manager
+Plugin 'VundleVim/Vundle.vim'
+
+" Language plugins
+Plugin 'rust-lang/rust.vim'                " Rust editing support
+Plugin 'cespare/vim-toml'                  " TOML syntax
+Plugin 'ziglang/zig.vim'                   " Zig syntax and filetype support
+
+" Utility plugins
+Plugin 'jiangmiao/auto-pairs'              " Auto-pair brackets/quotes
+Plugin 'enkron/ecs_light.vim'              " Local light theme
+Plugin 'enkron/ecs.vim'                    " Local dark theme
+Plugin 'tpope/vim-obsession.git'           " Save/restore sessions
+
+" Disable some languages inside vim-polyglot (must be done before loading it)
+let g:polyglot_disabled = ['zig', 'rust']
+Plugin 'sheerun/vim-polyglot'              " Polyglot language packs
+
+" Linting (ALE is used *only* as a linter)
+Plugin 'dense-analysis/ale'
+
+" Full LSP support for Vim
+Plugin 'prabirshrestha/async.vim'          " Async job control
+Plugin 'prabirshrestha/vim-lsp'            " Core LSP client
+Plugin 'prabirshrestha/vim-lsp-settings'   " Auto-installing LSP configs
+
 call vundle#end()
 " }}}
 
@@ -165,43 +158,172 @@ let g:rustfmt_autosave = 1
 let g:rust_keep_autopairs_default = 0
 let g:rust_fold = 1
 
-"" register LSP language server.  Use :help lsp#register_server() for
-"" more info
-"if executable('rust-analyzer')
-"" https://github.com/rust-lang/rust-analyzer
-"  au User lsp_setup call lsp#register_server({
-"        \   'name': 'Rust language server',
-"        \   'cmd': {server_info->['rust-analyzer']},
-"        \   'whitelist': ['rust'],
-"        \   'initialization_options': {
-"        \     'cargo': {
-"        \       'buildScripts': {
-"        \         'enable': v:true,
-"        \       },
-"        \     },
-"        \     'procMacro': {
-"        \       'enable': v:true,
-"        \     },
-"        \   },
-"        \ })
-"endif
-
 " asm.vim
 " set filetype=nasm
 " let g:asmsyntax = 'nasm'
 
-" ALE syntax checking and semantic errors
-let g:ale_completion_enabled = 1
-let g:ale_hover_to_floating_preview = 1
-let g:ale_fix_on_save = 1
+" ALE (Asynchronous Lint Engine) ---------------------------------- {{{
+" ALE is used *only* for linting. Actual LSP features (completion,
+" go-to-definition, rename, references, etc.) come from vim-lsp.
+
+let g:ale_disable_lsp = 1                " Prevent ALE from acting as an LSP client
+let g:ale_completion_enabled = 0         " Disable ALE completion (vim-lsp handles it)
+let g:ale_hover_to_floating_preview = 1  " Keep ALE's hover popup (non-LSP)
+let g:ale_fix_on_save = 1                " Auto-fix when saving
 let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
+
 let g:ale_linters = {
-\   'rust': ['cargo', 'analyzer'],
+\   'rust':   ['cargo'],
 \   'python': ['ruff', 'mypy'],
 \}
+
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \}
+" }}}
+
+" vim-lsp configuration -------------------------------------------- {{{
+" Enable LSP popups with better default UI
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_document_highlight_enabled = 1
+let g:lsp_hover_ui = 'float'
+let g:lsp_log_verbose = 0
+let g:lsp_log_file = expand('~/.vim-lsp.log')
+
+" Auto-completion support using built-in Vim popup menu
+" (vim-lsp provides the actual LSP completion items)
+set completeopt=menu,menuone,popup,noselect,noinsert
+
+let g:zls_install_root = get(g:, 'zls_install_root', expand('~/.local/share/zls'))
+
+function! s:lsp_project_root(markers) abort
+    let l:path = lsp#utils#find_nearest_parent_file_directory(expand('%:p'), a:markers)
+    return empty(l:path) ? getcwd() : l:path
+endfunction
+
+function! s:lsp_root_uri(server_info, markers) abort
+    return lsp#utils#path_to_uri(s:lsp_project_root(a:markers))
+endfunction
+
+function! s:zls_repo_dir() abort
+    return fnamemodify(g:zls_install_root, ':p')
+endfunction
+
+function! s:zls_binary_path() abort
+    return s:zls_repo_dir() . '/zig-out/bin/zls'
+endfunction
+
+function! s:zls_cmd() abort
+    if executable('zls')
+        return ['zls']
+    endif
+    let l:path = s:zls_binary_path()
+    if filereadable(l:path) && executable(l:path)
+        return [l:path]
+    endif
+    return []
+endfunction
+
+function! s:register_zls() abort
+    let l:cmd = s:zls_cmd()
+    if empty(l:cmd)
+        echom 'ZLS not found; run :ZlsInstall to build it or install it via your package manager.'
+        return
+    endif
+    call lsp#register_server({
+    \   'name': 'zls',
+    \   'cmd': l:cmd,
+    \   'root_uri': function('s:lsp_root_uri', [['build.zig', '.git/']]),
+    \   'allowlist': ['zig'],
+    \ })
+endfunction
+
+function! s:register_rust_analyzer() abort
+    if !executable('rust-analyzer')
+        return
+    endif
+    call lsp#register_server({
+    \   'name': 'rust-analyzer',
+    \   'cmd': ['rust-analyzer'],
+    \   'root_uri': function('s:lsp_root_uri', [['Cargo.toml', '.git/']]),
+    \   'allowlist': ['rust'],
+    \ })
+endfunction
+
+function! s:register_pylsp() abort
+    if !executable('pylsp')
+        return
+    endif
+    call lsp#register_server({
+    \   'name': 'pylsp',
+    \   'cmd': ['pylsp'],
+    \   'root_uri': function('s:lsp_root_uri', [['pyproject.toml', 'setup.cfg', 'requirements.txt', '.git/']]),
+    \   'allowlist': ['python'],
+    \ })
+endfunction
+
+function! s:register_all_lsp_servers() abort
+    call s:register_zls()
+    call s:register_rust_analyzer()
+    call s:register_pylsp()
+endfunction
+
+augroup custom_lsp_servers
+    autocmd!
+    autocmd User lsp_setup call s:register_all_lsp_servers()
+augroup END
+
+function! s:run_or_throw(cmd) abort
+    let l:output = system(a:cmd)
+    if v:shell_error != 0
+        throw printf('Command failed (%d): %s%s%s',
+                    \ v:shell_error,
+                    \ type(a:cmd) == type([]) ? string(a:cmd) : a:cmd,
+                    \ empty(l:output) ? '' : "\n",
+                    \ empty(l:output) ? '' : l:output)
+    endif
+endfunction
+
+function! s:zls_install() abort
+    if !executable('git')
+        echohl ErrorMsg | echom 'Cannot install ZLS: git is required.' | echohl None
+        return
+    endif
+    if !executable('zig')
+        echohl ErrorMsg | echom 'Cannot install ZLS: zig compiler is required.' | echohl None
+        return
+    endif
+    let l:repo = s:zls_repo_dir()
+    let l:parent = fnamemodify(l:repo, ':h')
+    if !isdirectory(l:parent)
+        call mkdir(l:parent, 'p')
+    endif
+    try
+        if !isdirectory(l:repo . '/.git')
+            if isdirectory(l:repo)
+                throw printf('Cannot install ZLS: %s exists but is not a git repository.', l:repo)
+            endif
+            call s:run_or_throw(['git', 'clone', '--depth', '1', 'https://github.com/zigtools/zls', l:repo])
+        else
+            call s:run_or_throw(['git', '-C', l:repo, 'pull', '--ff-only'])
+        endif
+        let l:build = printf('cd %s && zig build -Doptimize=ReleaseSafe', shellescape(l:repo))
+        call s:run_or_throw(['sh', '-c', l:build])
+    catch
+        echohl ErrorMsg | echom v:exception | echohl None
+        return
+    endtry
+    let l:cmd = s:zls_cmd()
+    if empty(l:cmd)
+        echohl ErrorMsg | echom 'ZLS build finished but no executable was found under ' . s:zls_repo_dir() | echohl None
+    else
+        echom 'ZLS installed at ' . l:cmd[0]
+    endif
+endfunction
+
+command! ZlsInstall call s:zls_install()
+" }}}
+
 " }}}
 
 " Key mappings ----------------------------------------------------- {{{
@@ -318,12 +440,20 @@ nmap <leader>ee :setl undoreload=0 \|edit<CR>
 " Source ~/.vimrc
 nmap <leader>rc :source $MYVIMRC<CR>:nohlsearch<CR>
 
-" vim ale goto definition
-nnoremap <leader>gt :ALEGoToDefinition<CR>
-" vim ale hover window
-nnoremap <leader>p :ALEHover<CR>
+" LSP key mappings ------------------------------------------------ {{{
+" Basic IDE-style navigation using vim-lsp
 
-" open/close minimap (minimap plugin required)
-nnoremap <leader>mo :Minimap<CR>
-nnoremap <leader>mc :MinimapClose<CR>
+nnoremap <leader>gt :LspDefinition<CR>          " Go to definition
+nnoremap <leader>gr :LspReferences<CR>           " Find references
+nnoremap <leader>gi :LspImplementation<CR>       " Go to implementation
+nnoremap <leader>rn :LspRename<CR>               " Rename symbol
+nnoremap <leader>p  :LspHover<CR>                " Show documentation
+nnoremap <leader>fs :LspDocumentSymbol<CR>       " Symbols in file
+nnoremap <leader>ws :LspWorkspaceSymbol<CR>      " Workspace symbols
+nnoremap <leader>ca :LspCodeAction<CR>           " Code actions (fix, refactor)
+nnoremap <leader>gd :LspDeclaration<CR>          " Go to declaration
+nnoremap <leader>e  :LspNextDiagnostic<CR>       " Next error
+nnoremap <leader>E  :LspPreviousDiagnostic<CR>   " Previous error
+" }}}
+
 " }}}
