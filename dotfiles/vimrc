@@ -201,7 +201,7 @@ function! s:lsp_project_root(markers) abort
     return empty(l:path) ? getcwd() : l:path
 endfunction
 
-function! s:lsp_root_uri(server_info, markers) abort
+function! s:lsp_root_uri(markers, server_info) abort
     return lsp#utils#path_to_uri(s:lsp_project_root(a:markers))
 endfunction
 
