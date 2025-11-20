@@ -321,6 +321,7 @@ endfunction
 augroup custom_lsp_servers
     autocmd!
     autocmd User lsp_setup call s:register_all_lsp_servers()
+    autocmd User lsp_buffer_enabled setlocal omnifunc=lsp#complete
     autocmd FileType zig call s:warn_missing_zls()
     autocmd FileType terraform,terraform-vars call s:warn_missing_terraform_ls()
 augroup END
