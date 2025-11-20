@@ -252,6 +252,41 @@ function! s:warn_missing_zls() abort
     endif
 endfunction
 
+function! s:terraform_ls_cmd() abort
+    if executable('terraform-ls')
+        return ['terraform-ls', 'serve']
+    endif
+    return []
+endfunction
+
+let s:terraform_ls_missing_warning = 0
+
+function! s:register_terraform_ls() abort
+    let l:cmd = s:terraform_ls_cmd()
+    if empty(l:cmd)
+        let s:terraform_ls_missing_warning = 1
+        if index(['terraform', 'terraform-vars'], &filetype) >= 0
+            call s:warn_missing_terraform_ls()
+        endif
+        return
+    endif
+    call lsp#register_server({
+    \   'name': 'terraform-ls',
+    \   'cmd': l:cmd,
+    \   'root_uri': function('s:lsp_root_uri', [['main.tf', 'versions.tf', 'providers.tf', '.terraform/', '.git/']]),
+    \   'allowlist': ['terraform', 'terraform-vars'],
+    \ })
+endfunction
+
+function! s:warn_missing_terraform_ls() abort
+    if s:terraform_ls_missing_warning
+        echohl WarningMsg
+        echom 'terraform-ls not found; install the official terraform-ls binary and ensure it is available in $PATH.'
+        echohl None
+        let s:terraform_ls_missing_warning = 0
+    endif
+endfunction
+
 function! s:register_rust_analyzer() abort
     if !executable('rust-analyzer')
         return
@@ -278,6 +313,7 @@ endfunction
 
 function! s:register_all_lsp_servers() abort
     call s:register_zls()
+    call s:register_terraform_ls()
     call s:register_rust_analyzer()
     call s:register_pylsp()
 endfunction
@@ -286,6 +322,7 @@ augroup custom_lsp_servers
     autocmd!
     autocmd User lsp_setup call s:register_all_lsp_servers()
     autocmd FileType zig call s:warn_missing_zls()
+    autocmd FileType terraform,terraform-vars call s:warn_missing_terraform_ls()
 augroup END
 
 function! s:run_or_throw(cmd) abort
