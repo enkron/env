@@ -82,6 +82,7 @@
             ripgrep
             rustup
             terraform
+            terraform-ls
             tmux
             zig
             zls
@@ -111,6 +112,7 @@
             ripgrep
             rustup
             terraform
+            terraform-ls
             tmux
             zig
             zls
