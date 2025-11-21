@@ -1,0 +1,535 @@
+" Plugins ---------------------------------------------------------- {{{
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Package manager
+Plugin 'VundleVim/Vundle.vim'
+
+" Language plugins
+Plugin 'rust-lang/rust.vim'                " Rust editing support
+Plugin 'cespare/vim-toml'                  " TOML syntax
+Plugin 'ziglang/zig.vim'                   " Zig syntax and filetype support
+
+" Utility plugins
+Plugin 'jiangmiao/auto-pairs'              " Auto-pair brackets/quotes
+Plugin 'enkron/ecs_light.vim'              " Local light theme
+Plugin 'enkron/ecs.vim'                    " Local dark theme
+Plugin 'tpope/vim-obsession.git'           " Save/restore sessions
+
+" Disable some languages inside vim-polyglot (must be done before loading it)
+let g:polyglot_disabled = ['zig', 'rust']
+Plugin 'sheerun/vim-polyglot'              " Polyglot language packs
+
+" Linting (ALE is used *only* as a linter)
+Plugin 'dense-analysis/ale'
+
+" Full LSP support for Vim
+Plugin 'prabirshrestha/async.vim'          " Async job control
+Plugin 'prabirshrestha/vim-lsp'            " Core LSP client
+Plugin 'prabirshrestha/vim-lsp-settings'   " Auto-installing LSP configs
+
+call vundle#end()
+" }}}
+
+" General settings ------------------------------------------------- {{{
+if &term != "linux"
+    set t_Co=256
+    colorscheme ecs
+endif
+
+set term=${TERM}
+
+syntax on                            " enable syntax highlighting
+set nocompatible                     " enables to use Vim specific features
+filetype off                         " reset filetype detection first ...
+filetype plugin indent on            " ... and enable filetype detection
+set tabstop=4                        " set tabs to have 4 spaces
+set shiftwidth=4                     " when using the >> or << commands,
+                                     " shift lines by 4 spaces
+set expandtab                        " expand tabs into spaces
+set smarttab
+set smartindent
+set number                           " show line numbers
+set relativenumber                   " each line in a file is numbered relative
+                                     " to the cursor’s current position to show
+                                     " the distance to that line
+set showmatch                        " show the matching part
+                                     " of the pair for [] {} and ()
+set cursorline                       " show a visual line under the cursor's current line
+
+if v:version >= 801                  " `v: name` - variable predefined by Vim
+    set cursorlineopt=number,screenline  " settings for how 'cursorline' is displayed
+endif
+
+set fileformat=unix                  " store the file in a Unix format
+set textwidth=99                     " set global width default
+augroup MarkdownTextWidth
+    autocmd!
+    autocmd FileType markdown setlocal textwidth=79 " specific width for markdown
+augroup END
+set encoding=utf-8                   " set default encoding used inside Vim
+set ruler                            " show the cursor position all the time
+set history=50                       " keep 50 lines of command line history
+set viminfo='20,\"50                 " read/write a .viminfo file, don't store more
+                                     " than 50 lines of registers
+set bs=indent,eol,start              " allow backspacing over everything in insert mode
+set noswapfile                       " don't use swapfile
+set nobackup                         " don't create backup files
+set showcmd                          " show what i'm typing
+set hlsearch                         " enable highlight searched patterns
+set hidden                           " turn on 'hidden' mode for buffers
+"set nowrap                          " do not wrap lines
+                                     " allow long lines to extend as far as the line goes
+set incsearch                        " while searching though a file incrementally
+                                     " highlight matching characters as you type
+" set ignorecase                     " ignore capital letters during search
+" set smartcase                      " override the ignorecase option if searching for capital letters
+                                     " this will allow to search specifically for capital letters
+set showmode                         " show the mode you are on the last line.
+set completeopt=menu,menuone,popup,noselect,noinsert " autocomplete with popup windows
+" }}}
+
+" Statusline ------------------------------------------------------- {{{
+set laststatus=2                        " show the status on the second to last line
+set statusline=                         " clear status line when vimrc is reloaded
+set statusline+=%1*\%{&ff}%y\ %*
+set statusline+=%2*\»\ %*
+set statusline+=%3*\%n%m\%*
+set statusline+=%1*\:%t\ %*
+set statusline+=%=
+set statusline+=%1*\%4l/%*
+set statusline+=%5*\%L%*
+set statusline+=%2*\ «\ %*
+set statusline+=%4*\ 0x%B\/%c\%*
+" set statusline=%<%F%=\ [%1*%M%*%n%R%H]\ %-19(%3l.%02c%03V%)%-6(%p%%%)%O'%02b'
+" }}}
+
+" Vim scripts ------------------------------------------------------ {{{
+" allow to fold long files to hide sections of text
+" by default `marker` is mapped to '{{{ }}}' chars
+" for example: " FOLDING SECTION --- {{{ a section code goes here }}}
+" zo - opens a single fold under the cursor.
+" zc - closes the fold under the cursor.
+" zR - opens all folds.
+" zM - closes all folds.
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+" Override conceal level which could be set by some plugin
+autocmd BufEnter * set conceallevel=0
+" }}}
+
+" Vim functions ---------------------------------------------------- {{{
+" Below function allows to avoid entering the `INSERT` mode while splitting a
+" long line (Vim doesn't have this type of method by default)
+function! SplitLine()
+    s/^\(\s*\)\(.\{-}\)\(\s*\)\(\%#\)\(\s*\)\(.*\)/\1\2\r\1\4\6
+    call histdel("/", -1)
+endfunction
+
+function! ScrollPopup(nlines)
+    let winids = popup_list()
+    if len(winids) == 0
+        return
+    endif
+
+    let prop = popup_getpos(winids[0])
+    if prop.visible != 1
+        return
+    endif
+
+    let firstline = prop.firstline + a:nlines
+    let buf_lastline = str2nr(trim(win_execute(winids[0], "echo line('$')")))
+    if firstline < 1
+        let firstline = 1
+    elseif prop.lastline + a:nlines > buf_lastline
+        let firstline = buf_lastline + prop.firstline - prop.lastline
+    endif
+
+    call popup_setoptions(winids[0], {'firstline': firstline})
+endfunction
+" }}}
+
+" Plugins settings ------------------------------------------------- {{{
+" rust.vim
+let g:rustfmt_autosave = 1
+let g:rust_keep_autopairs_default = 0
+let g:rust_fold = 1
+
+" asm.vim
+" set filetype=nasm
+" let g:asmsyntax = 'nasm'
+
+" ALE (Asynchronous Lint Engine) ---------------------------------- {{{
+" ALE is used *only* for linting. Actual LSP features (completion,
+" go-to-definition, rename, references, etc.) come from vim-lsp.
+
+let g:ale_disable_lsp = 1                " Prevent ALE from acting as an LSP client
+let g:ale_completion_enabled = 0         " Disable ALE completion (vim-lsp handles it)
+let g:ale_hover_to_floating_preview = 1  " Keep ALE's hover popup (non-LSP)
+let g:ale_fix_on_save = 1                " Auto-fix when saving
+let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
+
+let g:ale_linters = {
+\   'rust':   ['cargo'],
+\   'python': ['ruff', 'mypy'],
+\}
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\}
+" }}}
+
+" vim-lsp configuration -------------------------------------------- {{{
+" Enable LSP popups with better default UI
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_document_highlight_enabled = 1
+let g:lsp_hover_ui = 'float'
+let g:lsp_log_verbose = 0
+let g:lsp_log_file = expand('~/.vim-lsp.log')
+
+" Auto-completion support using built-in Vim popup menu
+" (vim-lsp provides the actual LSP completion items)
+set completeopt=menu,menuone,popup,noselect,noinsert
+
+let g:zls_install_root = get(g:, 'zls_install_root', expand('~/.local/share/zls'))
+
+function! s:lsp_project_root(markers) abort
+    let l:path = lsp#utils#find_nearest_parent_file_directory(expand('%:p'), a:markers)
+    return empty(l:path) ? getcwd() : l:path
+endfunction
+
+function! s:lsp_root_uri(markers, server_info) abort
+    return lsp#utils#path_to_uri(s:lsp_project_root(a:markers))
+endfunction
+
+function! s:zls_repo_dir() abort
+    return fnamemodify(g:zls_install_root, ':p')
+endfunction
+
+function! s:zls_binary_path() abort
+    return s:zls_repo_dir() . '/zig-out/bin/zls'
+endfunction
+
+function! s:zls_cmd() abort
+    if executable('zls')
+        return ['zls']
+    endif
+    let l:path = s:zls_binary_path()
+    if filereadable(l:path) && executable(l:path)
+        return [l:path]
+    endif
+    return []
+endfunction
+
+let s:zls_missing_warning = 0
+
+function! s:register_zls() abort
+    let l:cmd = s:zls_cmd()
+    if empty(l:cmd)
+        let s:zls_missing_warning = 1
+        if &filetype ==# 'zig'
+            call s:warn_missing_zls()
+        endif
+        return
+    endif
+    call lsp#register_server({
+    \   'name': 'zls',
+    \   'cmd': l:cmd,
+    \   'root_uri': function('s:lsp_root_uri', [['build.zig', '.git/']]),
+    \   'allowlist': ['zig'],
+    \ })
+endfunction
+
+function! s:warn_missing_zls() abort
+    if s:zls_missing_warning
+        echohl WarningMsg
+        echom 'ZLS not found; run :ZlsInstall to build it or install it via your package manager.'
+        echohl None
+        let s:zls_missing_warning = 0
+    endif
+endfunction
+
+function! s:terraform_ls_cmd() abort
+    if executable('terraform-ls')
+        return ['terraform-ls', 'serve']
+    endif
+    return []
+endfunction
+
+let s:terraform_ls_missing_warning = 0
+
+function! s:register_terraform_ls() abort
+    let l:cmd = s:terraform_ls_cmd()
+    if empty(l:cmd)
+        let s:terraform_ls_missing_warning = 1
+        if index(['terraform', 'terraform-vars'], &filetype) >= 0
+            call s:warn_missing_terraform_ls()
+        endif
+        return
+    endif
+    call lsp#register_server({
+    \   'name': 'terraform-ls',
+    \   'cmd': l:cmd,
+    \   'root_uri': function('s:lsp_root_uri', [['main.tf', 'versions.tf', 'providers.tf', '.terraform/', '.git/']]),
+    \   'allowlist': ['terraform', 'terraform-vars'],
+    \ })
+endfunction
+
+function! s:warn_missing_terraform_ls() abort
+    if s:terraform_ls_missing_warning
+        echohl WarningMsg
+        echom 'terraform-ls not found; install the official terraform-ls binary and ensure it is available in $PATH.'
+        echohl None
+        let s:terraform_ls_missing_warning = 0
+    endif
+endfunction
+
+function! s:register_rust_analyzer() abort
+    if !executable('rust-analyzer')
+        return
+    endif
+    call lsp#register_server({
+    \   'name': 'rust-analyzer',
+    \   'cmd': ['rust-analyzer'],
+    \   'root_uri': function('s:lsp_root_uri', [['Cargo.toml', '.git/']]),
+    \   'allowlist': ['rust'],
+    \ })
+endfunction
+
+function! s:register_pylsp() abort
+    if !executable('pylsp')
+        return
+    endif
+    call lsp#register_server({
+    \   'name': 'pylsp',
+    \   'cmd': ['pylsp'],
+    \   'root_uri': function('s:lsp_root_uri', [['pyproject.toml', 'setup.cfg', 'requirements.txt', '.git/']]),
+    \   'allowlist': ['python'],
+    \ })
+endfunction
+
+function! s:register_all_lsp_servers() abort
+    call s:register_zls()
+    call s:register_terraform_ls()
+    call s:register_rust_analyzer()
+    call s:register_pylsp()
+endfunction
+
+augroup custom_lsp_servers
+    autocmd!
+    autocmd User lsp_setup call s:register_all_lsp_servers()
+    autocmd User lsp_buffer_enabled setlocal omnifunc=lsp#complete
+    autocmd FileType zig call s:warn_missing_zls()
+    autocmd FileType terraform,terraform-vars call s:warn_missing_terraform_ls()
+augroup END
+
+function! s:run_or_throw(cmd) abort
+    if type(a:cmd) == type([])
+        let l:parts = map(copy(a:cmd), {_, v -> shellescape(v)})
+        let l:command = join(l:parts, ' ')
+    else
+        let l:command = a:cmd
+    endif
+    let l:output = system(l:command)
+    if v:shell_error != 0
+        throw printf('Command failed (%d): %s%s%s',
+                    \ v:shell_error,
+                    \ type(a:cmd) == type([]) ? string(a:cmd) : a:cmd,
+                    \ empty(l:output) ? '' : "\n",
+                    \ empty(l:output) ? '' : l:output)
+    endif
+endfunction
+
+function! s:zls_install() abort
+    if !executable('git')
+        echohl ErrorMsg | echom 'Cannot install ZLS: git is required.' | echohl None
+        return
+    endif
+    if !executable('zig')
+        echohl ErrorMsg | echom 'Cannot install ZLS: zig compiler is required.' | echohl None
+        return
+    endif
+    let l:repo = s:zls_repo_dir()
+    let l:parent = fnamemodify(l:repo, ':h')
+    if !isdirectory(l:parent)
+        call mkdir(l:parent, 'p')
+    endif
+    try
+        if !isdirectory(l:repo . '/.git')
+            if isdirectory(l:repo)
+                throw printf('Cannot install ZLS: %s exists but is not a git repository.', l:repo)
+            endif
+            call s:run_or_throw(['git', 'clone', '--depth', '1', 'https://github.com/zigtools/zls', l:repo])
+        else
+            call s:run_or_throw(['git', '-C', l:repo, 'pull', '--ff-only'])
+        endif
+        let l:build = printf('cd %s && zig build -Doptimize=ReleaseSafe', shellescape(l:repo))
+        call s:run_or_throw(['sh', '-c', l:build])
+    catch
+        echohl ErrorMsg | echom v:exception | echohl None
+        return
+    endtry
+    let l:cmd = s:zls_cmd()
+    if empty(l:cmd)
+        echohl ErrorMsg | echom 'ZLS build finished but no executable was found under ' . s:zls_repo_dir() | echohl None
+    else
+        echom 'ZLS installed at ' . l:cmd[0]
+    endif
+endfunction
+
+command! ZlsInstall call s:zls_install()
+
+" LSP reference highlighting
+" Trigger highlight after 300ms instead of Vim’s default 4s
+set updatetime=300
+
+" Highlight color (vim-lsp uses lowercase `lspReference`)
+highlight LspReferenceText  cterm=bold ctermbg=88 guibg=#990000
+highlight LspReferenceRead  cterm=bold ctermbg=88 guibg=#990000
+highlight LspReferenceWrite cterm=bold ctermbg=88 guibg=#990000
+highlight! link lspReference LspReferenceText
+
+" Automatically clear highlights when cursor moves
+augroup LspReferenceHighlight
+    autocmd!
+    autocmd CursorMoved  * silent! call lsp#ui#vim#clear_references()
+    autocmd CursorMovedI * silent! call lsp#ui#vim#clear_references()
+augroup END
+" }}}
+
+" }}}
+
+" Key mappings ----------------------------------------------------- {{{
+" nnoremap – allows to map keys in normal mode
+" inoremap – allows to map keys in insert mode
+" vnoremap – allows to map keys in visual mode
+let mapleader=' ' " by default mapleader variable is set to '\'
+
+" the more often save action occurs, the more likely the data won't be
+" lost
+" nnoremap <Space> :w!<CR>
+cnoremap W<CR> :w!<CR>
+
+" switch between buffers
+nnoremap <leader>b :ls<CR>:buffer<Space>
+" switch between last buffers
+nnoremap <leader>ll :b#<CR>
+
+" ugly change pattern
+nnoremap <leader>c :%s///g<Left><Left><Left>
+" replace all occurences of a particular word under the cursor
+nnoremap <leader>co :%s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
+" replace all occurences of a word on a current row only
+nnoremap <leader>cl :.s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
+" count number of matches of a pattern
+nnoremap <leader>gn :%s/\<<C-r>=expand('<cword>')<CR>\>//gn<CR>
+
+" release search highlighting
+nnoremap <leader><space> :nohlsearch<CR>
+
+" switch between bracets pairs (actual for mac keyboard)
+nnoremap ~ %
+
+" on/off trailing whitespaces visibility
+nnoremap <leader>l :set list listchars=tab:>-,trail:∙,eol:¶<CR>
+nnoremap <leader>nl :set nolist<CR>
+
+" obtain highlighting information under the coursor
+nnoremap <leader>hi :execute 'hi' synIDattr(synID(line("."), col("."), 1), "name")<CR>
+
+" change behaviour of the `o` and `O` keys: by default these keys enters
+" into the INSERT mode immediately after a call, below binding leaves it
+" in COMMAND mode
+map o o<ESC>
+map <S-o> <S-o><ESC>
+
+" format all long lines in a file without affecting short lines
+" tw (textwidth) option could be set for a new formatting option
+" check existing tw -> :setl tw?
+" reset current tw to defaults -> :setl tw&
+nmap <leader>f :g/./ normal gqq<CR><ESC> :nohlsearch<CR>``
+
+" most of the Linux terminals sends the escape by default when pressing
+" alt/meta+normal_mode_key
+imap <M-h> <ESC>
+
+" map Left to Ctrl+b in cmd mode to have behaviour like in terminal
+cnoremap <C-b> <Left>
+" map Right to Ctrl+f in cmd mode to have behaviour like in terminal
+cnoremap <C-f> <Right>
+" map Home to Ctrl+a in cmd mode to have behaviour like in terminal
+cnoremap <C-a> <Home>
+
+" inoremap () ()<Left>
+" inoremap [] []<Left>
+" inoremap {} {}<Left>
+" inoremap "" ""<Left>
+" inoremap ' ''<Left>
+" inoremap ` ``<Left>
+
+" search mappings: these will make it so that going to the
+" next one in a search will center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" when long lines inserted j k moves one physical line
+" gj gk moves down one displayed line
+noremap <Up> gk
+noremap <Down> gj
+noremap j gj
+noremap k gk
+
+" maybe later i'll figure out for what this mode is needed..
+nnoremap Q <NOP>
+" do not show q: window
+" upd(24-Mar-22): understood at last: q: - shows the history of last
+" commands, also 'q:' suffix works within gq+(line_num/G) command
+" eg. `gq3<CR>` - formats next 3 lines according to the `tw` value
+" nnoremap q: <NOP>
+
+" Vundle mappings
+nnoremap <leader>vu :PluginUpdate<CR>
+
+" reload vim configuration file
+" nnoremap <leader>rc :source<space>~/.vimrc<CR>
+
+" split long lines in `NORMAL` mode
+nnoremap <leader>sl :<C-u>call SplitLine()<CR>
+
+" add a `?` to the end of the line,
+" return the cursor to its original spot.
+inoremap ?? <C-o>mp<C-o>A?<C-o>`p
+
+" sync syntax highlighting (sometimes vim gets confused in a long file)
+nnoremap <leader>ss :syntax sync fromstart<CR>
+
+" popup window scrolling
+nnoremap <buffer> <C-n> :call ScrollPopup(3)<CR>
+nnoremap <buffer> <C-p> :call ScrollPopup(-3)<CR>
+
+" Reload undo history
+nmap <leader>ee :setl undoreload=0 \|edit<CR>
+
+" Source ~/.vimrc
+nmap <leader>rc :source $MYVIMRC<CR>:nohlsearch<CR>
+
+" LSP key mappings ------------------------------------------------ {{{
+" Basic IDE-style navigation using vim-lsp
+
+nnoremap <leader>gt :LspDefinition<CR>          " Go to definition
+nnoremap <leader>gr :LspReferences<CR>           " Find references
+nnoremap <leader>gi :LspImplementation<CR>       " Go to implementation
+nnoremap <leader>rn :LspRename<CR>               " Rename symbol
+nnoremap <leader>p  :LspHover<CR>                " Show documentation
+nnoremap <leader>fs :LspDocumentSymbol<CR>       " Symbols in file
+nnoremap <leader>ws :LspWorkspaceSymbol<CR>      " Workspace symbols
+nnoremap <leader>ca :LspCodeAction<CR>           " Code actions (fix, refactor)
+nnoremap <leader>gd :LspDeclaration<CR>          " Go to declaration
+nnoremap <leader>e  :LspNextDiagnostic<CR>       " Next error
+nnoremap <leader>E  :LspPreviousDiagnostic<CR>   " Previous error
+" }}}
+
+" }}}
