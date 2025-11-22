@@ -64,38 +64,13 @@
       # across all systems to avoid cross-platform hash drift.
       kubectlPkgs = nixpkgs-kubectl132.legacyPackages.${system};
     in {
-      # Some packages are commented due to:
-      # 1. Too outdated version on stable channel.
-      # 2. Failing to build on stable channel.
-      base = pkgs.buildEnv {
-        name = "Basic toolset";
+      enk-coreutils = pkgs.buildEnv {
+        name = "Personal toolbox";
         paths =
           (with pkgs; [
-            bat
-            claude-code
-            delta
-            fzf
-            gnupg
-            kubernetes-helm
-            nmap
-            nodejs_24
-            ripgrep
-            rustup
-            terraform
-            terraform-ls
-            tmux
-            zig
-            zls
-          ])
-          ++ [kubectlPkgs.kubectl];
-      };
-
-      work = pkgs.buildEnv {
-        name = "Work toolset";
-        paths = with pkgs;
-          [
             awscli2
             bat
+            claude-code
             codex
             delta
             fd
@@ -117,6 +92,13 @@
             zig
             zls
             zstd
+          ]);
+      };
+
+      work = pkgs.buildEnv {
+        enk-coreutils-dev = "Experemental and/or temporary toolchains";
+        paths = with pkgs;
+          [
           ]
           ++ [
             kubectlPkgs.kubectl
