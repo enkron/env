@@ -66,37 +66,36 @@
     in {
       enk-coreutils = pkgs.buildEnv {
         name = "Personal toolbox";
-        paths =
-          (with pkgs; [
-            awscli2
-            bat
-            claude-code
-            codex
-            delta
-            fd
-            fzf
-            git-lfs
-            gnupg
-            go
-            groovy
-            jujutsu
-            kubernetes-helm
-            nmap
-            nodejs_24
-            podman
-            ripgrep
-            rustup
-            terraform
-            terraform-ls
-            tmux
-            zig
-            zls
-            zstd
-          ]);
+        paths = with pkgs; [
+          awscli2
+          bat
+          claude-code
+          codex
+          delta
+          fd
+          fzf
+          git-lfs
+          gnupg
+          go
+          groovy
+          jujutsu
+          kubernetes-helm
+          nmap
+          nodejs_24
+          podman
+          ripgrep
+          rustup
+          terraform
+          terraform-ls
+          tmux
+          zig
+          zls
+          zstd
+        ];
       };
 
-      work = pkgs.buildEnv {
-        enk-coreutils-dev = "Experemental and/or temporary toolchains";
+      enk-coreutils-dev = pkgs.buildEnv {
+        name = "Experemental and/or temporary toolchains";
         paths = with pkgs;
           [
           ]
