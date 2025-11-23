@@ -137,6 +137,12 @@ clear_above() {
     zle redisplay
 }
 
+# Explicitly set default Emacs mode in a shell.
+# Some utilities potentially can:
+# 1. override default shell's key bindings;
+# 2. override default zsh mode (eg. bindkey -v).
+bindkey -e
+
 # Remap Ctrl+L to clear terminal screen above prompt
 # (temporary maybe until i found new shortcut)
 zle -N clear-above clear_above
