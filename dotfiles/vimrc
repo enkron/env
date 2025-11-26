@@ -443,9 +443,9 @@ command! ZlsInstall call g:ZlsInstall()
 set updatetime=300
 
 # Highlight color (vim-lsp uses lowercase `lspReference`)
-highlight LspReferenceText  cterm=bold ctermbg=88 guibg=#990000
-highlight LspReferenceRead  cterm=bold ctermbg=88 guibg=#990000
-highlight LspReferenceWrite cterm=bold ctermbg=88 guibg=#990000
+highlight LspReferenceText  cterm=bold ctermbg=88 guibg=#96653a
+highlight LspReferenceRead  cterm=bold ctermbg=88 guibg=#96653a
+highlight LspReferenceWrite cterm=bold ctermbg=88 guibg=#96653a
 highlight! link lspReference LspReferenceText
 
 # Automatically clear highlights when cursor moves
