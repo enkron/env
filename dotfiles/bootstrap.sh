@@ -135,6 +135,10 @@ log info "Linking Jujutsu configuration"
 mkdir -p "${HOME}/.config/jj"
 ln -sf "${REPOS_HOME}/env/dotfiles/jj.toml" "${HOME}/.config/jj/config.toml"
 
+log info "Linking Ghostty configuration"
+mkdir -p "${HOME}/.config/ghostty"
+ln -sf "${REPOS_HOME}/env/dotfiles/ghostty.conf" "${HOME}/.config/ghostty/config"
+
 if command -v nix >/dev/null 2>&1; then
     log warning "nix already installed, skipping installation step"
 else
