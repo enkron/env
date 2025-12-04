@@ -4,15 +4,21 @@ email = "srj.belokon@gmail.com"
 
 [ui]
 color = "auto"
+editor = "vim"
 
 [colors]
 # Some examples of what's possible to colourize
 # https://github.com/jj-vcs/jj/blob/main/cli/src/config/colors.toml
-"diff removed token" = { underline = false }
-"diff added token" = { underline = false }
-"description placeholder" = { fg = "#444444", bold = false, italic = true }
-"working_copy description placeholder" = { fg = "#444444", bold = false, italic = true }
-"working_copy empty" = { fg = "#444444", bold = false, italic = true }
-"working_copy empty description placeholder" = { fg = "#444444", bold = false, italic = true }
-#"bookmark" = { bg = "#5C88CB" }
-#"bookmarks" = { bg = "#5C88CB" }
+"change_id" = { fg = "default", bg = "default", bold = true }
+
+"description placeholder" = { fg = "#444444", bg = "default", bold = false, italic = true }
+"working_copy description placeholder" = { fg = "#444444", bg = "default", bold = false, italic = true }
+"working_copy empty" = { fg = "#444444", bg = "default", bold = false, italic = true }
+"working_copy empty description placeholder" = { fg = "#444444", bg = "default", bold = false, italic = true }
+#"working_copy author" = { fg = "#9FBBEB" }
+
+"author" = { fg = "#9FBBEB", bg = "default" }
+"bookmark" = { fg = "#5C88CB", bg = "default" }
+"bookmarks" = { fg = "#5C88CB", bg = "default" }
+
+"diff token" = { underline = false }
