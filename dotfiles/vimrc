@@ -157,6 +157,7 @@ set incsearch                        # while searching though a file incremental
                                      # this will allow to search specifically for capital letters
 set showmode                         # show the mode you are on the last line.
 set completeopt=menu,menuone,popup,noselect,noinsert # autocomplete with popup windows
+set wildoptions=pum                  # Popup menu completion
 # }}}
 
 # Statusline ------------------------------------------------------- {{{
