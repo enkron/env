@@ -80,6 +80,7 @@
           groovy
           jujutsu
           kubernetes-helm
+          newsboat
           nmap
           nodejs_24
           podman
