@@ -139,6 +139,11 @@ log info "Linking Ghostty configuration"
 mkdir -p "${HOME}/.config/ghostty"
 ln -sf "${REPOS_HOME}/env/dotfiles/ghostty.conf" "${HOME}/.config/ghostty/config"
 
+log info "Linking Newsboat configuration"
+mkdir -p "${HOME}/.newsboat"
+ln -sf "${REPOS_HOME}/env/dotfiles/newsboat/urls" "${HOME}/.newsboat/urls"
+ln -sf "${REPOS_HOME}/env/dotfiles/newsboat/config" "${HOME}/.newsboat/config"
+
 if command -v nix >/dev/null 2>&1; then
     log warning "nix already installed, skipping installation step"
 else
