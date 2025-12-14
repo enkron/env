@@ -3,3 +3,6 @@ https://ziglang.org/news/index.xml
 
 # Kubernetes blog official RSS feed
 https://kubernetes.io/feed.xml
+
+# Kubernetes official CVE feed
+https://k8s.io/docs/reference/issues-security/official-cve-feed/feed.xml
