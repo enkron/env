@@ -114,13 +114,6 @@ ln -sf "${REPOS_HOME}/env/dotfiles/gitconfig" "${HOME}/.gitconfig"
 log info "Linking Vim configuration"
 ln -sf "${REPOS_HOME}/env/dotfiles/vimrc" "${HOME}/.vimrc"
 
-if [ -d "${HOME}/.vim/bundle/Vundle.vim" ]; then
-    log warning "Vundle.vim already exists, skipping clone step"
-else
-    log info "Cloning Vundle.vim"
-    git clone https://github.com/VundleVim/Vundle.vim.git "${HOME}/.vim/bundle/Vundle.vim"
-fi
-
 if [ -d "${HOME}/.tmux/plugins/tpm" ]; then
     log warning "TPM already exists, skipping clone step"
 else
