@@ -9,3 +9,6 @@ https://kubernetes.io/feed.xml
 
 # Kubernetes official CVE feed
 https://k8s.io/docs/reference/issues-security/official-cve-feed/feed.xml
+
+# Codeberg community-led effort that provides Git hosting
+https://blog.codeberg.org/feeds/all.atom.xml
