@@ -1,14 +1,35 @@
+# Kubernetes Blog (official releases and feature deep dives)
+# Site: https://kubernetes.io/blog/
+https://kubernetes.io/feed.xml
+
+# Kubernetes official CVE feed
+https://k8s.io/docs/reference/issues-security/official-cve-feed/feed.xml
+
+# Last Week in Kubernetes Development (weekly K8s dev summary)
+# Site: https://lwkd.info/
+https://lwkd.info/feed.xml
+
+# SRE Weekly (curated SRE ops, incidents, reliability)
+# Site: https://sreweekly.com/
+https://sreweekly.com/rss
+
+# CNCF Blog (ecosystem announcements across CNCF projects)
+# Site: https://www.cncf.io/blog/
+https://www.cncf.io/blog/feed/
+
+# The New Stack (cloud-native + DevOps news)
+# Site: https://thenewstack.io/
+https://thenewstack.io/feed/
+
+# InfoQ DevOps (DevOps/SRE articles and news)
+# Site: https://www.infoq.com/devops/
+https://www.infoq.com/feed/devops/
+
 # Zig language latest news
 https://ziglang.org/news/index.xml
 
 # Zig devlog
 https://ziglang.org/devlog/index.xml
-
-# Kubernetes blog official RSS feed
-https://kubernetes.io/feed.xml
-
-# Kubernetes official CVE feed
-https://k8s.io/docs/reference/issues-security/official-cve-feed/feed.xml
 
 # Codeberg community-led effort that provides Git hosting
 https://blog.codeberg.org/feeds/all.atom.xml
