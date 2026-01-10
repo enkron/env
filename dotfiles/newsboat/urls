@@ -37,3 +37,13 @@ https://blog.codeberg.org/feeds/all.atom.xml
 # IEEE Spectrum - an award-winning technology magazine
 # Site: https://spectrum.ieee.org/topic/computing/
 https://spectrum.ieee.org/customfeeds/feed/all-topics/rss
+
+# NixOS Weekly
+# Site: https://nixos.org/blog
+https://nixos.org/blog/newsletters-rss.xml
+
+# NixOS announcement
+https://nixos.org/blog/announcements-rss.xml
+
+# NixOS stories
+https://nixos.org/blog/stories-rss.xml
