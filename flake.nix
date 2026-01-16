@@ -92,6 +92,8 @@
           zig
           zls
           zstd
+        ] ++ pkgs.lib.optionals (system == "aarch64-darwin") [
+          container
         ];
       };
 
