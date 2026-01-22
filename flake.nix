@@ -77,6 +77,7 @@
           git-lfs
           gnupg
           go
+          gofumpt
           gopls
           groovy
           jujutsu
