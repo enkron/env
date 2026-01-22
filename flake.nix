@@ -77,6 +77,7 @@
           git-lfs
           gnupg
           go
+          gopls
           groovy
           jujutsu
           kubernetes-helm
