@@ -8,6 +8,7 @@ const PluginRepos = [
 \   'rust-lang/rust.vim',
 \   'cespare/vim-toml',
 \   'ziglang/zig.vim',
+\   'fatih/vim-go',
 \   'jiangmiao/auto-pairs',
 \   'enkron/ecs_light.vim',
 \   'enkron/ecs.vim',
@@ -94,7 +95,7 @@ enddef
 command! PluginsUpdate call PluginsUpdate()
 
 # Disable some languages inside vim-polyglot (must be done before loading it)
-g:polyglot_disabled = ['zig', 'rust']
+g:polyglot_disabled = ['zig', 'rust', 'go']
 # Keep vim-lsp-settings installed for optional helpers but suppress its auto
 # registrations/suggestions since servers below handle everything.
 g:lsp_settings_whitelist = []
@@ -232,6 +233,9 @@ g:rustfmt_autosave = 1
 g:rust_keep_autopairs_default = 0
 g:rust_fold = 1
 
+# vim-go
+g:go_fmt_command = 'gofumpt'
+
 # asm.vim
 # set filetype=nasm
 # let g:asmsyntax = 'nasm'
@@ -268,8 +272,6 @@ g:lsp_log_file = expand('~/.vim-lsp.log')
 # (vim-lsp provides the actual LSP completion items)
 set completeopt=menu,menuone,popup,noselect,noinsert
 
-g:zls_install_root = get(g:, 'zls_install_root', expand('~/.local/share/zls'))
-
 def LspProjectRoot(markers: list<string>): string
     var path = lsp#utils#find_nearest_parent_file_directory(expand('%:p'), markers)
     return empty(path) ? getcwd() : path
@@ -279,21 +281,9 @@ def LspRootUri(markers: list<string>, _server_info: dict<any>): string
     return lsp#utils#path_to_uri(LspProjectRoot(markers))
 enddef
 
-def g:ZlsRepoDir(): string
-    return fnamemodify(g:zls_install_root, ':p')
-enddef
-
-def g:ZlsBinaryPath(): string
-    return g:ZlsRepoDir() .. '/zig-out/bin/zls'
-enddef
-
 def g:ZlsCmd(): list<string>
     if executable('zls')
         return ['zls']
-    endif
-    const path = g:ZlsBinaryPath()
-    if filereadable(path) && executable(path)
-        return [path]
     endif
     return []
 enddef
@@ -320,9 +310,52 @@ enddef
 def WarnMissingZls()
     if zls_missing_warning
         echohl WarningMsg
-        echom 'ZLS not found; run :ZlsInstall to build it or install it via your package manager.'
+        echom 'ZLS not found; install it via Nix or ensure it is in $PATH.'
         echohl None
         zls_missing_warning = 0
+    endif
+enddef
+
+def g:GoplsCmd(): list<string>
+    if executable('gopls')
+        return ['gopls']
+    endif
+    return []
+enddef
+
+var gopls_missing_warning = 0
+
+def g:RegisterGopls()
+    const cmd = g:GoplsCmd()
+    if empty(cmd)
+        gopls_missing_warning = 1
+        if index(['go', 'gomod', 'gowork', 'gosum'], &filetype) >= 0
+            WarnMissingGopls()
+        endif
+        return
+    endif
+    lsp#register_server({
+    \   'name': 'gopls',
+    \   'cmd': cmd,
+    \   'root_uri': function('LspRootUri', [['go.work', 'go.mod', '.git/']]),
+    \   'allowlist': ['go', 'gomod', 'gowork', 'gosum'],
+    \   'workspace_config': {
+    \     'gopls': {
+    \       'staticcheck': v:true,
+    \       'gofumpt': v:true,
+    \       'completeUnimported': v:true,
+    \       'usePlaceholders': v:true,
+    \     },
+    \   },
+    \ })
+enddef
+
+def WarnMissingGopls()
+    if gopls_missing_warning
+        echohl WarningMsg
+        echom 'gopls not found; install it via Nix or ensure it is in $PATH.'
+        echohl None
+        gopls_missing_warning = 0
     endif
 enddef
 
@@ -387,6 +420,7 @@ enddef
 
 def g:RegisterAllLspServers()
     g:RegisterZls()
+    g:RegisterGopls()
     g:RegisterTerraformLs()
     g:RegisterRustAnalyzer()
     g:RegisterPylsp()
@@ -397,47 +431,20 @@ augroup custom_lsp_servers
     autocmd User lsp_setup call g:RegisterAllLspServers()
     autocmd User lsp_buffer_enabled setlocal omnifunc=lsp#complete
     autocmd FileType zig call WarnMissingZls()
+    autocmd FileType go,gomod,gowork,gosum call WarnMissingGopls()
     autocmd FileType terraform,terraform-vars call WarnMissingTerraformLs()
 augroup END
 
-def g:ZlsInstall()
-    if !executable('git')
-        echohl ErrorMsg | echom 'Cannot install ZLS: git is required.' | echohl None
-        return
-    endif
-    if !executable('zig')
-        echohl ErrorMsg | echom 'Cannot install ZLS: zig compiler is required.' | echohl None
-        return
-    endif
-    var repo = g:ZlsRepoDir()
-    var parent = fnamemodify(repo, ':h')
-    if !isdirectory(parent)
-        mkdir(parent, 'p')
-    endif
-    try
-        if !isdirectory(repo .. '/.git')
-            if isdirectory(repo)
-                throw printf('Cannot install ZLS: %s exists but is not a git repository.', repo)
-            endif
-            g:RunOrThrow(['git', 'clone', '--depth', '1', 'https://github.com/zigtools/zls', repo])
-        else
-            g:RunOrThrow(['git', '-C', repo, 'pull', '--ff-only'])
-        endif
-        const build = printf('cd %s && zig build -Doptimize=ReleaseSafe', shellescape(repo))
-        g:RunOrThrow(['sh', '-c', build])
-    catch
-        echohl ErrorMsg | echom v:exception | echohl None
-        return
-    endtry
-    const cmd = g:ZlsCmd()
-    if empty(cmd)
-        echohl ErrorMsg | echom 'ZLS build finished but no executable was found under ' . g:ZlsRepoDir() | echohl None
-    else
-        echom 'ZLS installed at ' . cmd[0]
+def EnableGoLspFormatOnSave()
+    if exists(':LspDocumentFormatSync')
+        autocmd BufWritePre <buffer> LspDocumentFormatSync
     endif
 enddef
 
-command! ZlsInstall call g:ZlsInstall()
+augroup go_lsp_format_on_save
+    autocmd!
+    autocmd FileType go,gomod,gowork call EnableGoLspFormatOnSave()
+augroup END
 
 # LSP reference highlighting
 # Trigger highlight after 300ms instead of Vim’s default 4s
