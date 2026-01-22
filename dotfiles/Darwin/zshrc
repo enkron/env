@@ -115,6 +115,7 @@ fi
 # https://github.com/sharkdp/bat
 if command -v bat >/dev/null 2>&1; then
     test -f "$HOME/.zsh/zfunc/_bat" || bat --completion zsh > ~/.zsh/zfunc/_bat
+    export BAT_THEME_DARK="Nord"
 fi
 
 # Aliases
