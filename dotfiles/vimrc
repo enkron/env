@@ -436,7 +436,7 @@ augroup custom_lsp_servers
 augroup END
 
 def EnableGoLspFormatOnSave()
-    if exists(':LspDocumentFormatSync')
+    if exists(':LspDocumentFormatSync') > 0
         autocmd BufWritePre <buffer> LspDocumentFormatSync
     endif
 enddef
