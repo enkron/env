@@ -69,6 +69,7 @@
         paths = with pkgs; [
           awscli2
           bat
+          cilium-cli
           claude-code
           codex
           delta
@@ -80,14 +81,19 @@
           gofumpt
           gopls
           groovy
+          hubble
           jujutsu
+          k9s
+          kubectl
           kubernetes-helm
           newsboat
           nmap
           nodejs_24
           podman
+          qemu
           ripgrep
           rustup
+          socat
           terraform
           terraform-ls
           tmux
