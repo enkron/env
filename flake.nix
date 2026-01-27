@@ -69,6 +69,7 @@
         paths = with pkgs; [
           awscli2
           bat
+          cdrtools
           cilium-cli
           claude-code
           codex
@@ -97,6 +98,7 @@
           terraform
           terraform-ls
           tmux
+          yq-go
           zig
           zls
           zstd
