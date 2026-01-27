@@ -69,6 +69,7 @@
         paths = with pkgs; [
           awscli2
           bat
+          btop
           cdrtools
           cilium-cli
           claude-code
