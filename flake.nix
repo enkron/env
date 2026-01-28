@@ -88,13 +88,16 @@
           k9s
           kubectl
           kubernetes-helm
-          newsboat
+          # the package newsboat is broken in unstable channel will figure out how to fix (or just
+          # wait for an update) later.
+          #newsboat
           nmap
           nodejs_24
           podman
           qemu
           ripgrep
           rustup
+          sd
           socat
           terraform
           terraform-ls
