@@ -58,6 +58,19 @@
       pkgs = import nixpkgs {
         system = system;
         config.allowUnfree = true;
+        overlays = [
+          (_final: prev: {
+            # libc++ 20 rejects function-reference deleters in this code path.
+            newsboat = prev.newsboat.overrideAttrs (old: {
+              postPatch =
+                (old.postPatch or "")
+                + prev.lib.optionalString prev.stdenv.hostPlatform.isDarwin ''
+                  substituteInPlace src/ocnewsapi.cpp \
+                    --replace-fail 'decltype(*json_object_put)' 'decltype(&json_object_put)'
+                '';
+            });
+          })
+        ];
       };
 
       # Pin kubectl to a specific nixpkgs revision and use it consistently
@@ -88,9 +101,7 @@
           k9s
           kubectl
           kubernetes-helm
-          # the package newsboat is broken in unstable channel will figure out how to fix (or just
-          # wait for an update) later.
-          #newsboat
+          newsboat
           nmap
           nodejs_24
           podman
