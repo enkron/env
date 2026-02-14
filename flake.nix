@@ -88,6 +88,7 @@
           claude-code
           codex
           delta
+          du-dust
           fd
           fzf
           git-lfs
