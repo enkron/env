@@ -108,6 +108,7 @@
           podman
           qemu
           ripgrep
+          rumdl
           rustup
           sd
           socat
