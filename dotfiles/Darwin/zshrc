@@ -14,14 +14,15 @@ export LSCOLORS=BxAhHxDxCxegedabagaced
 export EDITOR=vim
 
 #setopt EXTENDED_HISTORY # Adds timestamps and exit statuses to each entry saved in HISTFILE
-setopt HIST_APPEND # Append history, instead of overwriting it
+setopt APPEND_HISTORY # Append history, instead of overwriting it
+setopt HIST_FCNTL_LOCK # Use file locking to avoid history corruption in parallel shells
 setopt HIST_IGNORE_ALL_DUPS # Ignore duplicate commands
 setopt HIST_IGNORE_SPACE # Ignore commands that start with a space
 setopt HIST_REDUCE_BLANKS # Trim excess blanks
 setopt HIST_SAVE_NO_DUPS # Prevent saving duplicates to history
 setopt HIST_VERIFY # Ask for confirmation before executing a history-expanded command
 setopt INC_APPEND_HISTORY # Write to the history file after each command
-setopt SHARE_HISTORY # Share history between sessions
+unsetopt SHARE_HISTORY # Keep in-memory history independent per shell session
 
 # Ensure immediate history updates
 #precmd() {
