@@ -3,6 +3,9 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000 # History in memory
 SAVEHIST=10000 # Lines in the HISTFILE
 
+# tmux starts login zsh, so macOS path_helper can move /usr/bin ahead of Nix.
+export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+
 # Set shell prompt
 PS1="%F{red}»%f "
 
