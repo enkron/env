@@ -92,6 +92,7 @@
                 dust
                 fd
                 fzf
+                git
                 git-lfs
                 gnupg
                 go
@@ -99,6 +100,7 @@
                 gopls
                 groovy
                 hubble
+                jq
                 jujutsu
                 k9s
                 kubectl
@@ -116,6 +118,7 @@
                 terraform
                 terraform-ls
                 tmux
+                vim
                 yq-go
                 zig
                 zls
