@@ -140,8 +140,6 @@
       packages = forAllSystems sysPkgs;
 
       # Formatter used by `nix fmt`.
-      # `nixfmt-tree` gives `nix fmt` repo-aware default behavior instead of
-      # dropping into stdin mode when no paths are forwarded.
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
       # Lightweight checks suitable for CI: ensure bootstrap script parses.
