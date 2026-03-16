@@ -2,3 +2,6 @@ browser "open %u"
 
 bind k everywhere up
 bind j everywhere down
+
+bind ^D everywhere halfpagedown
+bind ^U everywhere halfpageup
