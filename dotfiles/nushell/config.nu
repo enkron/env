@@ -17,6 +17,43 @@ $env.config.completions.partial = true
 $env.config.completions.algorithm = "prefix"
 $env.config.completions.use_ls_colors = true
 
+# Completion menu colours (aligned with Vim Pmenu/PmenuSel and tmux palette)
+$env.config.menus = [
+    {
+        name: completion_menu
+        only_buffer_difference: false
+        marker: ""
+        type: {
+            layout: columnar
+            columns: 4
+            col_padding: 2
+        }
+        style: {
+            text: "#666666"
+            selected_text: { attr: b, fg: "#96653a" }
+            description_text: "#666666"
+            match_text: { attr: b, fg: "#ffffff" }
+            selected_match_text: { attr: b, fg: "#ffffff" }
+        }
+    }
+    {
+        name: history_menu
+        only_buffer_difference: true
+        marker: ""
+        type: {
+            layout: list
+            page_size: 10
+        }
+        style: {
+            text: "#666666"
+            selected_text: { attr: b, fg: "#96653a" }
+            description_text: "#666666"
+            match_text: { attr: b, fg: "#ffffff" }
+            selected_match_text: { attr: b, fg: "#ffffff" }
+        }
+    }
+]
+
 # Emacs keybinding mode (Zsh: bindkey -e)
 $env.config.edit_mode = "emacs"
 
