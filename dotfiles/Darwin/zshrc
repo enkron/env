@@ -11,7 +11,7 @@ PS1="%F{red}»%f "
 
 # Customize `ls` colours
 export CLICOLOR=1
-export LSCOLORS=BxAhHxDxCxegedabagaced
+export LSCOLORS=ExGxFxDxCxDbDaabagacBd
 
 # Configure default editor to Vim
 export EDITOR=vim
