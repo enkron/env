@@ -108,6 +108,7 @@
                 newsboat
                 nmap
                 nodejs_24
+                nushell
                 podman
                 qemu
                 ripgrep
