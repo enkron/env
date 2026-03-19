@@ -137,6 +137,17 @@ mkdir -p "${HOME}/.newsboat"
 ln -sf "${REPOS_HOME}/env/dotfiles/newsboat/urls" "${HOME}/.newsboat/urls"
 ln -sf "${REPOS_HOME}/env/dotfiles/newsboat/config" "${HOME}/.newsboat/config"
 
+# Nushell configuration
+if [ "$(uname -s)" = 'Darwin' ]; then
+    nushell_config_path="${HOME}/Library/Application Support/nushell"
+else
+    nushell_config_path="${HOME}/.config/nushell"
+fi
+log info "Linking Nushell configuration"
+mkdir -p "${nushell_config_path}"
+ln -sf "${REPOS_HOME}/env/dotfiles/nushell/env.nu" "${nushell_config_path}/env.nu"
+ln -sf "${REPOS_HOME}/env/dotfiles/nushell/config.nu" "${nushell_config_path}/config.nu"
+
 if command -v nix >/dev/null 2>&1; then
     log warning "nix already installed, skipping installation step"
 else
