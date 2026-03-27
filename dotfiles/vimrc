@@ -212,8 +212,9 @@ enddef
 
 command! PluginsUpdate call PluginsUpdate()
 
-# Disable some languages inside vim-polyglot (must be done before loading it)
-g:polyglot_disabled = ['zig', 'rust', 'go']
+# Disable languages handled by dedicated plugins or where polyglot's
+# non-standard syntax groups conflict with the colorscheme
+g:polyglot_disabled = ['zig', 'rust', 'go', 'markdown']
 # Keep vim-lsp-settings installed for optional helpers but suppress its auto
 # registrations/suggestions since servers below handle everything.
 g:lsp_settings_whitelist = []
