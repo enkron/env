@@ -696,6 +696,9 @@ nmap <leader>ee :setl undoreload=0 \|edit<CR>
 # Source ~/.vimrc
 nmap <leader>rc :source $MYVIMRC<CR>:nohlsearch<CR>
 
+# Fix nearest misspelling and return to cursor position
+inoremap <C-l> <C-g>u<Esc>[s1z=`]a<C-g>u
+
 # LSP key mappings ------------------------------------------------ {{{
 # Basic IDE-style navigation using vim-lsp
 
