@@ -60,19 +60,7 @@
           pkgs = import nixpkgs {
             system = system;
             config.allowUnfree = true;
-            overlays = [
-              (_final: prev: {
-                # libc++ 20 rejects function-reference deleters in this code path.
-                newsboat = prev.newsboat.overrideAttrs (old: {
-                  postPatch =
-                    (old.postPatch or "")
-                    + prev.lib.optionalString prev.stdenv.hostPlatform.isDarwin ''
-                      substituteInPlace src/ocnewsapi.cpp \
-                        --replace-fail 'decltype(*json_object_put)' 'decltype(&json_object_put)'
-                    '';
-                });
-              })
-            ];
+            overlays = [];
           };
         in
         {
