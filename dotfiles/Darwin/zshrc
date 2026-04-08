@@ -12,6 +12,8 @@ PS1="%F{red}»%f "
 # Customize `ls` colours
 export CLICOLOR=1
 export LSCOLORS=ExGxFxDxCxDbDaabagacBd
+# GNU-style equivalent of LSCOLORS (used by zsh completion colouring)
+export LS_COLORS="di=1;34:ln=1;36:so=1;35:pi=1;33:ex=1;32:bd=1;33;41:cd=1;33;40:su=30;41:sg=30;46:tw=30;42:ow=1;31;43"
 
 # Configure default editor to Vim
 export EDITOR=vim
@@ -48,7 +50,7 @@ zstyle ':completion::complete:*' cache-path "$HOME/.zsh/cache"
 
 # Show completion menu when multiple options exist
 zstyle ':completion:*' menu select
-zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # Fast completion (no description)
 #zstyle ':completion:*' verbose no
