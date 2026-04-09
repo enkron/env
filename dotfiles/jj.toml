@@ -7,18 +7,79 @@ color = "auto"
 editor = "vim"
 
 [colors]
-# Some examples of what's possible to colourize
+# ecs.vim-derived palette
 # https://github.com/jj-vcs/jj/blob/main/cli/src/config/colors.toml
-"change_id" = { fg = "default", bg = "default", bold = true }
 
-"description placeholder" = { fg = "#444444", bg = "default", bold = false, italic = true }
-"working_copy description placeholder" = { fg = "#444444", bg = "default", bold = false, italic = true }
-"working_copy empty" = { fg = "#444444", bg = "default", bold = false, italic = true }
-"working_copy empty description placeholder" = { fg = "#444444", bg = "default", bold = false, italic = true }
-#"working_copy author" = { fg = "#9FBBEB" }
+# --- Log: base colors (non-working-copy revisions) ---
+change_id         = { fg = "#96653a", bold = true }   # copper accent — the primary identifier
+commit_id         = "#6e6ec4"                          # muted purple — a reference constant
+author            = "#3972a8"                          # steel blue — metadata
+committer         = "#3972a8"
+timestamp         = "#3f6969"                          # dark teal — structural metadata
+local_bookmarks   = "#3333ff"                          # deep blue — named pointers
+remote_bookmarks  = "#3333ff"
+tag               = "#6e6ec4"
+tags              = "#6e6ec4"
+git_ref           = "#3f6969"
+git_refs          = "#3f6969"
+git_head          = "#3f6969"
 
-"author" = { fg = "#9FBBEB", bg = "default" }
-"bookmark" = { fg = "#5C88CB", bg = "default" }
-"bookmarks" = { fg = "#5C88CB", bg = "default" }
+separator         = "#666666"                          # comment gray
+elided            = "#666666"
+rest              = "#666666"
+empty             = { fg = "#666666", italic = true }
+root              = "#666666"
+"empty description placeholder" = { fg = "#444444", italic = true }
 
-"diff token" = { underline = false }
+conflict              = "#990000"                      # dark red
+conflict_description  = "#965949"                      # reddish brown
+"conflict_description difficult" = "#990000"
+divergent             = "#965949"
+"mutable divergent"            = "#990000"
+"mutable divergent change_id"  = "#990000"
+placeholder           = "#990000"
+
+"description placeholder"                     = { fg = "#444444", italic = true }
+"working_copy description placeholder"        = { fg = "#444444", italic = true }
+"working_copy empty"                          = { fg = "#444444", italic = true }
+"working_copy empty description placeholder"  = { fg = "#444444", italic = true }
+
+# --- Log: working copy (brighter variants) ---
+working_copy.bold = true
+"working_copy change_id"          = { fg = "#b88050", bold = true }
+"working_copy commit_id"          = "#9090dd"
+"working_copy author"             = "#5c9bd0"
+"working_copy committer"          = "#5c9bd0"
+"working_copy timestamp"          = "#5a9090"
+"working_copy bookmark"           = "#5555ff"
+"working_copy bookmarks"          = "#5555ff"
+"working_copy local_bookmarks"    = "#5555ff"
+"working_copy remote_bookmarks"   = "#5555ff"
+"working_copy tag"                = "#9090dd"
+"working_copy tags"               = "#9090dd"
+"working_copy git_ref"            = "#5a9090"
+"working_copy git_refs"           = "#5a9090"
+"working_copy working_copies"     = "#5a9090"
+"working_copy divergent"          = "#965949"
+"working_copy mutable divergent"           = "#cc2222"
+"working_copy mutable divergent change_id" = "#cc2222"
+"working_copy conflict"           = "#cc2222"
+"working_copy placeholder"        = "#cc2222"
+
+# --- Diff ---
+"diff header"       = "#96653a"          # copper accent for file headers
+"diff file_header"  = { bold = true }
+"diff hunk_header"  = "#3f6969"          # teal, like Type
+"diff removed"      = { fg = "red" }
+"diff added"        = { fg = "green" }
+"diff modified"     = "#3972a8"          # steel blue
+"diff renamed"      = "#3972a8"
+"diff copied"       = "#3f6969"
+"diff empty"        = "#666666"
+"diff binary"       = "#666666"
+"diff token"        = { underline = false }
+
+# --- Errors/warnings ---
+"error heading"         = { fg = "#990000", bold = true }
+"warning heading"       = { fg = "#96653a", bold = true }  # copper instead of yellow
+"hint heading"          = { fg = "#3972a8", bold = true }   # steel blue instead of cyan
