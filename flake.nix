@@ -104,6 +104,7 @@
                 rustup
                 sd
                 socat
+                talosctl
                 terraform
                 terraform-ls
                 tmux
