@@ -12,9 +12,10 @@
     # (this version doesn't support python3.10). Therefore pinning nixpkgs url to the previous hash
     nixpkgs-sphinx747.url = "github:NixOS/nixpkgs/a684c58d46ebbede49f280b653b9e56100aa3877";
 
-    # Pinned to the commit where talosctl v1.9.5 is available.
-    # Talos v1.12.6 machined hangs on QEMU aarch64/HVF (Apple Silicon).
-    nixpkgs-talos195.url = "github:NixOS/nixpkgs/3e2cf88148e732abc1d259286123e06a9d8c964a";
+    # Talos v1.12.6 hang on QEMU aarch64/HVF was caused by missing
+    # gic-version=max and pflash firmware flags, not a Talos bug.
+    # talosctl now tracks nixpkgs-unstable (currently v1.12.6).
+    # nixpkgs-talos195.url = "github:NixOS/nixpkgs/3e2cf88148e732abc1d259286123e06a9d8c964a";
   };
 
   outputs =
@@ -23,7 +24,6 @@
       nixpkgs,
       nixpkgs-poetry171,
       nixpkgs-sphinx747,
-      nixpkgs-talos195,
     }:
     let
       # Use the standard set of platforms that flakes expose by default.
@@ -67,7 +67,6 @@
             config.allowUnfree = true;
             overlays = [];
           };
-          talosPkgs = nixpkgs-talos195.legacyPackages.${system};
         in
         {
           enk-coreutils = pkgs.buildEnv {
@@ -110,7 +109,7 @@
                 rustup
                 sd
                 socat
-                talosPkgs.talosctl
+                talosctl
                 terraform
                 terraform-ls
                 tmux

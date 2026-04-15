@@ -48,28 +48,11 @@
         "type": "github"
       }
     },
-    "nixpkgs-talos195": {
-      "locked": {
-        "lastModified": 1745533402,
-        "narHash": "sha256-gDcMJdnBJg7ncP+eqENwH9pOW0azcCOW5y50N+jKdL8=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "3e2cf88148e732abc1d259286123e06a9d8c964a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "3e2cf88148e732abc1d259286123e06a9d8c964a",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
         "nixpkgs-poetry171": "nixpkgs-poetry171",
-        "nixpkgs-sphinx747": "nixpkgs-sphinx747",
-        "nixpkgs-talos195": "nixpkgs-talos195"
+        "nixpkgs-sphinx747": "nixpkgs-sphinx747"
       }
     }
   },
