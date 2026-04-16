@@ -2,8 +2,8 @@
   description = "Default profiles with the development shell";
 
   inputs = {
-    #nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05"; # Stable channel
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # Nightly channel
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     # Pinned to the commit where poetry v1.7.1 is available
     nixpkgs-poetry171.url = "github:NixOS/nixpkgs/087f43a1fa052b17efd441001c4581813c34bc19";
@@ -11,17 +11,13 @@
     # In order for python310 package to work correctly `sphinx` dependency must be < 8.2.3 version
     # (this version doesn't support python3.10). Therefore pinning nixpkgs url to the previous hash
     nixpkgs-sphinx747.url = "github:NixOS/nixpkgs/a684c58d46ebbede49f280b653b9e56100aa3877";
-
-    # Talos v1.12.6 hang on QEMU aarch64/HVF was caused by missing
-    # gic-version=max and pflash firmware flags, not a Talos bug.
-    # talosctl now tracks nixpkgs-unstable (currently v1.12.6).
-    # nixpkgs-talos195.url = "github:NixOS/nixpkgs/3e2cf88148e732abc1d259286123e06a9d8c964a";
   };
 
   outputs =
     {
       self,
       nixpkgs,
+      nixpkgs-stable,
       nixpkgs-poetry171,
       nixpkgs-sphinx747,
     }:
@@ -62,71 +58,80 @@
         system:
         let
           # Allow packages with non-free licensing scheme
-          pkgs = import nixpkgs {
+          unstable = import nixpkgs {
             system = system;
             config.allowUnfree = true;
-            overlays = [];
+          };
+          stable = import nixpkgs-stable {
+            system = system;
+            config.allowUnfree = true;
           };
         in
         {
-          enk-coreutils = pkgs.buildEnv {
-            name = "Personal toolbox";
+          enk-coreutils-stable = stable.buildEnv {
+            name = "enk-coreutils-stable";
+            paths = with stable; [
+              bat
+              btop
+              cdrtools
+              delta
+              dust
+              fd
+              fzf
+              git
+              git-lfs
+              gnupg
+              groovy
+              jq
+              newsboat
+              nmap
+              nushell
+              podman
+              qemu
+              ripgrep
+              sd
+              socat
+              tmux
+              vim
+              yq-go
+              zstd
+            ];
+          };
+
+          enk-coreutils-unstable = unstable.buildEnv {
+            name = "enk-coreutils-unstable";
             paths =
-              with pkgs;
+              with unstable;
               [
                 awscli2
-                bat
-                btop
-                cdrtools
                 cilium-cli
                 claude-code
                 codex
-                delta
-                dust
-                fd
-                fzf
-                git
-                git-lfs
-                gnupg
                 go
                 gofumpt
                 gopls
-                groovy
                 hubble
-                jq
                 jujutsu
                 k9s
                 kubectl
                 kubernetes-helm
-                newsboat
-                nmap
                 nodejs_24
-                nushell
-                podman
-                qemu
-                ripgrep
                 rumdl
                 rustup
-                sd
-                socat
                 talosctl
                 terraform
                 terraform-ls
-                tmux
-                vim
-                yq-go
                 zig
                 zls
-                zstd
               ]
-              ++ pkgs.lib.optionals (system == "aarch64-darwin") [
+              ++ unstable.lib.optionals (system == "aarch64-darwin") [
                 container
               ];
           };
 
-          enk-coreutils-dev = pkgs.buildEnv {
+          enk-coreutils-dev = unstable.buildEnv {
             name = "Experemental and/or temporary toolchains";
-            paths = with pkgs; [
+            paths = with unstable; [
               chafa
             ];
           };
