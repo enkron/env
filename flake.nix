@@ -91,7 +91,6 @@
               ripgrep
               sd
               socat
-              tmux
               vim
               yq-go
               zstd
@@ -121,6 +120,7 @@
                 talosctl
                 terraform
                 terraform-ls
+                tmux
                 zig
                 zls
               ]
