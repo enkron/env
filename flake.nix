@@ -75,21 +75,26 @@
               btop
               cdrtools
               delta
+              difftastic
               dust
               fd
               git
               git-lfs
               gnupg
               groovy
+              hyperfine
               jq
               newsboat
               nmap
               nushell
               podman
+              procs
               qemu
               ripgrep
               sd
               socat
+              tealdeer
+              tokei
               vim
               yq-go
               zstd
@@ -114,6 +119,7 @@
                 k9s
                 kubectl
                 kubernetes-helm
+                nixd
                 nodejs_24
                 rumdl
                 rustup
