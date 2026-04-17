@@ -94,6 +94,7 @@
               sd
               socat
               tokei
+              tree
               vim
               yq-go
               zoxide
