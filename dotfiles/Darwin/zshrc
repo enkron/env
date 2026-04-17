@@ -75,6 +75,13 @@ if command -v fzf >/dev/null 2>&1; then
     . <(fzf --zsh)
 fi
 
+# zoxide: a smarter cd that ranks directories by frecency
+# https://github.com/ajeetdsouza/zoxide
+# `z <pattern>` jumps to the best-matching tracked dir; `zi` is interactive (fzf).
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
+
 # HashiCorp Terraform
 # https://developer.hashicorp.com/terraform
 if command -v terraform >/dev/null 2>&1; then

@@ -96,6 +96,7 @@
               tokei
               vim
               yq-go
+              zoxide
               zstd
             ];
           };
