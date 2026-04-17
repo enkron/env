@@ -93,7 +93,6 @@
               ripgrep
               sd
               socat
-              tealdeer
               tokei
               vim
               yq-go
@@ -124,6 +123,7 @@
                 rumdl
                 rustup
                 talosctl
+                tealdeer
                 terraform
                 terraform-ls
                 tmux
