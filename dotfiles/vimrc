@@ -537,12 +537,25 @@ def g:RegisterPylsp()
     \ })
 enddef
 
+def g:RegisterNixd()
+    if !executable('nixd')
+        return
+    endif
+    lsp#register_server({
+    \   'name': 'nixd',
+    \   'cmd': ['nixd'],
+    \   'root_uri': function('LspRootUri', [['flake.nix', 'shell.nix', 'default.nix', '.git/']]),
+    \   'allowlist': ['nix'],
+    \ })
+enddef
+
 def g:RegisterAllLspServers()
     g:RegisterZls()
     g:RegisterGopls()
     g:RegisterTerraformLs()
     g:RegisterRustAnalyzer()
     g:RegisterPylsp()
+    g:RegisterNixd()
 enddef
 
 augroup custom_lsp_servers
