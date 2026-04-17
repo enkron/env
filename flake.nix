@@ -77,7 +77,6 @@
               delta
               dust
               fd
-              fzf
               git
               git-lfs
               gnupg
@@ -106,6 +105,7 @@
                 cilium-cli
                 claude-code
                 codex
+                fzf
                 go
                 gofumpt
                 gopls
