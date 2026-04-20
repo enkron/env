@@ -96,6 +96,7 @@
               tokei
               tree
               vim
+              w3m
               yq-go
               zoxide
               zstd
