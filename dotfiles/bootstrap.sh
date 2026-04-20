@@ -137,6 +137,10 @@ mkdir -p "${HOME}/.newsboat"
 ln -sf "${REPOS_HOME}/env/dotfiles/newsboat/urls" "${HOME}/.newsboat/urls"
 ln -sf "${REPOS_HOME}/env/dotfiles/newsboat/config" "${HOME}/.newsboat/config"
 
+log info "Linking w3m configuration"
+mkdir -p "${HOME}/.w3m"
+ln -sf "${REPOS_HOME}/env/dotfiles/w3m/keymap" "${HOME}/.w3m/keymap"
+
 # Nushell configuration
 if [ "$(uname -s)" = 'Darwin' ]; then
     nushell_config_path="${HOME}/Library/Application Support/nushell"

@@ -1,0 +1,42 @@
+# Vim-style key bindings for w3m
+# See /etc/w3m/keymap.default (or w3m source) for the full function list.
+
+# Motion
+keymap  h       MOVE_LEFT
+keymap  j       MOVE_DOWN
+keymap  k       MOVE_UP
+keymap  l       MOVE_RIGHT
+keymap  w       NEXT_WORD
+keymap  b       PREV_WORD
+keymap  0       LINE_BEGIN
+keymap  $       LINE_END
+keymap  gg      BEGIN
+keymap  G       END
+keymap  ^F      NEXT_PAGE
+keymap  ^B      PREV_PAGE
+keymap  ^D      NEXT_HALF_PAGE
+keymap  ^U      PREV_HALF_PAGE
+
+# Links / navigation
+keymap  u       BACK
+keymap  H       HISTORY
+keymap  o       GOTO
+keymap  O       GOTO_RELATIVE
+keymap  r       RELOAD
+
+# Tabs / buffers
+keymap  gt      NEXT_TAB
+keymap  gT      PREV_TAB
+keymap  t       NEW_TAB
+keymap  x       CLOSE_TAB
+
+# Search
+keymap  /       SEARCH
+keymap  ?       SEARCH_BACK
+keymap  n       SEARCH_NEXT
+keymap  N       SEARCH_PREV
+
+# Misc
+keymap  :       COMMAND
+keymap  ZZ      EXIT
+keymap  q       QUIT
