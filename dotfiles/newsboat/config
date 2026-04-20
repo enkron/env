@@ -1,7 +1,7 @@
 # Newsboat configuration
 # Docs: https://newsboat.org/releases/2.34/docs/newsboat.html
 
-# ── Fetching ────────────────────────────────────────────────────────────────
+# Fetching
 refresh-on-startup            yes
 auto-reload                   yes
 reload-time                   30
@@ -9,7 +9,7 @@ reload-threads                8
 download-retries              3
 download-timeout              30
 
-# ── UI ──────────────────────────────────────────────────────────────────────
+# UI
 confirm-exit                  yes
 cleanup-on-quit               yes
 show-read-feeds               no
@@ -21,38 +21,34 @@ datetime-format               "%Y-%m-%d %H:%M"
 text-width                    100
 scrolloff                     5
 
-# ── Storage ─────────────────────────────────────────────────────────────────
+# Storage
 save-path                     "~/Documents/newsboat"
 max-items                     500
 keep-articles-days            60
 
-# ── Browser ─────────────────────────────────────────────────────────────────
+# Browser
 # Default: terminal browser. Escape to GUI via macro `,o`.
 browser                       "w3m %u"
 
-# ── Keybindings (vim-style) ─────────────────────────────────────────────────
+# Keybindings
 bind-key j                    down
 bind-key k                    up
-bind-key l                    open
-bind-key h                    quit
 bind-key ^D                   halfpagedown
 bind-key ^U                   halfpageup
 bind-key g                    home
 bind-key G                    end
-bind-key n                    next-unread
-bind-key N                    prev-unread
 bind-key /                    open-search
-bind-key u                    toggle-article-read
+bind-key f                    article-feed
 bind-key S                    save
 
-# ── Macros (prefix: `,` — press `,o` or `,g`) ───────────────────────────────
+# Macros (prefix: `,`)
 # ,o — open current URL in macOS default browser
 macro o set browser "open %u" ; open-in-browser ; set browser "w3m %u" -- "open in GUI browser"
 
 # ,g — full article rendered via w3m -dump and paginated through bat
 macro g set browser "w3m -dump %u | bat --paging=always --style=plain --language=md" ; open-in-browser ; set browser "w3m %u" -- "read article (w3m + bat)"
 
-# ── Colors ──────────────────────────────────────────────────────────────────
+# Colors
 color background              default  default
 color listnormal              default  default
 color listnormal_unread       color15  default  bold
