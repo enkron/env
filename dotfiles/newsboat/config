@@ -12,8 +12,8 @@ download-timeout              30
 # UI
 confirm-exit                  yes
 cleanup-on-quit               yes
-show-read-feeds               no
-show-read-articles            no
+show-read-feeds               yes
+show-read-articles            yes
 goto-next-feed                no
 article-sort-order            date-desc
 feed-sort-order               unreadarticlecount-asc
