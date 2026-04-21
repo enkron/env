@@ -24,7 +24,7 @@ scrolloff                     5
 # Storage
 save-path                     "~/Documents/newsboat"
 max-items                     500
-keep-articles-days            60
+keep-articles-days            730
 
 # Browser
 # Default: terminal browser. Escape to GUI via macro `,o`.
