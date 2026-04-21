@@ -157,6 +157,11 @@ clear_above() {
     zle redisplay
 }
 
+# Release Ctrl+Y for userland: the tty's dsusp (default ^Y on macOS) queues
+# a deferred SIGTSTP on the next read. Ctrl+Z already covers job suspension,
+# so unbinding dsusp lets Ctrl+Y reach the shell and interactive programs.
+[[ -t 0 ]] && stty dsusp undef
+
 # Explicitly set default Emacs mode in a shell.
 # Some utilities potentially can:
 # 1. override default shell's key bindings;
