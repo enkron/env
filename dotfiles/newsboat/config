@@ -35,8 +35,8 @@ bind-key j                    down
 bind-key k                    up
 bind-key ^D                   halfpagedown
 bind-key ^U                   halfpageup
-bind-key ^E                   down
-bind-key ^Y                   up
+bind-key ^Y                   down
+bind-key ^E                   up
 bind-key g                    home
 bind-key G                    end
 bind-key /                    open-search
