@@ -1,29 +1,30 @@
 # Tags (after URL) let you filter feeds with `t` in newsboat.
 # Schema: <url> "tag1" "tag2" ...
 
-# ── Kubernetes & cloud-native ───────────────────────────────────────────────
+# Kubernetes & cloud-native
 https://kubernetes.io/feed.xml                                "kubernetes" "cloud-native"
 https://k8s.io/docs/reference/issues-security/official-cve-feed/feed.xml  "kubernetes" "security"
 https://lwkd.info/feed.xml                                    "kubernetes"
 https://www.cncf.io/blog/feed/                                "cloud-native"
 https://thenewstack.io/feed/                                  "cloud-native" "devops"
 
-# ── SRE & DevOps ────────────────────────────────────────────────────────────
+# Platform Engineering, SRE & DevOps
 https://sreweekly.com/rss                                     "sre"
 https://www.infoq.com/feed/devops/                            "devops" "sre"
 
-# ── Languages ───────────────────────────────────────────────────────────────
+# Languages
 https://ziglang.org/news/index.xml                            "zig" "languages"
 https://ziglang.org/devlog/index.xml                          "zig" "languages"
 
-# ── Nix ─────────────────────────────────────────────────────────────────────
+# Nix
 https://nixos.org/blog/newsletters-rss.xml                    "nix"
 https://nixos.org/blog/announcements-rss.xml                  "nix"
 https://nixos.org/blog/stories-rss.xml                        "nix"
 
-# ── Dev tooling ─────────────────────────────────────────────────────────────
+# Dev tooling
 https://blog.codeberg.org/feeds/all.atom.xml                  "dev-tooling"
 
-# ── Science ─────────────────────────────────────────────────────────────────
-https://spectrum.ieee.org/customfeeds/feed/all-topics/rss     "science"
+# Science & Engineering
+https://spectrum.ieee.org/customfeeds/feed/all-topics/rss     "science" "engineering"
+https://lawsofsoftwareengineering.com/index.xml               "engineering"
 https://scitechdaily.com/feed                                 "science"
