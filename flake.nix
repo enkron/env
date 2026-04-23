@@ -71,7 +71,6 @@
           enk-coreutils-stable = stable.buildEnv {
             name = "enk-coreutils-stable";
             paths = with stable; [
-              bat
               btop
               cdrtools
               delta
@@ -109,6 +108,7 @@
               with unstable;
               [
                 awscli2
+                bat
                 cilium-cli
                 claude-code
                 codex
