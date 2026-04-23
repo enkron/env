@@ -4,5 +4,4 @@ set -euo pipefail
 nix flake update \
   && jj desc -m='chore(nix): update Flake locked nixpkgs hash' \
   && jj bookmark move master --to=@ \
-  && jj new \
-  && jj git push -r=@-
+  && jj new
