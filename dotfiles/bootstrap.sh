@@ -154,7 +154,9 @@ ln -sf "${REPOS_HOME}/env/dotfiles/nushell/config.nu" "${nushell_config_path}/co
 
 log info "Linking Claude Code configuration"
 mkdir -p "${HOME}/.claude"
-ln -sf "${REPOS_HOME}/env/dotfiles/CLAUDE.md" "${HOME}/.claude/CLAUDE.md"
+ln -sf "${REPOS_HOME}/env/dotfiles/claude/CLAUDE.md" "${HOME}/.claude/CLAUDE.md"
+ln -sf "${REPOS_HOME}/env/dotfiles/claude/settings.json" "${HOME}/.claude/settings.json"
+ln -sf "${REPOS_HOME}/env/scripts/claude/statusline.sh" "${HOME}/.claude/statusline.sh"
 
 if command -v nix >/dev/null 2>&1; then
     log warning "nix already installed, skipping installation step"

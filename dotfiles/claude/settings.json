@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "defaultMode": "default"
+  },
+  "model": "opus[1m]",
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "terraform@claude-plugins-official": true
+  },
+  "effortLevel": "high",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  }
+}
