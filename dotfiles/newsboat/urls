@@ -16,10 +16,33 @@ https://www.infoq.com/feed/devops/                            "devops" "sre"
 https://ziglang.org/news/index.xml                            "zig" "languages"
 https://ziglang.org/devlog/index.xml                          "zig" "languages"
 
-# Nix
-https://nixos.org/blog/newsletters-rss.xml                    "nix"
-https://nixos.org/blog/announcements-rss.xml                  "nix"
-https://nixos.org/blog/stories-rss.xml                        "nix"
+# Nix / NixOS
+https://nixos.org/blog/feed.xml                               "nix"
+https://discourse.nixos.org/c/announcements/8.rss             "nix"
+https://www.tweag.io/rss.xml                                  "nix"
+https://github.com/NixOS/nixpkgs/releases.atom                "nix" "releases"
+https://lobste.rs/t/nix.rss                                   "nix"
+
+# Determinate Nix
+https://determinate.systems/rss.xml                           "nix" "determinate"
+https://github.com/DeterminateSystems/nix-installer/releases.atom  "nix" "determinate" "releases"
+
+# Immutable systems
+https://docs.projectbluefin.io/blog/atom.xml                  "immutable" "bluefin"
+https://vanillaos.org/feed.xml                                "immutable" "vanilla-os"
+https://microos.opensuse.org/feed.xml                         "immutable" "microos"
+https://guix.gnu.org/feeds/blog.atom                          "immutable" "guix"
+
+# Linux & systems newsletters
+https://lwn.net/headlines/rss                                 "linux" "newsletter"
+https://www.phoronix.com/rss.php                              "linux" "newsletter"
+https://news.opensuse.org/feed/                               "linux" "opensuse"
+
+# FreeBSD
+https://www.freebsd.org/news/feed.xml                         "freebsd" "bsd"
+https://www.freebsd.org/security/feed.xml                     "freebsd" "bsd" "security"
+https://freebsdfoundation.org/feed/                           "freebsd" "bsd"
+https://feeds.fireside.fm/bsdnow/rss                          "freebsd" "bsd" "podcast"
 
 # Dev tooling
 https://blog.codeberg.org/feeds/all.atom.xml                  "dev-tooling"
