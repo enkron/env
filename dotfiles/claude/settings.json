@@ -3,13 +3,14 @@
     "defaultMode": "default"
   },
   "model": "opus[1m]",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "terraform@claude-plugins-official": true
   },
   "effortLevel": "high",
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.sh"
-  }
+  "awaySummaryEnabled": false
 }
