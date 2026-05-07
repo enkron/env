@@ -16,8 +16,8 @@ keymap  ^F      NEXT_PAGE
 keymap  ^B      PREV_PAGE
 keymap  ^D      NEXT_HALF_PAGE
 keymap  ^U      PREV_HALF_PAGE
-keymap  ^Y      DOWN
-keymap  ^E      UP
+keymap  ^Y      UP
+keymap  ^E      DOWN
 
 # Links / navigation
 keymap  u       BACK
