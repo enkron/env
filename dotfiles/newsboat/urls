@@ -52,3 +52,14 @@ https://spectrum.ieee.org/customfeeds/feed/all-topics/rss     "science" "enginee
 https://lawsofsoftwareengineering.com/index.xml               "engineering"
 https://scitechdaily.com/feed                                 "science"
 https://cmr.berkeley.edu/feed.xml                             "science" "business"
+
+# Neuroscience
+https://www.nature.com/neuro.rss                              "neuroscience" "journal"
+https://www.nature.com/nrn.rss                                "neuroscience" "journal" "reviews"
+https://www.cell.com/neuron/current.rss                       "neuroscience" "journal"
+https://elifesciences.org/rss/subject/neuroscience.xml        "neuroscience" "journal"
+http://connect.biorxiv.org/biorxiv_xml.php?subject=neuroscience  "neuroscience" "preprints"
+https://api.quantamagazine.org/feed/                          "neuroscience" "science"
+https://www.thetransmitter.org/feed/                          "neuroscience"
+https://neurosciencenews.com/feed/                            "neuroscience" "news"
+https://www.sciencedaily.com/rss/mind_brain/neuroscience.xml  "neuroscience" "news"

@@ -1,0 +1,64 @@
+#!/usr/bin/env -S awk -f
+# Convert a newsboat `urls` file to OPML 2.0, grouping feeds into folders
+# by their first tag. `newsboat -e` itself emits flat OPML and drops tags,
+# so this script reads the source `urls` file directly.
+#
+# Usage:
+#   scripts/newsboat-urls-opml dotfiles/newsboat/urls > feeds.opml
+#   scripts/newsboat-urls-opml < dotfiles/newsboat/urls > feeds.opml
+#
+# Lines without tags land in an "Untagged" folder. Non-URL entries
+# (newsboat query/aliases) are skipped.
+
+function xmlesc(s) {
+    gsub(/&/,  "\\&amp;",  s)
+    gsub(/</,  "\\&lt;",   s)
+    gsub(/>/,  "\\&gt;",   s)
+    gsub(/"/,  "\\&quot;", s)
+    return s
+}
+
+BEGIN {
+    print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+    print "<opml version=\"2.0\">"
+    print "  <head><title>newsboat feeds</title></head>"
+    print "  <body>"
+    n_tags = 0
+}
+
+# Skip blanks and comments.
+/^[[:space:]]*(#|$)/ { next }
+
+# Skip non-URL entries (query feeds, aliases, etc.).
+$1 !~ /^https?:\/\// { next }
+
+{
+    url = $1
+    tag = "Untagged"
+    if (match($0, /"[^"]*"/)) {
+        tag = substr($0, RSTART + 1, RLENGTH - 2)
+    }
+    if (!(tag in seen)) {
+        seen[tag] = 1
+        order[++n_tags] = tag
+    }
+    feeds[tag] = feeds[tag] url "\n"
+}
+
+END {
+    for (i = 1; i <= n_tags; i++) {
+        tag  = order[i]
+        etag = xmlesc(tag)
+        printf "    <outline text=\"%s\" title=\"%s\">\n", etag, etag
+        n = split(feeds[tag], list, "\n")
+        for (j = 1; j <= n; j++) {
+            if (list[j] == "") continue
+            u = xmlesc(list[j])
+            printf "      <outline type=\"rss\" text=\"%s\" title=\"%s\" xmlUrl=\"%s\" htmlUrl=\"%s\"/>\n", \
+                u, u, u, u
+        }
+        print "    </outline>"
+    }
+    print "  </body>"
+    print "</opml>"
+}
