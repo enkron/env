@@ -8,8 +8,7 @@
     "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true,
-    "terraform@claude-plugins-official": true
+    "gopls-lsp@claude-plugins-official": true
   },
   "effortLevel": "high",
   "awaySummaryEnabled": false

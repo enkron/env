@@ -6,6 +6,9 @@ email = "srj.belokon@gmail.com"
 color = "auto"
 editor = "vim"
 
+[revset-aliases]
+'immutable_heads()' = 'trunk()'
+
 [colors]
 # ecs.vim-derived palette
 # https://github.com/jj-vcs/jj/blob/main/cli/src/config/colors.toml
