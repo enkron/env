@@ -9,6 +9,11 @@ editor = "vim"
 [revset-aliases]
 'immutable_heads()' = 'trunk()'
 
+[git]
+# Do not bring grabage from the Git repositories where there is a policy to not delete branches for
+# whatever reasons
+auto-local-bookmark = false
+
 [colors]
 # ecs.vim-derived palette
 # https://github.com/jj-vcs/jj/blob/main/cli/src/config/colors.toml
