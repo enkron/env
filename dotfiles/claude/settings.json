@@ -3,6 +3,9 @@
     "defaultMode": "default"
   },
   "model": "opus[1m]",
+  "worktree": {
+    "baseRef": "fresh"
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
@@ -11,5 +14,8 @@
     "gopls-lsp@claude-plugins-official": true
   },
   "effortLevel": "high",
-  "awaySummaryEnabled": false
+  "promptSuggestionEnabled": false,
+  "awaySummaryEnabled": false,
+  "editorMode": "normal",
+  "verbose": true
 }
