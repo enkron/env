@@ -94,6 +94,7 @@
               socat
               tokei
               tree
+              viddy
               vim
               w3m
               yq-go
