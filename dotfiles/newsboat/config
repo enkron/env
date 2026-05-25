@@ -15,7 +15,7 @@ cleanup-on-quit               yes
 show-read-feeds               yes
 show-read-articles            yes
 goto-next-feed                no
-article-sort-order            date-desc
+article-sort-order            date-asc
 feed-sort-order               unreadarticlecount-asc
 datetime-format               "%Y-%m-%d %H:%M"
 text-width                    100
