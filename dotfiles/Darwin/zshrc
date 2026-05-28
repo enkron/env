@@ -116,6 +116,9 @@ fi
 # https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
 if command -v kubectl >/dev/null 2>&1; then
     test -f "$HOME/.zsh/zfunc/_kubectl" || kubectl completion zsh > "$HOME/.zsh/zfunc/_kubectl"
+    if command -v difft >/dev/null 2>&1; then
+        export KUBECTL_EXTERNAL_DIFF='difft'
+    fi
 fi
 
 # Jujutsu VCS
