@@ -108,6 +108,7 @@
             paths =
               with unstable;
               [
+                argocd
                 awscli2
                 bat
                 cilium-cli
