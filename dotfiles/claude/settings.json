@@ -17,5 +17,6 @@
   "promptSuggestionEnabled": false,
   "awaySummaryEnabled": false,
   "editorMode": "normal",
-  "verbose": true
+  "verbose": true,
+  "tui": "fullscreen"
 }
