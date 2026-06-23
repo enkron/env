@@ -16,7 +16,7 @@
   "effortLevel": "high",
   "promptSuggestionEnabled": false,
   "awaySummaryEnabled": false,
+  "tui": "default",
   "editorMode": "normal",
-  "verbose": true,
-  "tui": "fullscreen"
+  "verbose": true
 }
