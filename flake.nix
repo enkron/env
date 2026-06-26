@@ -91,6 +91,7 @@
               qemu
               ripgrep
               sd
+              skopeo
               socat
               tokei
               tree
