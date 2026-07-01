@@ -2,7 +2,7 @@
   "permissions": {
     "defaultMode": "default"
   },
-  "model": "opus[1m]",
+  "model": "sonnet",
   "worktree": {
     "baseRef": "fresh"
   },

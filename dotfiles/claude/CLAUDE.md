@@ -7,12 +7,12 @@ by three profiles defined in the flake at
 - `enk-coreutils-stable`: pinned to nixos-25.05. Core CLI utilities: btop,
   cdrtools, delta, difftastic, dust, fd, git, git-lfs, gnupg, groovy,
   hyperfine, jq, newsboat, nmap, nushell, podman, procs, qemu, ripgrep, sd,
-  socat, tokei, tree, vim, w3m, yq-go, zoxide, zstd.
+  skopeo, socat, tokei, tree, viddy, vim, w3m, yq-go, zoxide, zstd.
 - `enk-coreutils-unstable`: tracks nixpkgs-unstable. Language toolchains and
-  fast-moving tools: awscli2, bat, cilium-cli, claude-code, codex, fzf, go,
-  gofumpt, gopls, hubble, jujutsu, k9s, kubectl, kubernetes-helm, nixd,
-  nodejs_24, rumdl, rustup, talosctl, tealdeer, terraform, terraform-ls,
-  tmux, zig, zls (plus `container` on aarch64-darwin).
+  fast-moving tools: argocd, awscli2, bat, cilium-cli, claude-code, codex,
+  fzf, go, gofumpt, gopls, hubble, jujutsu, k9s, kubectl, kubernetes-helm,
+  nixd, nodejs_24, rumdl, rustup, talosctl, tealdeer, terraform,
+  terraform-ls, tmux, zig, zls (plus `container` on aarch64-darwin).
 - `enk-coreutils-dev`: experimental/temporary toolchains (currently chafa).
 
 When using the Bash tool, prefer modern alternatives over legacy coreutils:
@@ -30,6 +30,7 @@ When using the Bash tool, prefer modern alternatives over legacy coreutils:
 | `diff` (semantic) | `difft`     | stable    | difftastic, syntax-aware diffs       |
 | `time` (bench)    | `hyperfine` | stable    | statistical command benchmarking     |
 | `wc -l` (code)    | `tokei`     | stable    | language-aware line counts           |
+| `watch`           | `viddy`     | stable    | modern watch, highlights diffs       |
 | `cd` history      | `zoxide`    | stable    | frecency-based directory jumping     |
 | `man` (quick)     | `tldr`      | unstable  | tealdeer, concise example pages      |
 | manual JSON parse | `jq`        | stable    | always available                     |
@@ -38,8 +39,11 @@ When using the Bash tool, prefer modern alternatives over legacy coreutils:
 Use `fzf` (unstable) for interactive selection when multiple results are
 expected and user input is appropriate.
 
-For version control, `git` is canonical; `jj` (jujutsu) is available when the
-user opts into it explicitly.
+For version control, prefer `jj` (jujutsu, unstable) where it can act as a
+drop-in for the needed operation. Fall back to `git` when `jj` cannot: it has
+no support for the Git LFS extension, and some git-specific commands or
+techniques (eg. interactive rebase workflows, certain hooks) have no `jj`
+equivalent in a git-backed repo.
 
 Do not fall back to legacy tools "for compatibility". This is a single-user
 workstation, not a portable script target.
