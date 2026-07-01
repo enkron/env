@@ -255,7 +255,9 @@ set fileformat=unix                  # store the file in a Unix format
 set textwidth=99                     # set global width default
 augroup MarkdownTextWidth
     autocmd!
-    autocmd FileType markdown setlocal textwidth=79 # specific width for markdown
+    # 'a' reflows the whole paragraph on every insert/delete so a word
+    # added mid-line rewraps immediately instead of overflowing textwidth
+    autocmd FileType markdown setlocal textwidth=79 formatoptions+=a
 augroup END
 set encoding=utf-8                   # set default encoding used inside Vim
 set ruler                            # show the cursor position all the time
@@ -375,7 +377,8 @@ g:ale_linters = {
 \}
 
 g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace']
+\   '*':        ['remove_trailing_lines', 'trim_whitespace'],
+\   'markdown': ['remove_trailing_lines', 'trim_whitespace', 'rumdl']
 \}
 # }}}
 
