@@ -2,7 +2,7 @@
   "permissions": {
     "defaultMode": "default"
   },
-  "model": "opus[1m]",
+  "model": "sonnet",
   "worktree": {
     "baseRef": "fresh"
   },
@@ -13,10 +13,11 @@
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "promptSuggestionEnabled": false,
   "awaySummaryEnabled": false,
   "tui": "default",
   "editorMode": "normal",
-  "verbose": true
+  "verbose": true,
+  "switchModelsOnFlag": true
 }
