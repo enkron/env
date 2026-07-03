@@ -48,6 +48,13 @@ equivalent in a git-backed repo.
 Do not fall back to legacy tools "for compatibility". This is a single-user
 workstation, not a portable script target.
 
+# Version control boundaries
+
+Claude must never create Git branches (or JJ bookmarks), commit changes, or
+push to a remote, under any circumstances. These actions are the user's
+sole responsibility. Claude may draft or suggest commit messages/descriptions
+but must never execute the commit (or branch/push) itself.
+
 # Typography
 
 Do not use Unicode hyphen/dash variants in documents or source code files
