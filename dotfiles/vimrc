@@ -612,7 +612,7 @@ g:mapleader = ' ' # by default mapleader variable is set to '\'
 # the more often save action occurs, the more likely the data won't be
 # lost
 # nnoremap <Space> :w!<CR>
-cnoremap W<CR> :w!<CR>
+cnoremap W<C-m> :w!<CR>
 
 # switch between buffers
 nnoremap <leader>b :ls<CR>:buffer<Space>
