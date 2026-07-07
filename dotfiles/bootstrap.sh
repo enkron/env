@@ -124,6 +124,10 @@ fi
 log info "Linking Tmux configuration"
 ln -sf "${REPOS_HOME}/env/dotfiles/tmux.conf" "${HOME}/.tmux.conf"
 
+log info "Linking Zellij configuration"
+mkdir -p "${HOME}/.config/zellij"
+ln -sf "${REPOS_HOME}/env/dotfiles/zellij.kdl" "${HOME}/.config/zellij/config.kdl"
+
 log info "Linking Jujutsu configuration"
 mkdir -p "${HOME}/.config/jj"
 ln -sf "${REPOS_HOME}/env/dotfiles/jj.toml" "${HOME}/.config/jj/config.toml"

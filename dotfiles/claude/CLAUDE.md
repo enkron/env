@@ -13,7 +13,8 @@ by three profiles defined in the flake at
   fzf, go, gofumpt, gopls, hubble, jujutsu, k9s, kubectl, kubernetes-helm,
   nixd, nodejs_24, rumdl, rustup, talosctl, tealdeer, terraform,
   terraform-ls, tmux, zig, zls (plus `container` on aarch64-darwin).
-- `enk-coreutils-dev`: experimental/temporary toolchains (currently chafa).
+- `enk-coreutils-dev`: experimental/temporary toolchains (currently chafa,
+  zellij).
 
 When using the Bash tool, prefer modern alternatives over legacy coreutils:
 

@@ -146,6 +146,7 @@
             name = "Experemental and/or temporary toolchains";
             paths = with unstable; [
               chafa
+              zellij
             ];
           };
         };
