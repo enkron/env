@@ -16,13 +16,21 @@
 //   - configuration reload binding: Zellij reloads the config automatically
 //   - tmux-resurrect/continuum: covered by built-in session serialization
 
-// Keybinding philosophy: prefix-only, as in tmux. The built-in "tmux" mode
-// acts as the prefix layer and Ctrl s is the ONLY key Zellij claims
-// globally; every other key (Ctrl h/p/n/b/t/o/g/q, Alt f/hjkl/...) reaches
-// the shell, so emacs/readline editing keeps working. Zellij's modes are
-// not removed, only moved behind the prefix:
-//   prefix Ctrl p pane | prefix Ctrl t tab | prefix Ctrl n resize
-//   prefix Ctrl o session | prefix m move | prefix Ctrl g lock
+// Keybinding philosophy: prefix-only, as in tmux, with two deliberate
+// exceptions. The built-in "tmux" mode acts as the prefix layer; Ctrl s
+// enters it and is claimed globally. Ctrl n is also claimed globally as a
+// native (unprefixed) shortcut straight into resize mode, since Zellij's
+// own resize mode (hjkl grow, HJKL shrink) is more capable than a
+// tmux-style prefix+direction imitation and worth losing the readline
+// "next history" binding it shadows. Locked mode gets the same unprefixed
+// treatment on Ctrl ] (both to enter from normal and to exit back from
+// locked), at effectively no readline cost: Ctrl ] is absent from zsh's
+// default keymap entirely and only maps to the obscure character-search
+// in bash. Every other key (Ctrl h/p/b/t/o/g/q, Alt f/hjkl/...) reaches
+// the shell, so emacs/readline editing keeps working otherwise. Zellij's
+// modes are not removed, only moved behind the prefix:
+//   prefix Ctrl p pane | prefix Ctrl t tab | Ctrl n resize (unprefixed)
+//   prefix Ctrl o session | prefix m move | Ctrl ] lock (unprefixed)
 //   prefix [ scroll | prefix w session manager
 // There is no quit binding (the default Ctrl q is dropped as a footgun):
 // quit by closing all panes or `zellij kill-session`; detach is prefix d.
@@ -30,9 +38,16 @@
 // not collide with the shell and are kept at Zellij defaults.
 keybinds clear-defaults=true {
     normal {
+        // Native, unprefixed: straight into Zellij's own resize mode
+        bind "Ctrl n" { SwitchToMode "Resize"; }
+        // Native, unprefixed: straight into Zellij's own locked mode.
+        // Ctrl ] is unbound in zsh's default keymap (absent from `bindkey`
+        // entirely) and only maps to the obscure character-search in bash,
+        // so this costs no meaningful readline binding.
+        bind "Ctrl ]" { SwitchToMode "Locked"; }
     }
     locked {
-        bind "Ctrl g" { SwitchToMode "Normal"; }
+        bind "Ctrl ]" { SwitchToMode "Normal"; }
     }
     resize {
         bind "Ctrl n" { SwitchToMode "Normal"; }
@@ -107,8 +122,8 @@ keybinds clear-defaults=true {
         bind "k" "Up" { ScrollUp; }
         bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
         bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
-        bind "d" { HalfPageScrollDown; }
-        bind "u" { HalfPageScrollUp; }
+        bind "d" "Ctrl d" { HalfPageScrollDown; }
+        bind "u" "Ctrl u" { HalfPageScrollUp; }
     }
     search {
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
@@ -116,8 +131,8 @@ keybinds clear-defaults=true {
         bind "k" "Up" { ScrollUp; }
         bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
         bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
-        bind "d" { HalfPageScrollDown; }
-        bind "u" { HalfPageScrollUp; }
+        bind "d" "Ctrl d" { HalfPageScrollDown; }
+        bind "u" "Ctrl u" { HalfPageScrollUp; }
         bind "n" { Search "down"; }
         bind "p" { Search "up"; }
         bind "c" { SearchToggleOption "CaseSensitivity"; }
@@ -208,12 +223,6 @@ keybinds clear-defaults=true {
         bind "l" "Right" { MoveFocus "Right"; SwitchToMode "Normal"; }
         bind "j" "Down" { MoveFocus "Down"; SwitchToMode "Normal"; }
         bind "k" "Up" { MoveFocus "Up"; SwitchToMode "Normal"; }
-        // prefix Ctrl h/j/k/l : pane resizing (one step per prefix press,
-        // as in tmux.conf; hold-and-repeat resizing lives in resize mode)
-        bind "Ctrl h" { Resize "Increase Left"; SwitchToMode "Normal"; }
-        bind "Ctrl l" { Resize "Increase Right"; SwitchToMode "Normal"; }
-        bind "Ctrl j" { Resize "Increase Down"; SwitchToMode "Normal"; }
-        bind "Ctrl k" { Resize "Increase Up"; SwitchToMode "Normal"; }
         // prefix g : synchronize panes (Zellij syncs all panes in the tab)
         bind "g" { ToggleActiveSyncTab; SwitchToMode "Normal"; }
         // prefix y : floating pane (toggle; created on first use, move and
@@ -226,13 +235,13 @@ keybinds clear-defaults=true {
         bind "d" { Detach; }
         bind "Space" { NextSwapLayout; }
         // Zellij modes, reachable only through the prefix (their default
-        // global Ctrl chords are not bound to keep readline keys free)
+        // global Ctrl chords are not bound to keep readline keys free).
+        // Resize is the one exception: Ctrl n is bound natively (unprefixed)
+        // in normal mode instead, so it is deliberately absent here.
         bind "Ctrl p" { SwitchToMode "Pane"; }
         bind "Ctrl t" { SwitchToMode "Tab"; }
-        bind "Ctrl n" { SwitchToMode "Resize"; }
         bind "Ctrl o" { SwitchToMode "Session"; }
         bind "m" { SwitchToMode "Move"; }
-        bind "Ctrl g" { SwitchToMode "Locked"; }
         // prefix w : session manager (like the tmux choose-window binding)
         bind "w" {
             LaunchOrFocusPlugin "session-manager" {
@@ -279,6 +288,15 @@ default_layout "compact"
 
 // tmux.conf: history-limit 100000
 scroll_buffer_size 100000
+
+// Default session name, reused (attached to) on subsequent launches instead
+// of spawning a new numbered session each time
+session_name "def"
+attach_to_session true
+
+// No per-pane title bars (tmux has no equivalent decoration); toggle
+// per-tab on demand with prefix Ctrl p z
+pane_frames false
 
 // Startup tips popup off (dismissing it from the UI is what makes Zellij
 // rewrite this file)
