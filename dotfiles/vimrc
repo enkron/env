@@ -612,7 +612,14 @@ g:mapleader = ' ' # by default mapleader variable is set to '\'
 # the more often save action occurs, the more likely the data won't be
 # lost
 # nnoremap <Space> :w!<CR>
-cnoremap W<C-m> :w!<CR>
+# rewrites the command line right before execution instead of intercepting
+# the submit keystroke, so it isn't affected by terminals/multiplexers that
+# report Ctrl-M as a Kitty-protocol-disambiguated event rather than a plain
+# CR byte (breaks a cnoremap keyed on <C-m>/<CR>)
+augroup FixTypedSaveCommand
+    autocmd!
+    autocmd CmdlineLeavePre : if getcmdline() == 'W' | call setcmdline('w!') | endif
+augroup END
 
 # switch between buffers
 nnoremap <leader>b :ls<CR>:buffer<Space>
