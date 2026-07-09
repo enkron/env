@@ -269,8 +269,19 @@ set incsearch                        # while searching though a file incremental
 # set smartcase                      " override the ignorecase option if searching for capital letters
                                      # this will allow to search specifically for capital letters
 set showmode                         # show the mode you are on the last line.
-set completeopt=menu,menuone,popup,noselect,noinsert # autocomplete with popup windows
+set completeopt=menu,menuone,popup,noselect,noinsert,fuzzy # autocomplete with popup windows
 set wildoptions=pum                  # Popup menu completion
+
+# Native complete-as-you-type (patch 9.1.1590) for prose buffers only;
+# code buffers stay owned by yegappan/lsp's autoComplete machinery
+augroup prose_autocomplete
+    autocmd!
+    autocmd FileType markdown,text,gitcommit {
+        setlocal autocomplete
+        setlocal spell
+        setlocal complete=.^5,w^5,kspell^5
+    }
+augroup END
 # }}}
 
 # Statusline ------------------------------------------------------- {{{
