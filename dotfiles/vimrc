@@ -6,18 +6,14 @@ const PackageRoot = expand('~/.vim/pack/plugins')
 const StartDir = PackageRoot .. '/start'
 const PluginRepos = [
 \   'rust-lang/rust.vim',
-\   'cespare/vim-toml',
 \   'ziglang/zig.vim',
 \   'fatih/vim-go',
 \   'jiangmiao/auto-pairs',
-\   'enkron/ecs_light.vim',
 \   'enkron/ecs.vim',
 \   'tpope/vim-obsession.git',
 \   'sheerun/vim-polyglot',
 \   'dense-analysis/ale',
-\   'prabirshrestha/async.vim',
-\   'prabirshrestha/vim-lsp',
-\   'prabirshrestha/vim-lsp-settings',
+\   'yegappan/lsp',
 \]
 # Add plugins by appending 'owner/repo' to s:PluginRepos above.
 # Run :PluginsUpdate to clone or refresh every plugin via git.
@@ -215,9 +211,6 @@ command! PluginsUpdate call PluginsUpdate()
 # Disable languages handled by dedicated plugins or where polyglot's
 # non-standard syntax groups conflict with the colorscheme
 g:polyglot_disabled = ['zig', 'rust', 'go', 'markdown', 'yaml']
-# Keep vim-lsp-settings installed for optional helpers but suppress its auto
-# registrations/suggestions since servers below handle everything.
-g:lsp_settings_whitelist = []
 # }}}
 
 # General settings ------------------------------------------------- {{{
@@ -312,7 +305,10 @@ augroup filetype_vim
 augroup END
 
 # Override conceal level which could be set by some plugin
-autocmd BufEnter * set conceallevel=0
+augroup no_conceal
+    autocmd!
+    autocmd BufEnter * setlocal conceallevel=0
+augroup END
 # }}}
 
 # Vim functions ---------------------------------------------------- {{{
@@ -354,6 +350,7 @@ g:rust_fold = 1
 
 # vim-go
 g:go_fmt_command = 'gofumpt'
+g:go_fmt_autosave = 0                # gopls owns format-on-save via :LspFormat
 
 # asm.vim
 # set filetype=nasm
@@ -384,220 +381,98 @@ g:ale_fixers = {
 g:ale_markdown_rumdl_fmt_options = "--silent --config 'MD013.reflow = true' --config 'MD013.line-length = 79'"
 # }}}
 
-# vim-lsp configuration -------------------------------------------- {{{
-# Enable LSP popups with better default UI
-g:lsp_diagnostics_enabled = 1
-g:lsp_document_highlight_enabled = 1
-g:lsp_hover_ui = 'float'
-g:lsp_log_verbose = 0
-g:lsp_log_file = expand('~/.vim-lsp.log')
-
-# Auto-completion support using built-in Vim popup menu
-# (vim-lsp provides the actual LSP completion items)
-set completeopt=menu,menuone,popup,noselect,noinsert
-
-def LspProjectRoot(markers: list<string>): string
-    var path = lsp#utils#find_nearest_parent_file_directory(expand('%:p'), markers)
-    return empty(path) ? getcwd() : path
-enddef
-
-def LspRootUri(markers: list<string>, _server_info: dict<any>): string
-    return lsp#utils#path_to_uri(LspProjectRoot(markers))
-enddef
-
-def g:ZlsCmd(): list<string>
+# yegappan/lsp configuration --------------------------------------- {{{
+# Servers are registered declaratively; each entry is added only when its
+# binary is on $PATH so absent toolchains stay silent at startup.
+def LspServerConfigs(): list<dict<any>>
+    var servers: list<dict<any>> = []
     if executable('zls')
-        return ['zls']
+        add(servers, {
+            name: 'zls',
+            filetype: ['zig'],
+            path: 'zls',
+            args: [],
+            rootSearch: ['build.zig', '.git/'],
+        })
     endif
-    return []
-enddef
-
-var zls_missing_warning = 0
-
-def g:RegisterZls()
-    const cmd = g:ZlsCmd()
-    if empty(cmd)
-        zls_missing_warning = 1
-        if &filetype ==# 'zig'
-            WarnMissingZls()
-        endif
-        return
-    endif
-    lsp#register_server({
-    \   'name': 'zls',
-    \   'cmd': cmd,
-    \   'root_uri': function('LspRootUri', [['build.zig', '.git/']]),
-    \   'allowlist': ['zig'],
-    \ })
-enddef
-
-def WarnMissingZls()
-    if zls_missing_warning
-        echohl WarningMsg
-        echom 'ZLS not found; install it via Nix or ensure it is in $PATH.'
-        echohl None
-        zls_missing_warning = 0
-    endif
-enddef
-
-def g:GoplsCmd(): list<string>
     if executable('gopls')
-        return ['gopls']
+        add(servers, {
+            name: 'gopls',
+            filetype: ['go', 'gomod', 'gowork', 'gosum'],
+            path: 'gopls',
+            args: [],
+            rootSearch: ['go.work', 'go.mod', '.git/'],
+            syncInit: true,
+            workspaceConfig: {gopls: {
+                staticcheck: true,
+                gofumpt: true,
+                completeUnimported: true,
+                usePlaceholders: true,
+            }},
+        })
     endif
-    return []
-enddef
-
-var gopls_missing_warning = 0
-
-def g:RegisterGopls()
-    const cmd = g:GoplsCmd()
-    if empty(cmd)
-        gopls_missing_warning = 1
-        if index(['go', 'gomod', 'gowork', 'gosum'], &filetype) >= 0
-            WarnMissingGopls()
-        endif
-        return
-    endif
-    lsp#register_server({
-    \   'name': 'gopls',
-    \   'cmd': cmd,
-    \   'root_uri': function('LspRootUri', [['go.work', 'go.mod', '.git/']]),
-    \   'allowlist': ['go', 'gomod', 'gowork', 'gosum'],
-    \   'workspace_config': {
-    \     'gopls': {
-    \       'staticcheck': v:true,
-    \       'gofumpt': v:true,
-    \       'completeUnimported': v:true,
-    \       'usePlaceholders': v:true,
-    \     },
-    \   },
-    \ })
-enddef
-
-def WarnMissingGopls()
-    if gopls_missing_warning
-        echohl WarningMsg
-        echom 'gopls not found; install it via Nix or ensure it is in $PATH.'
-        echohl None
-        gopls_missing_warning = 0
-    endif
-enddef
-
-def TerraformLsCmd(): list<string>
     if executable('terraform-ls')
-        return ['terraform-ls', 'serve']
+        add(servers, {
+            name: 'terraform-ls',
+            filetype: ['terraform', 'terraform-vars'],
+            path: 'terraform-ls',
+            args: ['serve'],
+            rootSearch: ['main.tf', 'versions.tf', 'providers.tf', '.terraform/', '.git/'],
+        })
     endif
-    return []
+    if executable('rust-analyzer')
+        add(servers, {
+            name: 'rust-analyzer',
+            filetype: ['rust'],
+            path: 'rust-analyzer',
+            args: [],
+            rootSearch: ['Cargo.toml', '.git/'],
+            syncInit: true,
+        })
+    endif
+    if executable('pylsp')
+        add(servers, {
+            name: 'pylsp',
+            filetype: ['python'],
+            path: 'pylsp',
+            args: [],
+            rootSearch: ['pyproject.toml', 'setup.cfg', 'requirements.txt', '.git/'],
+        })
+    endif
+    if executable('nixd')
+        add(servers, {
+            name: 'nixd',
+            filetype: ['nix'],
+            path: 'nixd',
+            args: [],
+            rootSearch: ['flake.nix', 'shell.nix', 'default.nix', '.git/'],
+        })
+    endif
+    return servers
 enddef
 
-var terraform_ls_missing_warning = 0
-
-def g:RegisterTerraformLs()
-    const cmd = TerraformLsCmd()
-    if empty(cmd)
-        terraform_ls_missing_warning = 1
-        if index(['terraform', 'terraform-vars'], &filetype) >= 0
-            WarnMissingTerraformLs()
-        endif
-        return
-    endif
-    lsp#register_server({
-    \   'name': 'terraform-ls',
-    \   'cmd': cmd,
-    \   'root_uri': function('LspRootUri', [['main.tf', 'versions.tf', 'providers.tf', '.terraform/', '.git/']]),
-    \   'allowlist': ['terraform', 'terraform-vars'],
-    \ })
-enddef
-
-def WarnMissingTerraformLs()
-    if terraform_ls_missing_warning
+def WarnMissingServer(bin: string)
+    if !executable(bin)
         echohl WarningMsg
-        echom 'terraform-ls not found; install the official terraform-ls binary and ensure it is available in $PATH.'
+        echom bin .. ' not found in $PATH; LSP features disabled for this buffer.'
         echohl None
-        terraform_ls_missing_warning = 0
     endif
 enddef
 
-def g:RegisterRustAnalyzer()
-    if !executable('rust-analyzer')
-        return
-    endif
-    lsp#register_server({
-    \   'name': 'rust-analyzer',
-    \   'cmd': ['rust-analyzer'],
-    \   'root_uri': function('LspRootUri', [['Cargo.toml', '.git/']]),
-    \   'allowlist': ['rust'],
-    \ })
-enddef
-
-def g:RegisterPylsp()
-    if !executable('pylsp')
-        return
-    endif
-    lsp#register_server({
-    \   'name': 'pylsp',
-    \   'cmd': ['pylsp'],
-    \   'root_uri': function('LspRootUri', [['pyproject.toml', 'setup.cfg', 'requirements.txt', '.git/']]),
-    \   'allowlist': ['python'],
-    \ })
-enddef
-
-def g:RegisterNixd()
-    if !executable('nixd')
-        return
-    endif
-    lsp#register_server({
-    \   'name': 'nixd',
-    \   'cmd': ['nixd'],
-    \   'root_uri': function('LspRootUri', [['flake.nix', 'shell.nix', 'default.nix', '.git/']]),
-    \   'allowlist': ['nix'],
-    \ })
-enddef
-
-def g:RegisterAllLspServers()
-    g:RegisterZls()
-    g:RegisterGopls()
-    g:RegisterTerraformLs()
-    g:RegisterRustAnalyzer()
-    g:RegisterPylsp()
-    g:RegisterNixd()
-enddef
-
-augroup custom_lsp_servers
+augroup enk_lsp
     autocmd!
-    autocmd User lsp_setup call g:RegisterAllLspServers()
-    autocmd User lsp_buffer_enabled setlocal omnifunc=lsp#complete
-    autocmd FileType zig call WarnMissingZls()
-    autocmd FileType go,gomod,gowork,gosum call WarnMissingGopls()
-    autocmd FileType terraform,terraform-vars call WarnMissingTerraformLs()
+    autocmd User LspSetup g:LspOptionsSet({autoComplete: true, autoHighlight: true})
+    autocmd User LspSetup g:LspAddServer(LspServerConfigs())
+    autocmd FileType zig call WarnMissingServer('zls')
+    autocmd FileType go,gomod,gowork,gosum call WarnMissingServer('gopls')
+    autocmd FileType terraform,terraform-vars call WarnMissingServer('terraform-ls')
 augroup END
 
-def EnableGoLspFormatOnSave()
-    if exists(':LspDocumentFormatSync') > 0
-        autocmd BufWritePre <buffer> LspDocumentFormatSync
-    endif
-enddef
-
+# gopls (gofumpt: true above) is the single Go format-on-save path;
+# vim-go's own autosave formatting is disabled via g:go_fmt_autosave = 0
 augroup go_lsp_format_on_save
     autocmd!
-    autocmd FileType go,gomod,gowork call EnableGoLspFormatOnSave()
-augroup END
-
-# LSP reference highlighting
-# Trigger highlight after 300ms instead of Vim’s default 4s
-set updatetime=300
-
-# Highlight color (vim-lsp uses lowercase `lspReference`)
-highlight LspReferenceText  cterm=bold ctermbg=88 guibg=#96653a
-highlight LspReferenceRead  cterm=bold ctermbg=88 guibg=#96653a
-highlight LspReferenceWrite cterm=bold ctermbg=88 guibg=#96653a
-highlight! link lspReference LspReferenceText
-
-# Automatically clear highlights when cursor moves
-augroup LspReferenceHighlight
-    autocmd!
-    autocmd CursorMoved  * silent! call lsp#ui#vim#clear_references()
-    autocmd CursorMovedI * silent! call lsp#ui#vim#clear_references()
+    autocmd BufWritePre *.go if exists(':LspFormat') == 2 | execute 'LspFormat' | endif
 augroup END
 # }}}
 
@@ -651,8 +526,8 @@ nnoremap <leader>hi :execute 'hi' synIDattr(synID(line("."), col("."), 1), "name
 # change behaviour of the `o` and `O` keys: by default these keys enters
 # into the INSERT mode immediately after a call, below binding leaves it
 # in COMMAND mode
-map o o<ESC>
-map <S-o> <S-o><ESC>
+nnoremap o o<ESC>
+nnoremap <S-o> <S-o><ESC>
 
 # format all long lines in a file without affecting short lines
 # tw (textwidth) option could be set for a new formatting option
@@ -712,8 +587,8 @@ inoremap ?? <C-o>mp<C-o>A?<C-o>`p
 nnoremap <leader>ss :syntax sync fromstart<CR>
 
 # popup window scrolling
-nnoremap <buffer> <C-n> <Cmd>call g:ScrollPopup(3)<CR>
-nnoremap <buffer> <C-p> <Cmd>call g:ScrollPopup(-3)<CR>
+nnoremap <C-n> <Cmd>call g:ScrollPopup(3)<CR>
+nnoremap <C-p> <Cmd>call g:ScrollPopup(-3)<CR>
 
 # Reload undo history
 nmap <leader>ee :setl undoreload=0 \|edit<CR>
@@ -725,14 +600,14 @@ nmap <leader>rc :source $MYVIMRC<CR>:nohlsearch<CR>
 inoremap <C-l> <C-g>u<Esc>[s1z=`]a<C-g>u
 
 # LSP key mappings ------------------------------------------------ {{{
-# Basic IDE-style navigation using vim-lsp
+# Basic IDE-style navigation using yegappan/lsp
 
 # Go to definition
-nnoremap <leader>gt :LspDefinition<CR>
+nnoremap <leader>gt :LspGotoDefinition<CR>
 # Find references
-nnoremap <leader>gr :LspReferences<CR>
+nnoremap <leader>gr :LspShowReferences<CR>
 # Go to implementation
-nnoremap <leader>gi :LspImplementation<CR>
+nnoremap <leader>gi :LspGotoImpl<CR>
 # Rename symbol
 nnoremap <leader>rn :LspRename<CR>
 # Show documentation
@@ -740,15 +615,15 @@ nnoremap <leader>p  :LspHover<CR>
 # Symbols in file
 nnoremap <leader>fs :LspDocumentSymbol<CR>
 # Workspace symbols
-nnoremap <leader>ws :LspWorkspaceSymbol<CR>
+nnoremap <leader>ws :LspSymbolSearch<CR>
 # Code actions (fix, refactor)
 nnoremap <leader>ca :LspCodeAction<CR>
 # Go to declaration
-nnoremap <leader>gd :LspDeclaration<CR>
+nnoremap <leader>gd :LspGotoDeclaration<CR>
 # Next error
-nnoremap <leader>e  :LspNextDiagnostic<CR>
+nnoremap <leader>e  :LspDiag next<CR>
 # Previous error
-nnoremap <leader>E  :LspPreviousDiagnostic<CR>
+nnoremap <leader>E  :LspDiag prev<CR>
 # }}}
 
 # }}}
