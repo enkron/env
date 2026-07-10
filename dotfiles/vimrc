@@ -244,6 +244,15 @@ if v:version >= 801                  # `v: name` - variable predefined by Vim
     set cursorlineopt=number,screenline  # settings for how 'cursorline' is displayed
 endif
 
+set mouse=a                          # let Vim (not the terminal) own mouse
+                                     # selection, so drag-select reads real
+                                     # buffer text instead of rendered
+                                     # listchars glyphs (e.g. indent guides)
+set clipboard=unnamed                # yanks/deletes go straight to the
+                                     # macOS system pasteboard (native
+                                     # +clipboard support, no pbcopy/pbpaste
+                                     # shell-out)
+
 set fileformat=unix                  # store the file in a Unix format
 set textwidth=99                     # set global width default
 augroup MarkdownTextWidth
@@ -271,6 +280,23 @@ set incsearch                        # while searching though a file incremental
 set showmode                         # show the mode you are on the last line.
 set completeopt=menu,menuone,popup,noselect,noinsert,fuzzy # autocomplete with popup windows
 set wildoptions=pum                  # Popup menu completion
+
+# Indent guides ------------------------------------------------ {{{
+# Native listchars-based indent guides (Vim 9.2+).
+# leadmultispace tiles a pattern across leading whitespace, redrawing
+# a bar at every shiftwidth (4) columns - one per nesting level.
+&list = true
+&listchars = 'leadmultispace:│   ,tab:│ '
+# All listchars glyphs share the SpecialKey highlight group in Vim
+# (unlike Neovim's separate Whitespace/NonText groups). Dim it so the
+# always-on guides stay unobtrusive; reapply on colorscheme reload the
+# same way no_conceal reapplies on BufEnter.
+augroup enk_indent_guides
+    autocmd!
+    autocmd ColorScheme * highlight SpecialKey ctermfg=238 guifg=#3a3a3a cterm=NONE gui=NONE
+augroup END
+highlight SpecialKey ctermfg=238 guifg=#3a3a3a cterm=NONE gui=NONE
+# }}}
 
 # Native complete-as-you-type (patch 9.1.1590) for prose buffers only;
 # code buffers stay owned by yegappan/lsp's autoComplete machinery
@@ -527,9 +553,9 @@ nnoremap <leader><space> :nohlsearch<CR>
 # switch between bracets pairs (actual for mac keyboard)
 nnoremap ~ %
 
-# on/off trailing whitespaces visibility
-nnoremap <leader>l :set list listchars=tab:>-,trail:∙,eol:¶<CR>
-nnoremap <leader>nl :set nolist<CR>
+# on/off trailing whitespace visibility (indent guides stay on)
+nnoremap <leader>l :set listchars+=trail:∙,eol:¶<CR>
+nnoremap <leader>nl :set listchars-=trail:∙ listchars-=eol:¶<CR>
 
 # obtain highlighting information under the coursor
 nnoremap <leader>hi :execute 'hi' synIDattr(synID(line("."), col("."), 1), "name")<CR>
@@ -600,6 +626,12 @@ nnoremap <leader>ss :syntax sync fromstart<CR>
 # popup window scrolling
 nnoremap <C-n> <Cmd>call g:ScrollPopup(3)<CR>
 nnoremap <C-p> <Cmd>call g:ScrollPopup(-3)<CR>
+
+# Restore "drag to select, release to copy" feel now that Vim owns the
+# mouse: yank the just-made visual selection straight to the system
+# clipboard when the drag ends. Only fires from an active Visual selection
+# (started by the drag itself), so plain clicks are unaffected.
+vnoremap <LeftRelease> <LeftRelease>"+y
 
 # Reload undo history
 nmap <leader>ee :setl undoreload=0 \|edit<CR>
