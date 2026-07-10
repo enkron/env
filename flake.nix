@@ -134,6 +134,7 @@
                 terraform
                 terraform-ls
                 tmux
+                wasm-pack
                 zig
                 zls
               ]
