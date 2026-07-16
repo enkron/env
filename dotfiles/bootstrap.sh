@@ -113,6 +113,10 @@ ln -sf "${REPOS_HOME}/env/dotfiles/gitconfig" "${HOME}/.gitconfig"
 
 log info "Linking Vim configuration"
 ln -sf "${REPOS_HOME}/env/dotfiles/vimrc" "${HOME}/.vimrc"
+# -n keeps re-runs from nesting links inside an already-linked directory;
+# ~/.vim/pack (live plugin clones) is deliberately not touched
+mkdir -p "${HOME}/.vim"
+ln -sfn "${REPOS_HOME}/env/dotfiles/vim/plugin" "${HOME}/.vim/plugin"
 
 if [ -d "${HOME}/.tmux/plugins/tpm" ]; then
     log warning "TPM already exists, skipping clone step"
