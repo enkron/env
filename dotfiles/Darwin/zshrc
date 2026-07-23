@@ -58,10 +58,10 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*' rehash true
 
 # Completion script generation
-# The blocks below write $HOME/.zsh/zfunc/_<tool> into `fpath`. They must run
-# BEFORE `compinit` scans `fpath` (further down) so a freshly generated file is
-# active in the same shell rather than only the next one. Each is guarded by a
-# `command -v` check and cached with `test -f` so it is a no-op once generated.
+# The blocks below write $HOME/.zsh/zfunc/_<tool> into `fpath`. They must run BEFORE `compinit`
+# scans `fpath` (further down) so a freshly generated file is active in the same shell rather than
+# only the next one. Each is guarded by a `command -v` check and cached with `test -f` so it is a
+# no-op once generated.
 
 # Setup environment for Rust lang
 # https://rust-lang.org
@@ -188,18 +188,17 @@ if command -v rumdl >/dev/null 2>&1; then
     test -f "$HOME/.zsh/zfunc/_rumdl" || rumdl completions zsh > "$HOME/.zsh/zfunc/_rumdl"
 fi
 
-# Enable the completion system now that every generator above has populated
-# `fpath`. `compinit` scans `fpath` once to build its table, so it must come
-# after the generation blocks and before the runtime integrations below that
-# call `compdef`/`complete`.
+# Enable the completion system now that every generator above has populated `fpath`. `compinit`
+# scans `fpath` once to build its table, so it must come after the generation blocks and before the
+# runtime integrations below that call `compdef`/`complete`.
 autoload -Uz +X compinit && compinit # Enable completion system
 autoload -Uz +X bashcompinit && bashcompinit # Enable bash-style completion
 
 setopt auto_menu # Show completion menu on successive tab
 
 # Tools integration
-# These hook into the live shell (sourcing widgets, `complete -C`, `compdef`)
-# and therefore require `compinit`/`bashcompinit` to be loaded first.
+# These hook into the live shell (sourcing widgets, `complete -C`, `compdef`) and therefore require
+# `compinit`/`bashcompinit` to be loaded first.
 # Command-line fuzzy finder
 # https://github.com/junegunn/fzf
 if command -v fzf >/dev/null 2>&1; then
@@ -238,8 +237,8 @@ if command -v op >/dev/null 2>&1; then
 fi
 
 # Aliases
-# Prefer Podman over Docker in this environment. Docker is largely deprecated
-# here and typically requires root/VM on macOS; use rootless Podman instead.
+# Prefer Podman over Docker in this environment. Docker is largely deprecated here and typically
+# requires root/VM on macOS; use rootless Podman instead.
 if command -v podman >/dev/null 2>&1; then
     alias docker='podman'
 fi
@@ -254,6 +253,11 @@ if ! command -v codex >/dev/null 2>&1; then
     alias codex='npx @openai/codex'
 fi
 
+# Typo guard: `jjs` is macOS's stub Java tool (Nashorn shell). It currently has no real usage in
+# the system; there's no Java Runtime installed either hence shadowing it to the Jujutsu's `status`
+# command.
+alias jjs='jj st'
+
 # Functions
 # Erase from top of screen to cursor.
 # Redraw prompt + input buffer.
@@ -263,9 +267,9 @@ clear_above() {
     zle redisplay
 }
 
-# Release Ctrl+Y for userland: the tty's dsusp (default ^Y on macOS) queues
-# a deferred SIGTSTP on the next read. Ctrl+Z already covers job suspension,
-# so unbinding dsusp lets Ctrl+Y reach the shell and interactive programs.
+# Release Ctrl+Y for userland: the tty's dsusp (default ^Y on macOS) queues a deferred SIGTSTP on
+# the next read. Ctrl+Z already covers job suspension, so unbinding dsusp lets Ctrl+Y reach the
+# shell and interactive programs.
 [[ -t 0 ]] && stty dsusp undef
 
 # Explicitly set default Emacs mode in a shell.
