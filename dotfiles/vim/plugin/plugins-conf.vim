@@ -25,14 +25,22 @@ g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
 
 g:ale_linters = {
 \   'rust':   ['cargo'],
-\   'python': ['ruff', 'mypy']
+\   'python': ['ruff', 'mypy'],
+\   'yaml':   ['yamllint']
 \}
 
 g:ale_fixers = {
 \   '*':        ['remove_trailing_lines', 'trim_whitespace'],
-\   'markdown': ['remove_trailing_lines', 'trim_whitespace', 'rumdl']
+\   'markdown': ['remove_trailing_lines', 'trim_whitespace', 'rumdl'],
+\   'yaml':     ['remove_trailing_lines', 'trim_whitespace', 'yamlfmt']
 \}
 
 # reflow paragraphs that exceed the limit on save; paragraphs already
 # within the limit are left untouched so intentional short lines survive
 g:ale_markdown_rumdl_fmt_options = "--silent --config 'MD013.reflow = true' --config 'MD013.line-length = 79'"
+
+# yamllint finds ~/.config/yamllint/config on its own; yamlfmt's global
+# config discovery is less uniform across platforms, so pass the
+# bootstrap-linked config explicitly to keep in-vim formatting
+# deterministic (ALE runs `yamlfmt <options> -in`).
+g:ale_yaml_yamlfmt_options = '-conf ' .. expand('~/.config/yamlfmt/.yamlfmt')

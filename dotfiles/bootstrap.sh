@@ -149,6 +149,14 @@ log info "Linking w3m configuration"
 mkdir -p "${HOME}/.w3m"
 ln -sf "${REPOS_HOME}/env/dotfiles/w3m/keymap" "${HOME}/.w3m/keymap"
 
+log info "Linking yamllint configuration"
+mkdir -p "${HOME}/.config/yamllint"
+ln -sf "${REPOS_HOME}/env/dotfiles/yamllint.yaml" "${HOME}/.config/yamllint/config"
+
+log info "Linking yamlfmt configuration"
+mkdir -p "${HOME}/.config/yamlfmt"
+ln -sf "${REPOS_HOME}/env/dotfiles/yamlfmt.yaml" "${HOME}/.config/yamlfmt/.yamlfmt"
+
 # Nushell configuration
 if [ "$(uname -s)" = 'Darwin' ]; then
     nushell_config_path="${HOME}/Library/Application Support/nushell"

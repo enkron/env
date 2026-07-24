@@ -9,6 +9,7 @@ vim9script
 #   plugin/mappings.vim      key mappings and helper functions
 #   plugin/jenkinsfile.vim   Jenkinsfile detection for *.groovy
 #   plugin/prose.vim         markdown/text/gitcommit prose settings
+#   plugin/yaml.vim          2-space indentation for yaml/helm buffers
 
 if &term != "linux"
     set t_Co=256

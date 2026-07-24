@@ -1,0 +1,17 @@
+# yamlfmt configuration.
+# Linked to ~/.config/yamlfmt/.yamlfmt by bootstrap.sh; vim additionally
+# passes it explicitly via -conf (see vim/plugin/plugins-conf.vim).
+# Line reflow (max_line_length) stays off on purpose: breaking long
+# string scalars (image references, selectors, annotations) changes
+# their value; long lines surface as yamllint warnings instead.
+# Known upstream quirk: a block scalar that is the last node of the
+# file gets its chomping rewritten (`|` -> `|-`), dropping the value's
+# single trailing newline. Mid-file block scalars round-trip exactly.
+formatter:
+  type: basic
+  indent: 2
+  # Collapse runs of blank lines to one, but keep deliberate single
+  # blank lines between sections/documents.
+  retain_line_breaks_single: true
+  trim_trailing_whitespace: true
+  eof_newline: true

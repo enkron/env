@@ -135,6 +135,8 @@
                 terraform-ls
                 tmux
                 wasm-pack
+                yamlfmt
+                yamllint
                 zig
                 zls
               ]

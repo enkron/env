@@ -1,0 +1,40 @@
+# yamllint configuration, tuned for Kubernetes manifests.
+# Linked to ~/.config/yamllint/config by bootstrap.sh so ALE in vim and
+# direct CLI runs share the same rules.
+extends: default
+
+rules:
+  # Long container image references, annotation values and probe URLs are
+  # routine in manifests; the default 80 is unrealistic. Warn, not error,
+  # since there is no auto-fix for it (yamlfmt line reflow stays off).
+  line-length:
+    max: 120
+    level: warning
+    allow-non-breakable-words: true
+    allow-non-breakable-inline-mappings: true
+  # kubectl/kustomize emit single documents without a leading --- and
+  # yamlfmt does not insert one; requiring it would create a permanent
+  # linter/fixer disagreement. --- separators inside multi-document
+  # streams are still syntax and remain untouched.
+  document-start: disable
+  # Kubernetes ecosystem style: 2-space indent with indented block
+  # sequences - exactly what the yamlfmt basic formatter emits, so a
+  # saved buffer always lints clean on indentation.
+  indentation:
+    spaces: 2
+    indent-sequences: true
+  # Keep the value check (catches unquoted yes/no/on/off YAML 1.1
+  # pitfalls in manifests) but skip keys so files like GitHub workflows
+  # with an `on:` key do not flag.
+  truthy:
+    check-keys: false
+  # One space between `#` and inline content is enough; the default 2 is
+  # stricter than most generated/vendored manifests.
+  comments:
+    min-spaces-from-content: 1
+  # Allow the compact flow style common in manifests, e.g.
+  # `emptyDir: {}` and `{ key: value }`.
+  braces:
+    max-spaces-inside: 1
+  brackets:
+    max-spaces-inside: 1
