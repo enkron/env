@@ -67,6 +67,47 @@ def LspServerConfigs(): list<dict<any>>
             rootSearch: ['flake.nix', 'shell.nix', 'default.nix', '.git/'],
         })
     endif
+    if executable('yaml-language-server')
+        # Schema-aware validation/completion for Kubernetes manifests and
+        # any YAML with a schemastore.org match (GitHub workflows, Chart.yaml,
+        # docker-compose, ...). Style linting stays with ALE/yamllint and
+        # formatting with ALE/yamlfmt: the server's own prettier-based
+        # formatter is disabled so there is a single format-on-save path.
+        # Helm templates are unaffected: polyglot gives them ft=helm.
+        add(servers, {
+            name: 'yamlls',
+            filetype: ['yaml'],
+            path: 'yaml-language-server',
+            args: ['--stdio'],
+            rootSearch: ['.git/'],
+            workspaceConfig: {
+                yaml: {
+                    format: {enable: false},
+                    validate: true,
+                    hover: true,
+                    completion: true,
+                    schemaStore: {
+                        enable: true,
+                        url: 'https://www.schemastore.org/api/json/catalog.json',
+                    },
+                    # The reserved `kubernetes` keyword resolves to the
+                    # builtin K8s API schema. Manifests have no standard
+                    # filename, so association is by directory glob.
+                    # Caveat: kustomization/Chart files inside these trees
+                    # get the K8s schema too; override per file with a
+                    # modeline `# yaml-language-server: $schema=<url>`.
+                    schemas: {
+                        kubernetes: [
+                            '**/kubernetes/**/*.yaml',
+                            '**/k8s/**/*.yaml',
+                            '**/manifests/**/*.yaml',
+                        ],
+                    },
+                },
+                redhat: {telemetry: {enabled: false}},
+            },
+        })
+    endif
     return servers
 enddef
 

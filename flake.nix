@@ -135,6 +135,7 @@
                 terraform-ls
                 tmux
                 wasm-pack
+                yaml-language-server
                 yamlfmt
                 yamllint
                 zig
