@@ -11,6 +11,7 @@ https://thenewstack.io/feed/                                  "cloud-native" "de
 # Platform Engineering, SRE & DevOps
 https://sreweekly.com/rss                                     "sre"
 https://www.infoq.com/feed/devops/                            "devops" "sre"
+https://www.jenkins.io/changelog-stable/rss.xml               "jenkins" "ci"
 
 # Languages
 https://ziglang.org/news/index.xml                            "zig" "languages"
