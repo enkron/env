@@ -181,3 +181,198 @@ nnoremap <leader>gd :LspGotoDeclaration<CR>
 nnoremap <leader>e  :LspDiag next<CR>
 # Previous error
 nnoremap <leader>E  :LspDiag prev<CR>
+
+# Surround: add, change and delete delimiter pairs around a motion, a
+# textobject or a Visual selection.
+#
+# Built on Vim's documented operator interface (:h map-operator, :h g@).
+# The <expr> mapping only reads keys and returns 'g@' - changing text from
+# an <expr> mapping is blocked by |textlock| - and the edit happens in the
+# 'operatorfunc' callback. Vim records `g@{motion}` for redo, so `.`
+# repeats the last surround with the same delimiter.
+#
+# Nothing is yanked or put: edits are setline() splices. That matters
+# because 'clipboard' is "unnamed", so any register detour would push the
+# intermediate text onto the macOS pasteboard.
+
+# Delimiter -> [opening, closing]. An opening char also adds inner spaces,
+# its closing counterpart does not:
+#   <leader>ysiw(  ->  ( foo )
+#   <leader>ysiw)  ->  (foo)
+const SurroundPairs = {
+    '(': ['(', ')'], ')': ['(', ')'],
+    '[': ['[', ']'], ']': ['[', ']'],
+    '{': ['{', '}'], '}': ['{', '}'],
+    '<': ['<', '>'], '>': ['<', '>'],
+}
+const SurroundSpaced = ['(', '[', '{', '<']
+
+# Handed to the operator callback; survives until the next surround
+# mapping, which is what lets `.` reuse the delimiter without asking.
+var Pending: dict<any> = {}
+
+def Warn(msg: string)
+    echohl WarningMsg
+    echomsg 'surround: ' .. msg
+    echohl None
+enddef
+
+# Read one delimiter key; empty string means aborted. getchar() is
+# explicitly allowed in an <expr> mapping and consumes typeahead, so
+# `<leader>ds"` typed in one burst works (:h map-expression).
+def AskDelim(prompt: string): string
+    echohl ModeMsg
+    echo prompt
+    echohl None
+    const ch = getcharstr()
+    echo ''
+    return ch == "\<Esc>" ? '' : ch
+enddef
+
+def Pair(ch: string, spaced: bool = true): list<string>
+    const pair = get(SurroundPairs, ch, [ch, ch])
+    if spaced && index(SurroundSpaced, ch) >= 0
+        return [pair[0] .. ' ', ' ' .. pair[1]]
+    endif
+    return pair
+enddef
+
+# Byte index just past the character at 1-based byte column `col`.
+def ByteAfter(lnum: number, col: number): number
+    return col - 1 + strlen(matchstr(getline(lnum), '.', col - 1))
+enddef
+
+# Replace `len` bytes at 0-based byte index `idx` on line `lnum`.
+def Splice(lnum: number, idx: number, len: number, ins: string)
+    const line = getline(lnum)
+    setline(lnum, strpart(line, 0, idx) .. ins .. strpart(line, idx + len))
+enddef
+
+# Edit the closing site first so the opening edit cannot shift its index.
+# The operator has already parked the cursor at the start of the range, so
+# shifting it past the inserted opening delimiter leaves it on the first
+# character of the wrapped text rather than on the delimiter itself.
+def Rewrite(l1: number, i1: number, n1: number, open: string,
+            l2: number, i2: number, n2: number, close: string)
+    var pos = getcurpos()
+    Splice(l2, i2, n2, close)
+    Splice(l1, i1, n1, open)
+    if pos[1] == l1 && pos[2] > i1
+        pos[2] += strlen(open) - n1
+    endif
+    setpos('.', pos)
+enddef
+
+# [lnum, byte idx, lnum, byte idx past end] of the operated region.
+def OpRange(type: string): list<number>
+    const p1 = getpos("'[")
+    const p2 = getpos("']")
+    if type == 'line'
+        # for a linewise motion the mark columns are meaningless: wrap from
+        # the first non-blank of the first line to the end of the last one
+        const indent = match(getline(p1[1]), '\S')
+        return [p1[1], indent < 0 ? 0 : indent, p2[1], strlen(getline(p2[1]))]
+    endif
+    return [p1[1], p1[2] - 1, p2[1], ByteAfter(p2[1], p2[2])]
+enddef
+
+def AddSurround(type: string)
+    if !Pending.repeat
+        # the motion comes first, so the delimiter is asked for here; on `.`
+        # the mapping does not run again and this block is skipped
+        const ch = AskDelim('surround with: ')
+        if empty(ch)
+            return
+        endif
+        Pending.pair = Pair(ch)
+        Pending.repeat = true
+    endif
+    var [l1, i1, l2, i2] = OpRange(type)
+    Rewrite(l1, i1, 0, Pending.pair[0], l2, i2, 0, Pending.pair[1])
+enddef
+
+# The motion was `i{old}`, so the marks bound the inner text and the
+# delimiters are the single characters just outside it.
+def RewrapSurround()
+    const p1 = getpos("'[")
+    const p2 = getpos("']")
+    const line1 = getline(p1[1])
+    const line2 = getline(p2[1])
+    const open_idx = p1[2] - 2
+    const close_idx = ByteAfter(p2[1], p2[2])
+    const old = Pair(Pending.old, false)
+    if open_idx < 0
+            || strpart(line1, open_idx, 1) != old[0]
+            || strpart(line2, close_idx, 1) != old[1]
+        Warn('no ' .. old[0] .. old[1] .. ' pair on this line')
+        return
+    endif
+    # an opening char also strips the inner spaces it would have added
+    var open_len = 1
+    var close_len = 1
+    var close_at = close_idx
+    if index(SurroundSpaced, Pending.old) >= 0
+        if strpart(line1, open_idx + 1, 1) == ' '
+            open_len += 1
+        endif
+        if close_idx > 0 && strpart(line2, close_idx - 1, 1) == ' '
+            close_at -= 1
+            close_len += 1
+        endif
+    endif
+    Rewrite(p1[1], open_idx, open_len, Pending.pair[0],
+            p2[1], close_at, close_len, Pending.pair[1])
+enddef
+
+def g:SurroundOperator(type: string)
+    if !has_key(Pending, 'kind')
+        return
+    endif
+    if type == 'block'
+        Warn('blockwise selection is not supported')
+        return
+    endif
+    if Pending.kind == 'add'
+        AddSurround(type)
+    else
+        RewrapSurround()
+    endif
+enddef
+
+def g:SurroundAdd(): string
+    Pending = {kind: 'add', repeat: false, pair: ['', '']}
+    &operatorfunc = 'g:SurroundOperator'
+    return 'g@'
+enddef
+
+def g:SurroundChange(): string
+    const old = AskDelim('change surround: ')
+    if empty(old)
+        return ''
+    endif
+    const new_delim = AskDelim('change ' .. old .. ' to: ')
+    if empty(new_delim)
+        return ''
+    endif
+    Pending = {kind: 'rewrap', old: old, pair: Pair(new_delim)}
+    &operatorfunc = 'g:SurroundOperator'
+    return 'g@i' .. old
+enddef
+
+def g:SurroundDelete(): string
+    const old = AskDelim('delete surround: ')
+    if empty(old)
+        return ''
+    endif
+    Pending = {kind: 'rewrap', old: old, pair: ['', '']}
+    &operatorfunc = 'g:SurroundOperator'
+    return 'g@i' .. old
+enddef
+
+# <leader>ys{motion}{delim}, <leader>yss{delim} for the whole line,
+# <leader>s{delim} in Visual mode, <leader>cs{old}{new}, <leader>ds{old}
+nnoremap <expr> <leader>ys  g:SurroundAdd()
+nnoremap <expr> <leader>yss g:SurroundAdd() .. '_'
+xnoremap <expr> <leader>s   g:SurroundAdd()
+nnoremap <expr> <leader>cs  g:SurroundChange()
+nnoremap <expr> <leader>ds  g:SurroundDelete()
