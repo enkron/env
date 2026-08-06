@@ -5,6 +5,7 @@ email = "srj.belokon@gmail.com"
 [ui]
 color = "auto"
 editor = "vim"
+diff-editor = ":builtin"
 
 [revset-aliases]
 'immutable_heads()' = 'trunk()'
