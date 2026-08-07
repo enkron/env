@@ -56,6 +56,18 @@ push to a remote, under any circumstances. These actions are the user's
 sole responsibility. Claude may draft or suggest commit messages/descriptions
 but must never execute the commit (or branch/push) itself.
 
+# Infrastructure boundaries
+
+Claude must never execute infrastructure rollout/apply commands (eg.
+`terraform apply`, `terraform destroy`, `pulumi up`, `kubectl apply`,
+`helm install`/`upgrade`, `argocd app sync`, or any equivalent command that
+provisions, mutates, or tears down real infrastructure), under any
+circumstances. These actions are the user's sole responsibility. Claude may
+draft, explain, or suggest the exact command to run (eg. show a `terraform
+plan`/`apply` invocation) but must never execute it itself. Read-only or
+inspection commands (eg. `terraform plan`, `terraform show`, `kubectl get`,
+`kubectl describe`) are fine to run.
+
 # Typography
 
 Do not use Unicode hyphen/dash variants in documents or source code files
