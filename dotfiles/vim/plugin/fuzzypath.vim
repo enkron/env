@@ -74,11 +74,24 @@ def g:FuzzyPathComplete(findstart: number, base: string): any
     # the cursor sits in column 1.
     var before = strpart(getline('.'), 0, col('.') - 1)
     var start = match(before, '\f*$')
+    var run = strpart(before, start)
+
+    # './' is an explicit "a path starts here" marker, so re-anchor the span on
+    # the last one in the run. Without this the run swallows any word typed
+    # immediately before it - 'etc../' and 'documentation./' are one \f run,
+    # because '.' and '/' are both in 'isfname' - and the needle then matches
+    # nothing, so the popup appears empty and looks broken. Typing a space
+    # first happened to work only because it broke the run.
+    var marker = strridx(run, './')
+    if marker >= 0
+        start += marker
+        run = strpart(run, marker)
+    endif
 
     # './foo' is how a relative path is habitually typed, but fd
     # --strip-cwd-prefix (and the glob() fallback) yield a bare 'foo', so a
     # literal './' would score against nothing.
-    var lead = matchstr(strpart(before, start), '^\%(\./\)\+')
+    var lead = matchstr(run, '^\%(\./\)\+')
 
     if findstart
         # Start *after* the './' so it stays in the buffer rather than being
@@ -128,23 +141,55 @@ set completefunc=g:FuzzyPathComplete
 # honours refresh:'always' - exactly what a path completion needs. Bare 'F'
 # means "the function named in 'completefunc'", so the name is not duplicated.
 var saved_complete = ''
+var suppressed_autocomplete = false
 
 def g:FuzzyPathTrigger(): string
     if empty(saved_complete)
         saved_complete = &l:complete
     endif
     &l:complete = 'F'
-    return "\<C-n>"
+
+    # 'complete' stays "F" until InsertLeave (see RestoreComplete), so in a
+    # prose buffer 'autocomplete' would keep driving this path source and the
+    # as-you-type suggestions would become file paths instead of words and
+    # spelling for the rest of the insert session. Suppress it for the duration.
+    #
+    # Guarded on the *effective* value, and only restored when we were the ones
+    # who turned it off. Never round-trip through &l:autocomplete: it is a
+    # global-local boolean, so an unset local reads back as -1 - which is truthy
+    # - and restoring that would switch autocomplete on in buffers that never
+    # had it.
+    if &autocomplete
+        &l:autocomplete = false
+        suppressed_autocomplete = true
+    endif
+    # <C-x><C-z> first, because 'autocomplete' (on in prose buffers) usually has
+    # a completion in flight - often a keyword one with zero matches. A bare
+    # <C-n> then means "next match in that dead menu", so the mapping appeared
+    # to do nothing at all in markdown while working fine in, say, nix where
+    # 'autocomplete' is off. i_CTRL-X_CTRL-Z stops completion without touching
+    # the text and is a harmless no-op when nothing is active, so it needs no
+    # guard. i_CTRL-E is not usable here: with no completion running it inserts
+    # the character below the cursor instead.
+    return "\<C-x>\<C-z>\<C-n>"
 enddef
 
-# Restoring any earlier than InsertLeave reintroduces the E764-class race that
-# an earlier CompleteDone restore caused here. The trade is that after one
-# trigger, a plain <C-n> for the rest of that insert session offers paths
-# rather than keywords; leaving Insert mode puts 'complete' back.
+# InsertLeave is the earliest safe point. CompleteDone cannot be used: the
+# <C-x><C-z> above ends any in-flight completion and so fires CompleteDone
+# itself, which would restore 'complete' before <C-n> ever reads it - the same
+# class of race that produced E764 here before.
+#
+# The residual trade is that until Insert mode is left, a deliberate <C-n>
+# offers paths rather than keywords. Automatic suggestions are not affected,
+# because the trigger suppresses 'autocomplete' for the same window.
 def RestoreComplete()
     if !empty(saved_complete)
         &l:complete = saved_complete
         saved_complete = ''
+    endif
+    if suppressed_autocomplete
+        &l:autocomplete = true
+        suppressed_autocomplete = false
     endif
 enddef
 
