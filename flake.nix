@@ -110,6 +110,7 @@
             paths =
               with unstable;
               [
+                argo-workflows
                 argocd
                 awscli2
                 bat
