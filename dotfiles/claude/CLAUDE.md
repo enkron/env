@@ -74,3 +74,34 @@ Do not use Unicode hyphen/dash variants in documents or source code files
 (including code comments). The forbidden characters are em dash, en dash,
 hyphen, non-breaking hyphen, figure dash, minus sign, and any other
 Unicode dash. Always use the plain ASCII hyphen-minus '-'.
+
+# Line width
+
+Wrap comments, docstrings and prose to the width Vim applies to that
+file type, not to a generic 79/80:
+
+- 99 columns by default, for every file type (`set textwidth=99` in
+  `dotfiles/vimrc`).
+- 79 for markdown (`dotfiles/vim/plugin/prose.vim`; the rumdl ALE fixer
+  reflows to the same `MD013.line-length = 79` on save).
+- 72 for git commit messages and jj descriptions (Vim's builtin
+  `gitcommit` and `jjdescription` ftplugins).
+- yaml is never reflowed: yamlfmt leaves long scalars alone and
+  yamllint only warns past 120 (`dotfiles/yamllint.yaml`).
+
+This governs prose only - comments, docstrings, documentation, commit
+messages. Leave code lines to the language's formatter (rustfmt,
+gofumpt, ruff, yamlfmt) and do not hand-break them to hit these
+numbers. Unbreakable tokens (URLs, image references, table rows, long
+identifiers) may exceed the width.
+
+An explicit project convention outranks these defaults: a formatter or
+linter config in the repo (`rustfmt.toml`, `.editorconfig`, a
+`line-length` in `pyproject.toml`), or a width the file being edited
+plainly already follows. Match the file being edited; do not reformat
+it. Never reflow lines the current change does not otherwise touch.
+
+When the width is unclear, ask Vim instead of guessing:
+
+    vim -es -u ~/.vimrc -i NONE -c 'edit <file>' \
+        -c 'redir >> /dev/stdout' -c 'echo &tw' -c 'redir END' -c 'qa!'
