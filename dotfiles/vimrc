@@ -47,10 +47,13 @@ set mouse=a                          # let Vim (not the terminal) own mouse
                                      # selection, so drag-select reads real
                                      # buffer text instead of rendered
                                      # listchars glyphs (e.g. indent guides)
-set clipboard=unnamed                # yanks/deletes go straight to the
-                                     # macOS system pasteboard (native
-                                     # +clipboard support, no pbcopy/pbpaste
-                                     # shell-out)
+set clipboard=                       # deliberately empty: "unnamed" would
+                                     # alias the unnamed register to the macOS
+                                     # pasteboard for delete and change too, so
+                                     # any d/c/x/s here would destroy text
+                                     # copied in another app. Yanks are
+                                     # mirrored into "+ by the TextYankPost
+                                     # autocmd in plugin/mappings.vim
 
 set fileformat=unix                  # store the file in a Unix format
 set textwidth=99                     # set global width default

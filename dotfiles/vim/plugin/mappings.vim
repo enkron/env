@@ -1,7 +1,7 @@
 vim9script
 
-# Below function allows to avoid entering the `INSERT` mode while splitting a
-# long line (Vim doesn't have this type of method by default)
+# Below function allows to avoid entering the `INSERT` mode while splitting a long line (Vim
+# doesn't have this type of method by default)
 def g:SplitLine()
     s/^\(\s*\)\(.\{-}\)\(\s*\)\(\%#\)\(\s*\)\(.*\)/\1\2\r\1\4\6
     histdel('/', -1)
@@ -32,16 +32,13 @@ enddef
 # nnoremap - allows to map keys in normal mode
 # inoremap - allows to map keys in insert mode
 # vnoremap - allows to map keys in visual mode
-# g:mapleader is set in the vimrc (it must be defined before this file
-# is sourced)
+# g:mapleader is set in the vimrc (it must be defined before this file is sourced)
 
-# the more often save action occurs, the more likely the data won't be
-# lost
-# nnoremap <Space> :w!<CR>
-# rewrites the command line right before execution instead of intercepting
-# the submit keystroke, so it isn't affected by terminals/multiplexers that
-# report Ctrl-M as a Kitty-protocol-disambiguated event rather than a plain
-# CR byte (breaks a cnoremap keyed on <C-m>/<CR>)
+# the more often save action occurs, the more likely the data won't be lost nnoremap <Space>
+# :w!<CR> rewrites the command line right before execution instead of intercepting the submit
+# keystroke, so it isn't affected by terminals/multiplexers that report Ctrl-M as a
+# Kitty-protocol-disambiguated event rather than a plain CR byte (breaks a cnoremap keyed on
+# <C-m>/<CR>)
 augroup FixTypedSaveCommand
     autocmd!
     autocmd CmdlineLeavePre : if getcmdline() == 'W' | call setcmdline('w!') | endif
@@ -74,20 +71,17 @@ nnoremap <leader>nl :set listchars-=trail:∙ listchars-=eol:¶<CR>
 # obtain highlighting information under the coursor
 nnoremap <leader>hi :execute 'hi' synIDattr(synID(line("."), col("."), 1), "name")<CR>
 
-# change behaviour of the `o` and `O` keys: by default these keys enters
-# into the INSERT mode immediately after a call, below binding leaves it
-# in COMMAND mode
+# change behaviour of the `o` and `O` keys: by default these keys enters into the INSERT mode
+# immediately after a call, below binding leaves it in COMMAND mode
 nnoremap o o<ESC>
 nnoremap <S-o> <S-o><ESC>
 
-# format all long lines in a file without affecting short lines
-# tw (textwidth) option could be set for a new formatting option
-# check existing tw -> :setl tw?
-# reset current tw to defaults -> :setl tw&
+# format all long lines in a file without affecting short lines tw (textwidth) option could be set
+# for a new formatting option check existing tw -> :setl tw?  reset current tw to defaults -> :setl
+# tw&
 nmap <leader>f :g/./ normal gqq<CR><ESC> :nohlsearch<CR>``
 
-# most of the Linux terminals sends the escape by default when pressing
-# alt/meta+normal_mode_key
+# most of the Linux terminals sends the escape by default when pressing alt/meta+normal_mode_key
 imap <M-h> <ESC>
 
 # map Left to Ctrl+b in cmd mode to have behaviour like in terminal
@@ -97,20 +91,12 @@ cnoremap <C-f> <Right>
 # map Home to Ctrl+a in cmd mode to have behaviour like in terminal
 cnoremap <C-a> <Home>
 
-# inoremap () ()<Left>
-# inoremap [] []<Left>
-# inoremap {} {}<Left>
-# inoremap "" ""<Left>
-# inoremap ' ''<Left>
-# inoremap ` ``<Left>
-
-# search mappings: these will make it so that going to the
-# next one in a search will center on the line it's found in.
+# search mappings: these will make it so that going to the next one in a search will center on the
+# line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-# when long lines inserted j k moves one physical line
-# gj gk moves down one displayed line
+# when long lines inserted j k moves one physical line gj gk moves down one displayed line
 noremap <Up> gk
 noremap <Down> gj
 noremap j gj
@@ -119,19 +105,14 @@ noremap k gk
 # maybe later i'll figure out for what this mode is needed..
 nnoremap Q <NOP>
 # do not show q: window
-# upd(24-Mar-22): understood at last: q: - shows the history of last
-# commands, also 'q:' suffix works within gq+(line_num/G) command
-# eg. `gq3<CR>` - formats next 3 lines according to the `tw` value
-# nnoremap q: <NOP>
-
-# reload vim configuration file
-# nnoremap <leader>rc :source<space>~/.vimrc<CR>
+# upd(24-Mar-22): understood at last: q: - shows the history of last commands, also 'q:' suffix
+# works within gq+(line_num/G) command eg. `gq3<CR>` - formats next 3 lines according to the `tw`
+# value nnoremap q: <NOP>
 
 # split long lines in `NORMAL` mode
 nnoremap <leader>sl :<C-u>call SplitLine()<CR>
 
-# add a `?` to the end of the line,
-# return the cursor to its original spot.
+# add a `?` to the end of the line, return the cursor to its original spot.
 inoremap ?? <C-o>mp<C-o>A?<C-o>`p
 
 # sync syntax highlighting (sometimes vim gets confused in a long file)
@@ -141,11 +122,33 @@ nnoremap <leader>ss :syntax sync fromstart<CR>
 nnoremap <C-n> <Cmd>call g:ScrollPopup(3)<CR>
 nnoremap <C-p> <Cmd>call g:ScrollPopup(-3)<CR>
 
-# Restore "drag to select, release to copy" feel now that Vim owns the
-# mouse: yank the just-made visual selection straight to the system
-# clipboard when the drag ends. Only fires from an active Visual selection
-# (started by the drag itself), so plain clicks are unaffected.
+# Restore "drag to select, release to copy" feel now that Vim owns the mouse: yank the just-made
+# visual selection straight to the system clipboard when the drag ends. Only fires from an active
+# Visual selection (started by the drag itself), so plain clicks are unaffected.  The explicit "+
+# means this does not lean on the mirror autocmd below, which skips it (regname is '+').
 vnoremap <LeftRelease> <LeftRelease>"+y
+
+# 'clipboard' is left empty; "unnamed" aliases the unnamed register to the pasteboard for delete
+# and change as well as yank, so copying text in another app and then deleting a word here would
+# put the deleted word back. Mirror only genuine yanks instead. Deletes and changes stay in Vim's
+# own registers, so dd + p line juggling is unaffected, and the regname test keeps an explicit
+# register ("ay) local too - which is what makes it usable for staging.
+augroup enk_clipboard
+    autocmd!
+    autocmd TextYankPost * {
+        if v:event.operator ==# 'y' && v:event.regname ==# ''
+            setreg('+', v:event.regcontents, v:event.regtype)
+        endif
+    }
+augroup END
+
+# Put from the macOS pasteboard. <leader>p is :LspHover and <leader>y and <leader>d are the
+# surround prefixes, so the Cmd-V mnemonic gets the key.  Visual mode uses "+P rather than "+p: per
+# :h v_P it replaces the selection without touching any register, so the same clipboard text can be
+# pasted over one target after another.
+nnoremap <leader>v "+p
+nnoremap <leader>V "+P
+xnoremap <leader>v "+P
 
 # Source ~/.vimrc
 nmap <leader>rc :source $MYVIMRC<CR>:nohlsearch<CR>
@@ -179,21 +182,20 @@ nnoremap <leader>e  :LspDiag next<CR>
 # Previous error
 nnoremap <leader>E  :LspDiag prev<CR>
 
-# Surround: add, change and delete delimiter pairs around a motion, a
-# textobject or a Visual selection.
+# Surround: add, change and delete delimiter pairs around a motion, a textobject or a Visual
+# selection.
 #
-# Built on Vim's documented operator interface (:h map-operator, :h g@).
-# The <expr> mapping only reads keys and returns 'g@' - changing text from
-# an <expr> mapping is blocked by |textlock| - and the edit happens in the
-# 'operatorfunc' callback. Vim records `g@{motion}` for redo, so `.`
+# Built on Vim's documented operator interface (:h map-operator, :h g@).  The <expr> mapping only
+# reads keys and returns 'g@' - changing text from an <expr> mapping is blocked by |textlock| - and
+# the edit happens in the 'operatorfunc' callback. Vim records `g@{motion}` for redo, so `.`
 # repeats the last surround with the same delimiter.
 #
-# Nothing is yanked or put: edits are setline() splices. That matters
-# because 'clipboard' is "unnamed", so any register detour would push the
-# intermediate text onto the macOS pasteboard.
+# Nothing is yanked or put: edits are setline() splices. That matters because a register detour
+# would clobber whatever is staged in the unnamed register (and, were 'clipboard' ever aliased
+# again, the macOS pasteboard with it).
 
-# Delimiter -> [opening, closing]. An opening char also adds inner spaces,
-# its closing counterpart does not:
+# Delimiter -> [opening, closing]. An opening char also adds inner spaces, its closing counterpart
+# does not:
 #   <leader>ysiw(  ->  ( foo )
 #   <leader>ysiw)  ->  (foo)
 const SurroundPairs = {
@@ -204,8 +206,8 @@ const SurroundPairs = {
 }
 const SurroundSpaced = ['(', '[', '{', '<']
 
-# Handed to the operator callback; survives until the next surround
-# mapping, which is what lets `.` reuse the delimiter without asking.
+# Handed to the operator callback; survives until the next surround mapping, which is what lets `.`
+# reuse the delimiter without asking.
 var Pending: dict<any> = {}
 
 def Warn(msg: string)
@@ -214,9 +216,8 @@ def Warn(msg: string)
     echohl None
 enddef
 
-# Read one delimiter key; empty string means aborted. getchar() is
-# explicitly allowed in an <expr> mapping and consumes typeahead, so
-# `<leader>ds"` typed in one burst works (:h map-expression).
+# Read one delimiter key; empty string means aborted. getchar() is explicitly allowed in an <expr>
+# mapping and consumes typeahead, so `<leader>ds"` typed in one burst works (:h map-expression).
 def AskDelim(prompt: string): string
     echohl ModeMsg
     echo prompt
@@ -245,10 +246,9 @@ def Splice(lnum: number, idx: number, len: number, ins: string)
     setline(lnum, strpart(line, 0, idx) .. ins .. strpart(line, idx + len))
 enddef
 
-# Edit the closing site first so the opening edit cannot shift its index.
-# The operator has already parked the cursor at the start of the range, so
-# shifting it past the inserted opening delimiter leaves it on the first
-# character of the wrapped text rather than on the delimiter itself.
+# Edit the closing site first so the opening edit cannot shift its index.  The operator has already
+# parked the cursor at the start of the range, so shifting it past the inserted opening delimiter
+# leaves it on the first character of the wrapped text rather than on the delimiter itself.
 def Rewrite(l1: number, i1: number, n1: number, open: string,
             l2: number, i2: number, n2: number, close: string)
     var pos = getcurpos()
