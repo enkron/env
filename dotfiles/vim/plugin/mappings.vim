@@ -147,9 +147,6 @@ nnoremap <C-p> <Cmd>call g:ScrollPopup(-3)<CR>
 # (started by the drag itself), so plain clicks are unaffected.
 vnoremap <LeftRelease> <LeftRelease>"+y
 
-# Reload undo history
-nmap <leader>ee :setl undoreload=0 \|edit<CR>
-
 # Source ~/.vimrc
 nmap <leader>rc :source $MYVIMRC<CR>:nohlsearch<CR>
 

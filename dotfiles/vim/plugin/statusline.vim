@@ -5,6 +5,8 @@ set statusline=                         # clear status line when vimrc is reload
 set statusline+=%1*\%{&ff}%y\ %*
 set statusline+=%2*\»\ %*
 set statusline+=%3*\%n%m\%*
+# Active undo barrier from plugin/checkpoint.vim; collapses to nothing when none is set
+set statusline+=%3*%{g:CheckpointStatus()}%*
 set statusline+=%1*\:%t\ %*
 set statusline+=%=
 set statusline+=%5*\%4l%*
