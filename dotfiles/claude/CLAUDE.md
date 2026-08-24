@@ -51,10 +51,20 @@ workstation, not a portable script target.
 
 # Version control boundaries
 
-Claude must never create Git branches (or JJ bookmarks), commit changes, or
-push to a remote, under any circumstances. These actions are the user's
-sole responsibility. Claude may draft or suggest commit messages/descriptions
-but must never execute the commit (or branch/push) itself.
+Claude must never execute any state-changing Git or JJ (Jujutsu) operation,
+under any circumstances - this includes (non-exhaustively) rebase, commit,
+describe, new, edit, abandon, squash, restore, branch/bookmark create or
+move, merge, and push. This applies even when the operation looks safe,
+trivial, or easily reversible (eg. `jj undo` exists) - reversibility is not
+the test; execution itself is prohibited. These actions are the user's sole
+responsibility. Claude may explain the current repository state, describe
+what a candidate operation would do, and draft or suggest the exact
+command(s) to run (including commit messages/descriptions), but must always
+stop there and let the user run it themselves - never execute it on their
+behalf, and never change repository state without the user's explicit
+approval for that specific action. Read-only/inspection commands (eg. `git
+status`, `git log`, `git diff`, `git show`, `jj log`, `jj st`, `jj diff`,
+`jj op log`, `jj bookmark list`) remain fine to run without asking.
 
 # Infrastructure boundaries
 
