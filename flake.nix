@@ -61,22 +61,6 @@
           unstable = import nixpkgs {
             system = system;
             config.allowUnfree = true;
-            overlays = [
-              # tmux 3.7c's configure script aborts on Darwin unless jemalloc is explicitly
-              # enabled or disabled. Mirror the nixpkgs master fix (56d4d710bd, "tmux: fix
-              # darwin build") until it reaches the nixpkgs-unstable channel, then drop this
-              # overlay with the next flake lock update.
-              (final: prev: {
-                tmux = prev.tmux.overrideAttrs (old: {
-                  buildInputs =
-                    (old.buildInputs or [ ])
-                    ++ final.lib.optionals final.stdenv.hostPlatform.isDarwin [ final.jemalloc ];
-                  configureFlags =
-                    (old.configureFlags or [ ])
-                    ++ final.lib.optionals final.stdenv.hostPlatform.isDarwin [ "--enable-jemalloc" ];
-                });
-              })
-            ];
           };
           stable = import nixpkgs-stable {
             system = system;
