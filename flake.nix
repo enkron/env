@@ -11,6 +11,9 @@
     # In order for python310 package to work correctly `sphinx` dependency must be < 8.2.3 version
     # (this version doesn't support python3.10). Therefore pinning nixpkgs url to the previous hash
     nixpkgs-sphinx747.url = "github:NixOS/nixpkgs/a684c58d46ebbede49f280b653b9e56100aa3877";
+
+    # Not in nixpkgs; ships its own flake.
+    tailcat.url = "github:tailscale/tailcat";
   };
 
   outputs =
@@ -20,6 +23,7 @@
       nixpkgs-stable,
       nixpkgs-poetry171,
       nixpkgs-sphinx747,
+      tailcat,
     }:
     let
       # Use the standard set of platforms that flakes expose by default.
@@ -144,6 +148,9 @@
               ]
               ++ unstable.lib.optionals (system == "aarch64-darwin") [
                 container
+              ]
+              ++ unstable.lib.optionals (tailcat.packages ? ${system}) [
+                tailcat.packages.${system}.default
               ];
           };
 
