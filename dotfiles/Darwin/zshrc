@@ -188,6 +188,11 @@ if command -v rumdl >/dev/null 2>&1; then
     test -f "$HOME/.zsh/zfunc/_rumdl" || rumdl completions zsh > "$HOME/.zsh/zfunc/_rumdl"
 fi
 
+# herdr: Tmux-like terminal multiplexer with the runtime for coding agents
+if command -v herdr >/dev/null 2>&1; then
+    test -f "$HOME/.zsh/zfunc/_herdr" || herdr completions zsh > "$HOME/.zsh/zfunc/_herdr"
+fi
+
 # Enable the completion system now that every generator above has populated `fpath`. `compinit`
 # scans `fpath` once to build its table, so it must come after the generation blocks and before the
 # runtime integrations below that call `compdef`/`complete`.

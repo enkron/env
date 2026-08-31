@@ -157,6 +157,10 @@ log info "Linking yamlfmt configuration"
 mkdir -p "${HOME}/.config/yamlfmt"
 ln -sf "${REPOS_HOME}/env/dotfiles/yamlfmt.yaml" "${HOME}/.config/yamlfmt/.yamlfmt"
 
+log info "Linking herdr configuration"
+mkdir -p "${HOME}/.config/herdr"
+ln -sf "${REPOS_HOME}/env/dotfiles/herdr.toml" "${HOME}/.config/herdr/config.toml"
+
 # Nushell configuration
 if [ "$(uname -s)" = 'Darwin' ]; then
     nushell_config_path="${HOME}/Library/Application Support/nushell"
