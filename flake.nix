@@ -151,7 +151,11 @@
                 container
               ]
               ++ unstable.lib.optionals (tailcat.packages ? ${system}) [
-                tailcat.packages.${system}.default
+                # Upstream's committed vendorHash (as of rev 3132331) doesn't match
+                # its go.sum; override with the correct hash until fixed forward.
+                (tailcat.packages.${system}.default.overrideAttrs (_old: {
+                  vendorHash = "sha256-EqmXVZsyuRjR4R+6V8E5pQtlAI88oskDaghfdv96sc0=";
+                }))
               ];
           };
 
