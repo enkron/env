@@ -125,6 +125,7 @@
                 go
                 gofumpt
                 gopls
+                herdr
                 hubble
                 jujutsu
                 k9s
