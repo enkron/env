@@ -14,7 +14,7 @@ auto_switch = false
 
 # Override individual color tokens on top of the base theme.
 # Accepts: hex (#rrggbb), named colors, rgb(r,g,b), or panel_bg = "reset"
-# [theme.custom]
+[theme.custom]
 # sidebar_bg = "#181825"
 # active_row_bg = "#1e1e2e"
 # selection_bg = "#313244"
@@ -22,6 +22,8 @@ auto_switch = false
 # accent = "#f5c2e7"
 # red = "#ff6188"
 # green = "#a6e3a1"
+panel_bg = "#1a1a1a"
+sidebar_bg = "#1a1a1a"
 
 [terminal]
 # Executable used for new interactive panes.
@@ -133,6 +135,14 @@ split_horizontal = "prefix+_"
 # width = "80%"
 # height = "80%"
 
+# Scratch shell popup, replacing tmux.conf's floating-pane binding on `y`.
+[[keys.command]]
+key = "prefix+y"
+type = "popup"
+command = "$SHELL"
+width = "64%"
+height = "18%"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]
@@ -194,7 +204,8 @@ split_horizontal = "prefix+_"
 # redraw_on_focus_gained = true
 
 # Pane scrollback lines to scroll per mouse wheel notch.
-# mouse_scroll_lines = 3
+# Matches the 1-line-per-notch scroll set up in tmux.conf.
+mouse_scroll_lines = 1
 
 # Ask for confirmation before closing a workspace
 # confirm_close = true
