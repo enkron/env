@@ -178,6 +178,29 @@ ln -sf "${REPOS_HOME}/env/dotfiles/claude/CLAUDE.md" "${HOME}/.claude/CLAUDE.md"
 ln -sf "${REPOS_HOME}/env/dotfiles/claude/settings.json" "${HOME}/.claude/settings.json"
 ln -sf "${REPOS_HOME}/env/scripts/claude/statusline.sh" "${HOME}/.claude/statusline.sh"
 
+# Herdr's Claude Code integration hook. On SessionStart it reports this
+# pane's Claude session id and transcript path to the Herdr server (socket
+# method pane.report_agent_session), which is what [session]
+# resume_agents_on_restore in dotfiles/herdr.toml needs in order to resume
+# panes into their native conversations after a server restart. It reports
+# no lifecycle state: Herdr derives idle/working/blocked/done from its own
+# agent-detection manifest whether or not this hook is installed.
+#
+# Deliberately linked as a dotfile rather than deployed with
+# `herdr integration install claude`: that command bakes an absolute $HOME
+# path into settings.json, which cannot be shared between macOS and Linux
+# hosts. The hooks entry in dotfiles/claude/settings.json uses "$HOME"
+# instead. That edit is also why the install command must not be re-run
+# casually: it matches its own entry by exact command string, so it would
+# append a second, absolute-path duplicate rather than update in place.
+# The symlink still lets `herdr integration status` read the script's
+# version, and a future `herdr integration install claude` writes through
+# it, landing the upgrade in the repo as a reviewable diff.
+log info "Linking Herdr's Claude Code integration hook"
+mkdir -p "${HOME}/.claude/hooks"
+ln -sf "${REPOS_HOME}/env/dotfiles/claude/hooks/herdr-agent-state.sh" \
+    "${HOME}/.claude/hooks/herdr-agent-state.sh"
+
 if command -v nix >/dev/null 2>&1; then
     log warning "nix already installed, skipping installation step"
 else
