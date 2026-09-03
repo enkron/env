@@ -35,9 +35,21 @@ unsetopt SHARE_HISTORY # Keep in-memory history independent per shell session
 #  history -n &>/dev/null # Read new history from the history file
 #}
 
-# Shell completions user dir
+# Shell completions user dir. Reserved for hand-written completions covering tools Nix does not
+# package. Prefer adding the tool to flake.nix, since nixpkgs packages almost always ship a
+# completion of their own.
 [[ -d "$HOME/.zsh/zfunc" ]] || mkdir -p "$HOME/.zsh/zfunc"
-fpath+=("$HOME/.zsh/zfunc")
+
+# Completion function search path. Nix packages ship their upstream zsh completions inside the
+# derivation, so the profile's site-functions dir is always version-matched to the binaries on
+# PATH. The profiles precede ~/.zsh/zfunc so that a hand-generated leftover from the old scheme is
+# shadowed.
+fpath=(
+    "$HOME/.nix-profile/share/zsh/site-functions"
+    /nix/var/nix/profiles/default/share/zsh/site-functions
+    "$HOME/.zsh/zfunc"
+    $fpath
+)
 
 # Use caching to speed up completion startup
 [[ -d "$HOME/.zsh/cache" ]] || mkdir -p "$HOME/.zsh/cache"
@@ -57,11 +69,7 @@ zstyle ':completion:*' group-name ''
 # Skip unnecessary prompt recalculations
 zstyle ':completion:*' rehash true
 
-# Completion script generation
-# The blocks below write $HOME/.zsh/zfunc/_<tool> into `fpath`. They must run BEFORE `compinit`
-# scans `fpath` (further down) so a freshly generated file is active in the same shell rather than
-# only the next one. Each is guarded by a `command -v` check and cached with `test -f` so it is a
-# no-op once generated.
+# Tool environment. Plain variables and PATH additions.
 
 # Setup environment for Rust lang
 # https://rust-lang.org
@@ -69,133 +77,26 @@ if [[ -f "$HOME/.cargo/env" ]]; then
     . "$HOME/.cargo/env"
 fi
 
-# Rust lang shell completions
-if command -v rustup >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_rustup" || rustup completions zsh > "$HOME/.zsh/zfunc/_rustup"
-    test -f "$HOME/.zsh/zfunc/_cargo" || rustup completions zsh cargo > "$HOME/.zsh/zfunc/_cargo"
-fi
-
-# Kubernetes kubectl
-# https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
-if command -v kubectl >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_kubectl" || kubectl completion zsh > "$HOME/.zsh/zfunc/_kubectl"
-    if command -v difft >/dev/null 2>&1; then
-        export KUBECTL_EXTERNAL_DIFF='difft'
-    fi
-fi
-
-# Helm: the package manager for Kubernetes
-# https://helm.sh
-if command -v helm >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_helm" || helm completion zsh > "$HOME/.zsh/zfunc/_helm"
-fi
-
-# k9s: a terminal UI to interact with Kubernetes clusters
-# https://k9scli.io
-if command -v k9s >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_k9s" || k9s completion zsh > "$HOME/.zsh/zfunc/_k9s"
-fi
-
-# Argo CD: declarative GitOps continuous delivery for Kubernetes
-# https://argo-cd.readthedocs.io
-if command -v argocd >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_argocd" || argocd completion zsh > "$HOME/.zsh/zfunc/_argocd"
-fi
-
-# Cilium CLI: manage the Cilium eBPF networking/security stack
-# https://cilium.io
-if command -v cilium >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_cilium" || cilium completion zsh > "$HOME/.zsh/zfunc/_cilium"
-fi
-
-# Hubble: network, service and security observability for Cilium
-# https://github.com/cilium/hubble
-if command -v hubble >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_hubble" || hubble completion zsh > "$HOME/.zsh/zfunc/_hubble"
-fi
-
-# talosctl: manage Talos Linux Kubernetes clusters
-# https://www.talos.dev
-if command -v talosctl >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_talosctl" || talosctl completion zsh > "$HOME/.zsh/zfunc/_talosctl"
-fi
-
-# Jujutsu VCS
-# https://github.com/jj-vcs/jj
-if command -v jj >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_jj" || jj util completion zsh > ~/.zsh/zfunc/_jj
-fi
-
-# bat: a cat(1) clone with syntax highlighting and Git integration
-# https://github.com/sharkdp/bat
-if command -v bat >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_bat" || bat --completion zsh > ~/.zsh/zfunc/_bat
-    export BAT_THEME_DARK="Nord"
-fi
-
-# Podman: daemonless container engine
-# https://podman.io
-if command -v podman >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_podman" || podman completion zsh > "$HOME/.zsh/zfunc/_podman"
-fi
-
-# procs: a modern replacement for ps
-# https://github.com/dalance/procs
-if command -v procs >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_procs" || procs --gen-completion-out zsh > "$HOME/.zsh/zfunc/_procs"
-fi
-
-# delta: a syntax-highlighting pager for git/diff output
-# https://github.com/dandavison/delta
-if command -v delta >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_delta" || delta --generate-completion zsh > "$HOME/.zsh/zfunc/_delta"
-fi
-
-# ripgrep: recursively search directories for a regex pattern
-# https://github.com/BurntSushi/ripgrep
-if command -v rg >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_rg" || rg --generate complete-zsh > "$HOME/.zsh/zfunc/_rg"
-fi
-
-# yq: a portable command-line YAML/JSON/XML processor
-# https://github.com/mikefarah/yq
-if command -v yq >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_yq" || yq shell-completion zsh > "$HOME/.zsh/zfunc/_yq"
-fi
-
-# Git LFS: an extension for versioning large files
-# https://git-lfs.com
-if command -v git-lfs >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_git-lfs" || git lfs completion zsh > "$HOME/.zsh/zfunc/_git-lfs"
-fi
-
 # difft - a structural diff that understands syntax
 if command -v difft >/dev/null 2>&1; then
     # Always show both sides of the `difft`'s output. Default side-by-side uses a single column if
     # a change is exclusively additions or exclusively removals
     export DFT_DISPLAY='side-by-side-show-both'
+
+    # Route `kubectl diff` through it as well
+    # https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
+    export KUBECTL_EXTERNAL_DIFF='difft'
 fi
 
-# Codex: OpenAI's command-line coding agent
-# https://github.com/openai/codex
-if command -v codex >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_codex" || codex completion zsh > "$HOME/.zsh/zfunc/_codex"
+# bat: a cat(1) clone with syntax highlighting and Git integration
+# https://github.com/sharkdp/bat
+if command -v bat >/dev/null 2>&1; then
+    export BAT_THEME_DARK="Nord"
 fi
 
-# rumdl: a fast Markdown linter and formatter
-# https://github.com/rvben/rumdl
-if command -v rumdl >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_rumdl" || rumdl completions zsh > "$HOME/.zsh/zfunc/_rumdl"
-fi
-
-# herdr: Tmux-like terminal multiplexer with the runtime for coding agents
-if command -v herdr >/dev/null 2>&1; then
-    test -f "$HOME/.zsh/zfunc/_herdr" || herdr completions zsh > "$HOME/.zsh/zfunc/_herdr"
-fi
-
-# Enable the completion system now that every generator above has populated `fpath`. `compinit`
-# scans `fpath` once to build its table, so it must come after the generation blocks and before the
-# runtime integrations below that call `compdef`/`complete`.
+# Enable the completion system. `compinit` scans `fpath` once to build its table, so it must run
+# after the `fpath` assignment above and before the runtime integrations below that call
+# `compdef`/`complete`.
 autoload -Uz +X compinit && compinit # Enable completion system
 autoload -Uz +X bashcompinit && bashcompinit # Enable bash-style completion
 
@@ -227,18 +128,6 @@ fi
 # https://developer.hashicorp.com/terraform
 if command -v terraform >/dev/null 2>&1; then
     complete -o nospace -C "$(command -v terraform)" terraform
-fi
-
-# AWS CLI
-# https://docs.aws.amazon.com/cli/latest/reference
-if command -v aws >/dev/null 2>&1; then
-    complete -o nospace -C "$(command -v aws_completer)" aws
-fi
-
-# 1Password CLI
-# https://developer.1password.com/docs/cli
-if command -v op >/dev/null 2>&1; then
-    eval "$(op completion zsh)"; compdef _op op
 fi
 
 # Aliases

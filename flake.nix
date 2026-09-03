@@ -114,6 +114,7 @@
             paths =
               with unstable;
               [
+                _1password-cli
                 argo-workflows
                 argocd
                 awscli2
