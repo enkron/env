@@ -11,13 +11,6 @@
     # In order for python310 package to work correctly `sphinx` dependency must be < 8.2.3 version
     # (this version doesn't support python3.10). Therefore pinning nixpkgs url to the previous hash
     nixpkgs-sphinx747.url = "github:NixOS/nixpkgs/a684c58d46ebbede49f280b653b9e56100aa3877";
-
-    # Not in nixpkgs; ships its own flake. Disabled while upstream is unstable: as of rev 7e45147
-    # its go.mod requires go >= 1.27.1 while its own build supplies 1.27.0, and GOTOOLCHAIN=local
-    # blocks the toolchain download, so the vendor derivation cannot build. Re-enable here, in the
-    # outputs pattern, and in enk-coreutils-unstable's paths together - the pattern has no
-    # ellipsis, so a half-restored input fails evaluation.
-    #tailcat.url = "github:tailscale/tailcat";
   };
 
   outputs =
@@ -27,7 +20,6 @@
       nixpkgs-stable,
       nixpkgs-poetry171,
       nixpkgs-sphinx747,
-      #tailcat,
     }:
     let
       # Use the standard set of platforms that flakes expose by default.
@@ -140,6 +132,7 @@
                 nodejs_24
                 rumdl
                 rustup
+                tailcat
                 talosctl
                 tealdeer
                 terraform
@@ -154,11 +147,7 @@
               ]
               ++ unstable.lib.optionals (system == "aarch64-darwin") [
                 container
-              ]
-            #++ unstable.lib.optionals (tailcat.packages ? ${system}) [
-            #  tailcat.packages.${system}.default
-            #]
-            ;
+              ];
           };
 
           enk-coreutils-dev = unstable.buildEnv {
