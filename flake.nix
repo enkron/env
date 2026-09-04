@@ -79,6 +79,7 @@
               fd
               git
               git-lfs
+              gnumake
               gnupg
               groovy
               hyperfine

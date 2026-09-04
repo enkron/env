@@ -2,13 +2,6 @@
   "permissions": {
     "defaultMode": "default"
   },
-  "worktree": {
-    "baseRef": "fresh"
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.sh"
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -23,6 +16,13 @@
       }
     ]
   },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true
   },
@@ -32,5 +32,6 @@
   "tui": "default",
   "editorMode": "normal",
   "verbose": true,
-  "switchModelsOnFlag": true
+  "switchModelsOnFlag": true,
+  "agentPushNotifEnabled": true
 }
