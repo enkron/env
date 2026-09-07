@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-kubectl135": {
+      "locked": {
+        "lastModified": 1776318428,
+        "narHash": "sha256-3jh39UtUVapHc4EUJ2q16YpP6dVacnJGuq7jNJPmySY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "917a7562e399cbb394fc2cdffc277ccaf84a02f4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "917a7562e399cbb394fc2cdffc277ccaf84a02f4",
+        "type": "github"
+      }
+    },
     "nixpkgs-poetry171": {
       "locked": {
         "lastModified": 1707949678,
@@ -67,6 +83,7 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
+        "nixpkgs-kubectl135": "nixpkgs-kubectl135",
         "nixpkgs-poetry171": "nixpkgs-poetry171",
         "nixpkgs-sphinx747": "nixpkgs-sphinx747",
         "nixpkgs-stable": "nixpkgs-stable"

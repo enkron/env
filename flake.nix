@@ -11,6 +11,11 @@
     # In order for python310 package to work correctly `sphinx` dependency must be < 8.2.3 version
     # (this version doesn't support python3.10). Therefore pinning nixpkgs url to the previous hash
     nixpkgs-sphinx747.url = "github:NixOS/nixpkgs/a684c58d46ebbede49f280b653b9e56100aa3877";
+
+    # Pinned to the commit where kubectl v1.35.4 is available. The EKS server is on 1.35, and
+    # kubectl must stay within the supported client/server version skew, so track that minor
+    # version explicitly instead of following nixpkgs-unstable's latest.
+    nixpkgs-kubectl135.url = "github:NixOS/nixpkgs/917a7562e399cbb394fc2cdffc277ccaf84a02f4";
   };
 
   outputs =
@@ -20,6 +25,7 @@
       nixpkgs-stable,
       nixpkgs-poetry171,
       nixpkgs-sphinx747,
+      nixpkgs-kubectl135,
     }:
     let
       # Use the standard set of platforms that flakes expose by default.
@@ -63,6 +69,10 @@
             config.allowUnfree = true;
           };
           stable = import nixpkgs-stable {
+            system = system;
+            config.allowUnfree = true;
+          };
+          kubectl135 = import nixpkgs-kubectl135 {
             system = system;
             config.allowUnfree = true;
           };
@@ -127,7 +137,7 @@
                 hubble
                 jujutsu
                 k9s
-                kubectl
+                kubectl135.kubectl
                 kubernetes-helm
                 nixd
                 nodejs_24
