@@ -119,6 +119,7 @@
                   cdrtools
                   curl
                   gnupg
+                  gnutar
                   nmap
                   podman
                   qemu
