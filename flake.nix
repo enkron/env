@@ -109,16 +109,20 @@
                   btop
                   dust
                   hyperfine
+                  lsof
                   procs
                   viddy
                 ];
                 # Virtualization, containers, security & networking
                 virtNet = [
+                  bind.dnsutils
                   cdrtools
+                  curl
                   gnupg
                   nmap
                   podman
                   qemu
+                  rsync
                   skopeo
                   socat
                   zstd
@@ -147,6 +151,7 @@
                   cilium-cli
                   hubble
                   k9s
+                  kubeconform
                   kubectl135.kubectl
                   kubernetes-helm
                   tailcat
@@ -184,6 +189,7 @@
                   codex
                   fzf
                   herdr
+                  irssi
                   jujutsu
                   tealdeer
                   tmux
