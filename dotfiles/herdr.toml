@@ -39,6 +39,10 @@ shell_mode = "auto"
 # "current" for Herdr's process directory, or a fixed path such as "~/Projects".
 new_cwd = "follow"
 
+# Local Kitty graphics rendering for attached clients. Requires a Kitty graphics-compatible outer
+# terminal.
+kitty_graphics = true
+
 [update]
 # Update channel used by background version checks and `herdr update`.
 # Stable builds default to "stable". Windows preview builds default to "preview"
@@ -218,11 +222,15 @@ prompt_new_tab_name = false
 prompt_new_workspace_name = true
 
 # Draw borders around split panes.
-# pane_borders = true
+# "always" - frame a single pane (if only pane_outer_borders = true).
+# "auto" - keeps split-only borders.
+# "off" - hide borders.
+# legacy booleans are also working
+pane_borders = "always"
 
 # Draw borders along the outside edge of the pane area.
 # Disable for tmux-style internal splitters without an outside frame.
-# pane_outer_borders = true
+pane_outer_borders = true
 
 # Draw interactive scrollbars beside terminal panes.
 # Set false to reclaim the scrollbar column and keep it out of terminal-native selections.
@@ -336,9 +344,6 @@ tab_bar_position = "bottom"
 [experimental]
 # Allow launching herdr from inside a herdr-managed pane.
 # allow_nested = false
-# Experimental local Kitty graphics rendering for attached clients.
-# Requires a Kitty graphics-compatible outer terminal.
-# kitty_graphics = false
 # Save recent pane screen history across full server restarts.
 pane_history = false
 # While prefix mode is active, temporarily switch the host input source to
