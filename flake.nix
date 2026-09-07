@@ -80,85 +80,116 @@
         {
           enk-coreutils-stable = stable.buildEnv {
             name = "enk-coreutils-stable";
-            paths = with stable; [
-              btop
-              cdrtools
-              delta
-              difftastic
-              dust
-              fd
-              git
-              git-lfs
-              gnumake
-              gnupg
-              groovy
-              hyperfine
-              jq
-              newsboat
-              nmap
-              nushell
-              podman
-              procs
-              qemu
-              ripgrep
-              sd
-              skopeo
-              socat
-              tokei
-              tree
-              uv
-              viddy
-              vim
-              w3m
-              yq-go
-              zoxide
-              zstd
-            ];
+            paths =
+              with stable;
+              let
+                # Version control & diffing
+                vcs = [
+                  delta
+                  difftastic
+                  git
+                  git-lfs
+                ];
+                # Everyday terminal navigation & text tools
+                shellCli = [
+                  fd
+                  jq
+                  newsboat
+                  nushell
+                  ripgrep
+                  sd
+                  tokei
+                  tree
+                  w3m
+                  yq-go
+                  zoxide
+                ];
+                # System/process monitoring & benchmarking
+                monitoring = [
+                  btop
+                  dust
+                  hyperfine
+                  procs
+                  viddy
+                ];
+                # Virtualization, containers, security & networking
+                virtNet = [
+                  cdrtools
+                  gnupg
+                  nmap
+                  podman
+                  qemu
+                  skopeo
+                  socat
+                  zstd
+                ];
+                # Build/lang tooling & editor
+                devTools = [
+                  gnumake
+                  groovy
+                  uv
+                  vim
+                ];
+              in
+              vcs ++ shellCli ++ monitoring ++ virtNet ++ devTools;
           };
 
           enk-coreutils-unstable = unstable.buildEnv {
             name = "enk-coreutils-unstable";
             paths =
               with unstable;
-              [
-                _1password-cli
-                argo-workflows
-                argocd
-                awscli2
-                bat
-                cilium-cli
-                claude-code
-                codex
-                fzf
-                go
-                gofumpt
-                gopls
-                herdr
-                hubble
-                jujutsu
-                k9s
-                kubectl135.kubectl
-                kubernetes-helm
-                nixd
-                nodejs_24
-                rumdl
-                rustup
-                tailcat
-                talosctl
-                tealdeer
-                terraform
-                terraform-ls
-                tmux
-                wasm-pack
-                yaml-language-server
-                yamlfmt
-                yamllint
-                zig
-                zls
-              ]
-              ++ unstable.lib.optionals (system == "aarch64-darwin") [
-                container
-              ];
+              let
+                # Cloud/k8s/IaC & network ops tooling
+                cloudDevops = [
+                  argo-workflows
+                  argocd
+                  awscli2
+                  cilium-cli
+                  hubble
+                  k9s
+                  kubectl135.kubectl
+                  kubernetes-helm
+                  tailcat
+                  talosctl
+                  terraform
+                  terraform-ls
+                ]
+                ++ unstable.lib.optionals (system == "aarch64-darwin") [
+                  container
+                ];
+                # Language compilers & toolchains
+                langToolchains = [
+                  go
+                  gofumpt
+                  gopls
+                  nodejs_24
+                  rustup
+                  wasm-pack
+                  zig
+                  zls
+                ];
+                # Linters, formatters & language servers
+                lintFormatIde = [
+                  nixd
+                  rumdl
+                  yaml-language-server
+                  yamlfmt
+                  yamllint
+                ];
+                # General CLI productivity & agent tools
+                cliTools = [
+                  _1password-cli
+                  bat
+                  claude-code
+                  codex
+                  fzf
+                  herdr
+                  jujutsu
+                  tealdeer
+                  tmux
+                ];
+              in
+              cloudDevops ++ langToolchains ++ lintFormatIde ++ cliTools;
           };
 
           enk-coreutils-dev = unstable.buildEnv {
