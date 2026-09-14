@@ -15,3 +15,8 @@ formatter:
   retain_line_breaks_single: true
   trim_trailing_whitespace: true
   eof_newline: true
+  # Without this, folded (`>`) block scalars are re-serialized onto a
+  # single line, silently discarding deliberate manual line-wrapping
+  # (e.g. long shell commands split for readability). Same content
+  # either way once parsed, but it should stay a human's choice.
+  scan_folded_as_literal: true

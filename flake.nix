@@ -155,6 +155,7 @@
                   kubeconform
                   kubectl135.kubectl
                   kubernetes-helm
+                  kustomize
                   tailcat
                   talosctl
                   terraform
