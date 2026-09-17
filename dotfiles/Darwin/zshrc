@@ -152,6 +152,9 @@ fi
 # command.
 alias jjs='jj st'
 
+# Now there's a `kubeconform` along with a `kubectl` command so typing "kubectl" turned into chaos
+alias k=kubectl
+
 # Functions
 # Erase from top of screen to cursor.
 # Redraw prompt + input buffer.
