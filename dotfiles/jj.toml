@@ -20,7 +20,7 @@ auto-local-bookmark = false
 # https://github.com/jj-vcs/jj/blob/main/cli/src/config/colors.toml
 
 # --- Log: base colors (non-working-copy revisions) ---
-change_id         = { fg = "#96653a", bold = true }   # copper accent — the primary identifier
+change_id         = { fg = "#3e3b70", bold = true }   # indigo accent — the primary identifier
 commit_id         = "#6e6ec4"                          # muted purple — a reference constant
 author            = "#3972a8"                          # steel blue — metadata
 committer         = "#3972a8"
@@ -55,7 +55,7 @@ placeholder           = "#990000"
 
 # --- Log: working copy (brighter variants) ---
 working_copy.bold = true
-"working_copy change_id"          = { fg = "#b88050", bold = true }
+"working_copy change_id"          = { fg = "#615e93", bold = true }
 "working_copy commit_id"          = "#9090dd"
 "working_copy author"             = "#5c9bd0"
 "working_copy committer"          = "#5c9bd0"
@@ -76,7 +76,7 @@ working_copy.bold = true
 "working_copy placeholder"        = "#cc2222"
 
 # --- Diff ---
-"diff header"       = "#96653a"          # copper accent for file headers
+"diff header"       = "#3e3b70"          # indigo accent for file headers
 "diff file_header"  = { bold = true }
 "diff hunk_header"  = "#3f6969"          # teal, like Type
 "diff removed"      = { fg = "red" }
@@ -90,5 +90,5 @@ working_copy.bold = true
 
 # --- Errors/warnings ---
 "error heading"         = { fg = "#990000", bold = true }
-"warning heading"       = { fg = "#96653a", bold = true }  # copper instead of yellow
+"warning heading"       = { fg = "#3e3b70", bold = true }  # indigo instead of yellow
 "hint heading"          = { fg = "#3972a8", bold = true }   # steel blue instead of cyan

@@ -31,8 +31,8 @@ $env.FZF_DEFAULT_OPTS = '--height=40% --layout=reverse --info=inline-right --col
 # https://github.com/sharkdp/bat
 $env.BAT_THEME_DARK = "Nord"
 
-# Prompt: red "»" (Zsh: PS1="%F{red}»%f ")
+# Prompt: steel blue "»" (Zsh: PS1="%F{#3972a8}»%f ")
 $env.PROMPT_COMMAND = {|| "" }
-$env.PROMPT_INDICATOR = {|| $"(ansi red)»(ansi reset) " }
+$env.PROMPT_INDICATOR = {|| $"(ansi '#3972a8')»(ansi reset) " }
 $env.PROMPT_COMMAND_RIGHT = {|| "" }
 $env.PROMPT_MULTILINE_INDICATOR = {|| ": " }

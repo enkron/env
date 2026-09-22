@@ -307,9 +307,9 @@ show_startup_tips false
 // works over ssh, unlike pbcopy)
 
 // Theme built from the tmux.conf palette:
-//   #1a1a1a bar/mode background   #ffffff foreground
-//   #990000 active window (red)   #96653a session/window accent (amber)
-//   #e0a050 highlight             #63443b dim accent
+//   #1a1a1a bar/mode background      #ffffff foreground
+//   #3972a8 active window (steel blue)   #3972a8 session/window accent
+//   #6e6ec4 highlight (blue-violet)  #3e3b70 dim accent (indigo)
 //   #666666 grey (borders, window number separator)
 theme "enkron"
 
@@ -318,107 +318,107 @@ themes {
         text_unselected {
             base 255 255 255
             background 26 26 26
-            emphasis_0 224 160 80
-            emphasis_1 150 101 58
-            emphasis_2 153 0 0
+            emphasis_0 110 110 196
+            emphasis_1 57 114 168
+            emphasis_2 57 114 168
             emphasis_3 102 102 102
         }
         text_selected {
             base 255 255 255
-            background 99 68 59
-            emphasis_0 224 160 80
-            emphasis_1 150 101 58
-            emphasis_2 153 0 0
+            background 62 59 112
+            emphasis_0 110 110 196
+            emphasis_1 57 114 168
+            emphasis_2 57 114 168
             emphasis_3 102 102 102
         }
-        // Inactive tabs: amber text blending into the bar background,
+        // Inactive tabs: accent text blending into the bar background,
         // like window-status-format
         ribbon_unselected {
-            base 150 101 58
+            base 57 114 168
             background 26 26 26
-            emphasis_0 153 0 0
+            emphasis_0 57 114 168
             emphasis_1 255 255 255
-            emphasis_2 224 160 80
+            emphasis_2 110 110 196
             emphasis_3 102 102 102
         }
-        // Active tab: white on red, like window-status-current-format
+        // Active tab: white on steel blue, like window-status-current-format
         ribbon_selected {
             base 255 255 255
-            background 153 0 0
-            emphasis_0 224 160 80
+            background 57 114 168
+            emphasis_0 110 110 196
             emphasis_1 255 255 255
-            emphasis_2 150 101 58
+            emphasis_2 57 114 168
             emphasis_3 102 102 102
         }
         table_title {
-            base 150 101 58
+            base 57 114 168
             background 26 26 26
-            emphasis_0 224 160 80
-            emphasis_1 150 101 58
-            emphasis_2 153 0 0
+            emphasis_0 110 110 196
+            emphasis_1 57 114 168
+            emphasis_2 57 114 168
             emphasis_3 102 102 102
         }
         table_cell_unselected {
             base 255 255 255
             background 26 26 26
-            emphasis_0 224 160 80
-            emphasis_1 150 101 58
-            emphasis_2 153 0 0
+            emphasis_0 110 110 196
+            emphasis_1 57 114 168
+            emphasis_2 57 114 168
             emphasis_3 102 102 102
         }
         table_cell_selected {
             base 255 255 255
-            background 99 68 59
-            emphasis_0 224 160 80
-            emphasis_1 150 101 58
-            emphasis_2 153 0 0
+            background 62 59 112
+            emphasis_0 110 110 196
+            emphasis_1 57 114 168
+            emphasis_2 57 114 168
             emphasis_3 102 102 102
         }
         list_unselected {
             base 255 255 255
             background 26 26 26
-            emphasis_0 224 160 80
-            emphasis_1 150 101 58
-            emphasis_2 153 0 0
+            emphasis_0 110 110 196
+            emphasis_1 57 114 168
+            emphasis_2 57 114 168
             emphasis_3 102 102 102
         }
         list_selected {
             base 255 255 255
-            background 99 68 59
-            emphasis_0 224 160 80
-            emphasis_1 150 101 58
-            emphasis_2 153 0 0
+            background 62 59 112
+            emphasis_0 110 110 196
+            emphasis_1 57 114 168
+            emphasis_2 57 114 168
             emphasis_3 102 102 102
         }
-        // Pane borders: active red, inactive grey (pane-*-border-style)
+        // Pane borders: active steel blue, inactive grey (pane-*-border-style)
         frame_selected {
-            base 153 0 0
+            base 57 114 168
             background 0 0 0
-            emphasis_0 224 160 80
-            emphasis_1 150 101 58
+            emphasis_0 110 110 196
+            emphasis_1 57 114 168
             emphasis_2 102 102 102
             emphasis_3 0 0 0
         }
         frame_unselected {
             base 102 102 102
             background 0 0 0
-            emphasis_0 150 101 58
-            emphasis_1 224 160 80
+            emphasis_0 57 114 168
+            emphasis_1 110 110 196
             emphasis_2 102 102 102
             emphasis_3 0 0 0
         }
         frame_highlight {
-            base 224 160 80
+            base 110 110 196
             background 0 0 0
-            emphasis_0 153 0 0
-            emphasis_1 224 160 80
-            emphasis_2 150 101 58
+            emphasis_0 57 114 168
+            emphasis_1 110 110 196
+            emphasis_2 57 114 168
             emphasis_3 0 0 0
         }
         exit_code_success {
-            base 150 101 58
+            base 57 114 168
             background 0 0 0
-            emphasis_0 224 160 80
+            emphasis_0 110 110 196
             emphasis_1 26 26 26
             emphasis_2 102 102 102
             emphasis_3 0 0 0
@@ -432,15 +432,15 @@ themes {
             emphasis_3 0 0 0
         }
         multiplayer_user_colors {
-            player_1 224 160 80
-            player_2 153 0 0
-            player_3 150 101 58
+            player_1 110 110 196
+            player_2 57 114 168
+            player_3 57 114 168
             player_4 255 255 255
-            player_5 99 68 59
+            player_5 62 59 112
             player_6 102 102 102
-            player_7 224 160 80
-            player_8 153 0 0
-            player_9 150 101 58
+            player_7 110 110 196
+            player_8 57 114 168
+            player_9 57 114 168
             player_10 255 255 255
         }
     }

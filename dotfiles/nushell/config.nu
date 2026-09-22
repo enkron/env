@@ -30,7 +30,7 @@ $env.config.menus = [
         }
         style: {
             text: "#666666"
-            selected_text: { attr: b, fg: "#96653a" }
+            selected_text: { attr: b, fg: "#3972a8" }
             description_text: "#666666"
             match_text: { attr: b, fg: "#ffffff" }
             selected_match_text: { attr: b, fg: "#ffffff" }
@@ -46,7 +46,7 @@ $env.config.menus = [
         }
         style: {
             text: "#666666"
-            selected_text: { attr: b, fg: "#96653a" }
+            selected_text: { attr: b, fg: "#3972a8" }
             description_text: "#666666"
             match_text: { attr: b, fg: "#ffffff" }
             selected_match_text: { attr: b, fg: "#ffffff" }

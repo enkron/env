@@ -294,7 +294,8 @@ tab_bar_position = "bottom"
 
 # Accent color for highlights, borders, and navigation UI.
 # Accepts: hex (#89b4fa), named colors (cyan, blue, magenta), or rgb(r,g,b)
-# accent = "cyan"
+# Steel blue, matching the rest of the environment (ghostty/tmux/zellij/jj/vim).
+accent = "#3972a8"
 
 # Background notification popup delivery
 [ui.toast]
