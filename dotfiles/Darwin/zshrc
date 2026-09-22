@@ -7,7 +7,7 @@ SAVEHIST=10000 # Lines in the HISTFILE
 export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
 
 # Set shell prompt
-PS1="%F{#3972a8}»%f "
+PS1="%F{#3972a8}❯%f "
 
 # Customize `ls` colours
 export CLICOLOR=1

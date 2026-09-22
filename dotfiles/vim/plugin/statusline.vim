@@ -3,7 +3,7 @@ vim9script
 set laststatus=2                        # show the status on the second to last line
 set statusline=                         # clear status line when vimrc is reloaded
 set statusline+=%1*\%{&ff}%y\ %*
-set statusline+=%2*\»\ %*
+set statusline+=%2*\❯\ %*
 set statusline+=%3*\%n%m\%*
 # Active undo barrier from plugin/checkpoint.vim; collapses to nothing when none is set
 set statusline+=%3*%{g:CheckpointStatus()}%*
@@ -12,7 +12,7 @@ set statusline+=%=
 set statusline+=%5*\%4l%*
 set statusline+=%6*/%*
 set statusline+=%1*\%L%*
-set statusline+=%2*\ «\ %*
+set statusline+=%2*\ ❮\ %*
 set statusline+=%4*\0x%B\%*
 set statusline+=%6*/%*
 set statusline+=%5*%c\%*
