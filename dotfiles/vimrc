@@ -20,6 +20,17 @@ endif
 
 set term=${TERM}
 
+# Terminal capabilities, kept out of the colorscheme. Set after 'term',
+# which reloads the termcap entries: 24-bit color, and curly/reset
+# underline codes so undercurl (spelling, diagnostics) renders in Ghostty.
+if has('termguicolors')
+    set termguicolors
+endif
+if !has('gui_running')
+    &t_Cs = "\e[4:3m"
+    &t_Ce = "\e[4:0m"
+endif
+
 syntax on                            # enable syntax highlighting
 set nocompatible                     # enables to use Vim specific features
 filetype off                         # reset filetype detection first ...
