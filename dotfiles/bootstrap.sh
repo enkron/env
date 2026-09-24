@@ -117,6 +117,7 @@ ln -sf "${REPOS_HOME}/env/dotfiles/vimrc" "${HOME}/.vimrc"
 # ~/.vim/pack (live plugin clones) is deliberately not touched
 mkdir -p "${HOME}/.vim"
 ln -sfn "${REPOS_HOME}/env/dotfiles/vim/plugin" "${HOME}/.vim/plugin"
+ln -sfn "${REPOS_HOME}/env/dotfiles/vim/after" "${HOME}/.vim/after"
 
 if [ -d "${HOME}/.tmux/plugins/tpm" ]; then
     log warning "TPM already exists, skipping clone step"
