@@ -4,15 +4,19 @@ This environment uses Nix (flakes) for package management. Tools are provided
 by three profiles defined in the flake at
 `/Users/sergei.belokon/rps/github.com/enkron/env/flake.nix`:
 
-- `enk-coreutils-stable`: pinned to nixos-25.05. Core CLI utilities: btop,
-  cdrtools, delta, difftastic, dust, fd, git, git-lfs, gnupg, groovy,
-  hyperfine, jq, newsboat, nmap, nushell, podman, procs, qemu, ripgrep, sd,
-  skopeo, socat, tokei, tree, viddy, vim, w3m, yq-go, zoxide, zstd.
+- `enk-coreutils-stable`: pinned to nixos-26.05. Core CLI utilities: btop,
+  cdrtools, curl, delta, difftastic, dnsutils, dust, fd, git, git-lfs,
+  gnumake, gnupg, gnutar, groovy, hyperfine, jq, lsof, newsboat, nmap,
+  nushell, podman, procs, qemu, ripgrep, rsync, sd, skopeo, socat, tokei,
+  tree, uv, viddy, vim, w3m, yq-go, zoxide, zstd.
 - `enk-coreutils-unstable`: tracks nixpkgs-unstable. Language toolchains and
-  fast-moving tools: argocd, awscli2, bat, cilium-cli, claude-code, codex,
-  fzf, go, gofumpt, gopls, hubble, jujutsu, k9s, kubectl, kubernetes-helm,
-  nixd, nodejs_24, rumdl, rustup, talosctl, tealdeer, terraform,
-  terraform-ls, tmux, zig, zls (plus `container` on aarch64-darwin).
+  fast-moving tools: 1password-cli, argo-workflows, argocd, awscli2, bat,
+  cilium-cli, claude-code, codex, fzf, go, gofumpt, gopls, herdr, hubble,
+  irssi, jujutsu, k9s, kubeconform, kubernetes-helm, kustomize, nixd,
+  nodejs_24, rumdl, rustup, tailcat, talosctl, tealdeer, terraform,
+  terraform-ls, tmux, wasm-pack, yaml-language-server, yamlfmt, yamllint,
+  zig, zls (plus `container` on aarch64-darwin). kubectl comes from a
+  separate input pinned to 1.35 to stay within the EKS version skew.
 - `enk-coreutils-dev`: experimental/temporary toolchains (currently chafa,
   zellij).
 
