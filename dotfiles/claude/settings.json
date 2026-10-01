@@ -1,4 +1,7 @@
 {
+  "env": {
+    "DISABLE_INSTALLATION_CHECKS": "1"
+  },
   "permissions": {
     "defaultMode": "default"
   },
