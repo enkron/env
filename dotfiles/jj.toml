@@ -2,6 +2,12 @@
 name = "Sergei Belokon"
 email = "srj.belokon@gmail.com"
 
+# Work identity for every repo (and workspace) under the work tree.
+[[--scope]]
+--when.repositories = ["~/rps/bitbucket.org/morsemicro"]
+[--scope.user]
+email = "sergei.belokon@morsemicro.com"
+
 [ui]
 color = "auto"
 editor = "vim"
