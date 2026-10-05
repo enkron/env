@@ -111,6 +111,10 @@ fi
 log info "Linking Git configuration"
 ln -sf "${REPOS_HOME}/env/dotfiles/gitconfig" "${HOME}/.gitconfig"
 
+log info "Linking global Git excludes"
+mkdir -p "${HOME}/.config/git"
+ln -sf "${REPOS_HOME}/env/dotfiles/gitignore" "${HOME}/.config/git/ignore"
+
 log info "Linking Vim configuration"
 ln -sf "${REPOS_HOME}/env/dotfiles/vimrc" "${HOME}/.vimrc"
 # -n keeps re-runs from nesting links inside an already-linked directory;

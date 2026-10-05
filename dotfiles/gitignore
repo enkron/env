@@ -1,0 +1,9 @@
+# Global excludes, linked to ~/.config/git/ignore by bootstrap.sh. That is git's default
+# core.excludesFile location, so gitconfig needs no setting for it; jj honours it as well.
+
+# Claude Code per-user project settings (Claude Code appends this entry here on its own when it
+# creates such a file)
+**/.claude/settings.local.json
+
+# jj secondary workspaces kept inside the main checkout (eg. morse_svt_jenkins_pipelines)
+svt_*/
