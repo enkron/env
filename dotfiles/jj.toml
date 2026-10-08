@@ -16,6 +16,11 @@ diff-editor = ":builtin"
 [revset-aliases]
 'immutable_heads()' = 'trunk()'
 
+[revsets]
+# Show only the working copy, trunk and mutable work reachable from local or tracked remote
+# bookmarks, so untracked name@origin bookmarks do not clutter the log.
+log = "present(@) | ancestors(mutable() & (bookmarks() | tracked_remote_bookmarks()), 2) | present(trunk())"
+
 [git]
 # Do not bring grabage from the Git repositories where there is a policy to not delete branches for
 # whatever reasons
