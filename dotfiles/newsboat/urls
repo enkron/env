@@ -51,9 +51,7 @@ https://blog.codeberg.org/feeds/all.atom.xml                  "dev-tooling"
 # Science & Engineering
 https://spectrum.ieee.org/customfeeds/feed/all-topics/rss     "science" "engineering"
 https://lawsofsoftwareengineering.com/index.xml               "engineering"
-https://scitechdaily.com/feed                                 "science"
 https://cmr.berkeley.edu/feed.xml                             "science" "business"
-https://www.sciencedaily.com/rss/all.xml                      "science"
 
 # Neuroscience
 https://www.nature.com/neuro.rss                              "neuroscience" "journal"
@@ -64,4 +62,3 @@ http://connect.biorxiv.org/biorxiv_xml.php?subject=neuroscience  "neuroscience" 
 https://api.quantamagazine.org/feed/                          "neuroscience" "science"
 https://www.thetransmitter.org/feed/                          "neuroscience"
 https://neurosciencenews.com/feed/                            "neuroscience" "news"
-https://www.sciencedaily.com/rss/mind_brain/neuroscience.xml  "neuroscience" "news"
