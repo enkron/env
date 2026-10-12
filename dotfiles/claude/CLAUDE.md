@@ -56,19 +56,67 @@ workstation, not a portable script target.
 # Version control boundaries
 
 Claude must never execute any state-changing Git or JJ (Jujutsu) operation,
-under any circumstances - this includes (non-exhaustively) rebase, commit,
-describe, new, edit, abandon, squash, restore, branch/bookmark create or
-move, merge, and push. This applies even when the operation looks safe,
-trivial, or easily reversible (eg. `jj undo` exists) - reversibility is not
-the test; execution itself is prohibited. These actions are the user's sole
-responsibility. Claude may explain the current repository state, describe
-what a candidate operation would do, and draft or suggest the exact
-command(s) to run (including commit messages/descriptions), but must always
-stop there and let the user run it themselves - never execute it on their
-behalf, and never change repository state without the user's explicit
-approval for that specific action. Read-only/inspection commands (eg. `git
-status`, `git log`, `git diff`, `git show`, `jj log`, `jj st`, `jj diff`,
-`jj op log`, `jj bookmark list`) remain fine to run without asking.
+under any circumstances except the one below - this includes
+(non-exhaustively) rebase, new, edit, abandon, squash, restore,
+branch/bookmark create or move, merge, and push. This applies even when
+the operation looks safe, trivial, or easily reversible (eg. `jj undo`
+exists) - reversibility is not the test; execution itself is prohibited.
+These actions are the user's sole responsibility. Claude may explain the
+current repository state, describe what a candidate operation would do, and
+draft or suggest the exact command(s) to run (including commit
+messages/descriptions), but must always stop there and let the user run it
+themselves - never execute it on their behalf, and never change repository
+state without the user's explicit approval for that specific action, outside
+the exception below.
+Read-only/inspection commands (eg. `git status`, `git log`, `git diff`,
+`git show`, `jj log`, `jj st`, `jj diff`, `jj op log`, `jj bookmark list`)
+remain fine to run without asking.
+
+Exception - recording commits: Claude may run `jj describe` and `jj commit`
+on the working-copy change, and `git add` of the files its change touched
+followed by `git commit`, to record work done in the session. The message
+must follow "Commit messages" below. This never covers `--amend`,
+`--no-verify`, `git add -A`/`git add .` over unrelated files, rewording a
+commit the user wrote or one already pushed (or immutable in jj), or any
+operation listed above.
+
+# Commit messages
+
+Messages follow Conventional Commits 1.0.0
+(<https://www.conventionalcommits.org/en/v1.0.0/>) with nested scopes:
+
+    <type>(<scope>[(<sub-scope>)]): <subject>
+
+    <body>
+
+    * <optional changeset item>
+    * <...>
+
+    Refs: <TICKET-123>
+    Co-Authored-By: <attribution>
+
+- type: one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`,
+  `build`, `ci`, `chore`, `revert`. A breaking change adds `!` before the
+  `:` and a `BREAKING CHANGE:` trailer.
+- scope: the component touched, sub-components nested in parentheses, at
+  most two levels (eg. `gitops(jenkins)`, `docs(ci(karpenter))`).
+  Lower-case, kebab-case. Take it from the repo's CLAUDE.md scope list
+  first, else from the most common spelling in `jj log`/`git log` for the
+  same paths. Never invent a new top-level scope when one already exists;
+  omit the scope only when the change spans the whole repo.
+- subject: imperative mood, lower-case first word, no trailing period, the
+  whole header at most 72 columns. It names the effect, not the files.
+- body: after a blank line, wrapped at 72. What changed and why, plus
+  anything a reviewer cannot see in the diff (rollout steps, measurements,
+  side effects). Omit it only for a self-evident one-line change.
+- changeset: an optional `*` bullet list when one commit carries several
+  distinct items worth naming.
+- trailers: one block at the very end, one `Token: value` per line, no
+  blank lines inside. `Refs: <KEY>` when a ticket exists, then the
+  attribution line.
+- One logical change per commit; a subject that needs "and" means split.
+- Never mention Claude or the session in the subject or body; attribution
+  lives only in the trailer.
 
 # Infrastructure boundaries
 
