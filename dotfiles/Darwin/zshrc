@@ -164,6 +164,24 @@ clear_above() {
     zle redisplay
 }
 
+# Open a throwaway Markdown note in the per-user temp dir: `mknote [kind]`.
+# The name is <date>-<kind>-<random>.md, so notes sort chronologically and never collide. `kind`
+# (default "note", e.g. `mknote review`) is sanitised to [A-Za-z0-9_-]. macOS's mktemp cannot put
+# a suffix after the X's, hence the rename to add the .md extension. The path is printed after the
+# editor exits so the note can be found again.
+mknote() {
+    local kind=${1:-note} file
+    kind=${kind//[^[:alnum:]_-]/_}
+
+    # macOS's $TMPDIR ends with a slash; strip it to avoid a "//" in the path.
+    file=$(mktemp "${${TMPDIR:-/tmp}%/}/$(date +%Y-%m-%d-%H%M%S)-${kind}-XXXXXX") || return
+    mv -- "$file" "$file.md" || return
+    file+=.md
+
+    ${EDITOR:-vim} -- "$file"
+    print -r -- "$file"
+}
+
 # Release Ctrl+Y for userland: the tty's dsusp (default ^Y on macOS) queues a deferred SIGTSTP on
 # the next read. Ctrl+Z already covers job suspension, so unbinding dsusp lets Ctrl+Y reach the
 # shell and interactive programs.
