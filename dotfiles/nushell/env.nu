@@ -29,6 +29,9 @@ $env.FZF_DEFAULT_OPTS = '--height=40% --layout=reverse --info=inline-right --col
 
 # bat: syntax-highlighted cat(1)
 # https://github.com/sharkdp/bat
+# Settings live in `dotfiles/bat/config`; only the man pager hook is set here (Zsh: same values)
+$env.MANPAGER = "sh -c 'col -bx | bat --language=man --plain'"
+$env.MANROFFOPT = "-c"
 
 # Prompt: steel blue "❯" (Zsh: PS1="%F{#3972a8}❯%f ")
 $env.PROMPT_COMMAND = {|| "" }

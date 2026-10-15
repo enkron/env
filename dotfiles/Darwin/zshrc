@@ -90,7 +90,11 @@ fi
 
 # bat: a cat(1) clone with syntax highlighting and Git integration
 # https://github.com/sharkdp/bat
+# Settings live in `dotfiles/bat/config`; only the pager hooks are set here. `col -bx` strips the
+# backspace overstrike that man(1) emits, and MANROFFOPT=-c keeps groff from emitting SGR codes.
 if command -v bat >/dev/null 2>&1; then
+    export MANPAGER="sh -c 'col -bx | bat --language=man --plain'"
+    export MANROFFOPT="-c"
 fi
 
 # Enable the completion system. `compinit` scans `fpath` once to build its table, so it must run
@@ -113,6 +117,10 @@ if command -v fzf >/dev/null 2>&1; then
 --color=16 \
 --pointer=\"\" \
 --cycle"
+    # Ctrl-T file picker previews the file under the cursor
+    if command -v bat >/dev/null 2>&1; then
+        export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range=:300 {}'"
+    fi
     . <(fzf --zsh)
 fi
 
@@ -153,6 +161,12 @@ alias jjs='jj st'
 
 # Now there's a `kubeconform` along with a `kubectl` command so typing "kubectl" turned into chaos
 alias k=kubectl
+
+# Colourise `<cmd> --help` output through bat. `-h` is left alone: it is not help everywhere
+# (`df -h`, `du -h`, `sort -h`) and a global alias would expand it anywhere on the line.
+if command -v bat >/dev/null 2>&1; then
+    alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+fi
 
 # Functions
 # Erase from top of screen to cursor.
