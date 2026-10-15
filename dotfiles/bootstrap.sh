@@ -166,6 +166,10 @@ log info "Linking herdr configuration"
 mkdir -p "${HOME}/.config/herdr"
 ln -sf "${REPOS_HOME}/env/dotfiles/herdr.toml" "${HOME}/.config/herdr/config.toml"
 
+log info "Linking bat configuration"
+mkdir -p "${HOME}/.config/bat"
+ln -sf "${REPOS_HOME}/env/dotfiles/bat/config" "${HOME}/.config/bat/config"
+
 # Nushell configuration
 if [ "$(uname -s)" = 'Darwin' ]; then
     nushell_config_path="${HOME}/Library/Application Support/nushell"

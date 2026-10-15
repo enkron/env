@@ -1,0 +1,19 @@
+# bat: a cat(1) clone with syntax highlighting and Git integration
+# https://github.com/sharkdp/bat
+# Linked to `bat --config-file` by bootstrap.sh. Env vars (BAT_THEME, BAT_STYLE, ...) and CLI
+# flags override anything set here.
+
+# `--theme=auto` (the default) only queries the terminal background when stdout is a tty, so
+# piped output (fzf preview, `--color=always | less`) would fall back to Monokai. Ghostty is
+# always dark here: pin the dark slot, and `--theme=light` flips to the other one on demand.
+--theme="dark"
+--theme-dark="Nord"
+--theme-light="GitHub"
+
+# Decorations apply to interactive output only; piped output stays plain like cat(1)
+--style="numbers,changes,header"
+--italic-text=always
+
+# Repo files bat cannot classify by name alone
+--map-syntax="ghostty.conf:INI"
+--map-syntax="tmux.conf:Bourne Again Shell (bash)"

@@ -29,7 +29,6 @@ $env.FZF_DEFAULT_OPTS = '--height=40% --layout=reverse --info=inline-right --col
 
 # bat: syntax-highlighted cat(1)
 # https://github.com/sharkdp/bat
-$env.BAT_THEME_DARK = "Nord"
 
 # Prompt: steel blue "❯" (Zsh: PS1="%F{#3972a8}❯%f ")
 $env.PROMPT_COMMAND = {|| "" }

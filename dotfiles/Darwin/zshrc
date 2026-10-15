@@ -91,7 +91,6 @@ fi
 # bat: a cat(1) clone with syntax highlighting and Git integration
 # https://github.com/sharkdp/bat
 if command -v bat >/dev/null 2>&1; then
-    export BAT_THEME_DARK="Nord"
 fi
 
 # Enable the completion system. `compinit` scans `fpath` once to build its table, so it must run
