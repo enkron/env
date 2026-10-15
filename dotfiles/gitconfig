@@ -44,8 +44,6 @@
 [interactive]
     diffFilter = delta --color-only
 [delta]
-    syntax-theme = Nord ; delta does not read bat's config file, keep it in step by hand
-[delta]
     navigate = true ; use n & N to move between diff sections
     features = decorations
     word-diff = true
