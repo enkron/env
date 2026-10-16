@@ -10,13 +10,14 @@ by three profiles defined in the flake at
   nushell, podman, procs, qemu, ripgrep, rsync, sd, skopeo, socat, tokei,
   tree, uv, viddy, vim, w3m, yq-go, zoxide, zstd.
 - `enk-coreutils-unstable`: tracks nixpkgs-unstable. Language toolchains and
-  fast-moving tools: 1password-cli, argo-workflows, argocd, awscli2, bat,
-  cilium-cli, claude-code, codex, fzf, go, gofumpt, gopls, herdr, hubble,
-  irssi, jujutsu, k9s, kubeconform, kubernetes-helm, kustomize, nixd,
-  nodejs_24, rumdl, rustup, tailcat, talosctl, tealdeer, terraform,
-  terraform-ls, tmux, wasm-pack, yaml-language-server, yamlfmt, yamllint,
-  zig, zls (plus `container` on aarch64-darwin). kubectl comes from a
-  separate input pinned to 1.35 to stay within the EKS version skew.
+  fast-moving tools: 1password-cli, actionlint, argo-workflows, argocd,
+  awscli2, bat, cilium-cli, claude-code, codex, fzf, go, gofumpt, gopls,
+  herdr, hubble, irssi, jujutsu, k9s, kubeconform, kubernetes-helm,
+  kustomize, nixd, nodejs_24, rumdl, rustup, shellcheck, tailcat, talosctl,
+  tealdeer, terraform, terraform-ls, tmux, wasm-pack, yaml-language-server,
+  yamlfmt, yamllint, zig, zls (plus `container` on aarch64-darwin). kubectl
+  comes from a separate input pinned to 1.35 to stay within the EKS version
+  skew.
 - `enk-coreutils-dev`: experimental/temporary toolchains (currently chafa,
   zellij).
 

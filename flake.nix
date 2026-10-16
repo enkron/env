@@ -177,8 +177,10 @@
                 ];
                 # Linters, formatters & language servers
                 lintFormatIde = [
+                  actionlint
                   nixd
                   rumdl
+                  shellcheck
                   yaml-language-server
                   yamlfmt
                   yamllint
