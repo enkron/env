@@ -2,11 +2,11 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1792488032,
-        "narHash": "sha256-RkAXQ3+a5rHMiP97Er7AawR1kvEXX9tK1mhiWedOPTc=",
+        "lastModified": 1792812153,
+        "narHash": "sha256-T2+XBfNbf9pecLUWS4+RtuVNZ3W8K5taG5QdV71mWlk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e513db7b0a65def6f6e17bb55195dfe510871944",
+        "rev": "674a2028661e550a97400c1cc992b9cca9a668a1",
         "type": "github"
       },
       "original": {
@@ -16,19 +16,19 @@
         "type": "github"
       }
     },
-    "nixpkgs-kubectl135": {
+    "nixpkgs-kubectl136": {
       "locked": {
-        "lastModified": 1776318428,
-        "narHash": "sha256-3jh39UtUVapHc4EUJ2q16YpP6dVacnJGuq7jNJPmySY=",
+        "lastModified": 1784882238,
+        "narHash": "sha256-ef4wSrQna3PlF7+w+8kzzwN+F8m0eAlhrm/kUDxALRU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "917a7562e399cbb394fc2cdffc277ccaf84a02f4",
+        "rev": "6b1008c2068c33938dd9e0c4819c41cf1b616ac7",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "917a7562e399cbb394fc2cdffc277ccaf84a02f4",
+        "rev": "6b1008c2068c33938dd9e0c4819c41cf1b616ac7",
         "type": "github"
       }
     },
@@ -66,11 +66,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1792503283,
-        "narHash": "sha256-vhe2jyvRCgufWPqDuDq1S3t3ypE+ka46IFutV02xKso=",
+        "lastModified": 1792898606,
+        "narHash": "sha256-Mg3rRjsbMqhSMxop5PYMXos8SwAjejrxSgVThTvP9eg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "cd4ea8d57de16f4810bc5f14207bac45fbf19f67",
+        "rev": "1f607aa79b6356ed45d3cd3c8079c196e79efa2c",
         "type": "github"
       },
       "original": {
@@ -83,7 +83,7 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "nixpkgs-kubectl135": "nixpkgs-kubectl135",
+        "nixpkgs-kubectl136": "nixpkgs-kubectl136",
         "nixpkgs-poetry171": "nixpkgs-poetry171",
         "nixpkgs-sphinx747": "nixpkgs-sphinx747",
         "nixpkgs-stable": "nixpkgs-stable"

@@ -16,7 +16,7 @@ by three profiles defined in the flake at
   kustomize, nixd, nodejs_24, rumdl, rustup, shellcheck, tailcat, talosctl,
   tealdeer, terraform, terraform-ls, tmux, wasm-pack, yaml-language-server,
   yamlfmt, yamllint, zig, zls (plus `container` on aarch64-darwin). kubectl
-  comes from a separate input pinned to 1.35 to stay within the EKS version
+  comes from a separate input pinned to 1.36 to stay within the EKS version
   skew.
 - `enk-coreutils-dev`: experimental/temporary toolchains (currently chafa,
   zellij).
