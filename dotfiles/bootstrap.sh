@@ -154,6 +154,10 @@ log info "Linking w3m configuration"
 mkdir -p "${HOME}/.w3m"
 ln -sf "${REPOS_HOME}/env/dotfiles/w3m/keymap" "${HOME}/.w3m/keymap"
 
+log info "Linking Chawan configuration"
+mkdir -p "${HOME}/.config/chawan"
+ln -sf "${REPOS_HOME}/env/dotfiles/chawan/config.toml" "${HOME}/.config/chawan/config.toml"
+
 log info "Linking yamllint configuration"
 mkdir -p "${HOME}/.config/yamllint"
 ln -sf "${REPOS_HOME}/env/dotfiles/yamllint.yaml" "${HOME}/.config/yamllint/config"

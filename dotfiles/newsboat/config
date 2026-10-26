@@ -28,7 +28,7 @@ save-path                     "~/Documents/newsboat"
 
 # Browser
 # Default: terminal browser. Escape to GUI via macro `,o`.
-browser                       "w3m %u"
+browser                       "cha %u"
 
 # Keybindings
 bind-key j                    down
@@ -45,10 +45,10 @@ bind-key S                    save
 
 # Macros (prefix: `,`)
 # ,o — open current URL in macOS default browser
-macro o set browser "open %u" ; open-in-browser ; set browser "w3m %u" -- "open in GUI browser"
+macro o set browser "open %u" ; open-in-browser ; set browser "cha %u" -- "open in GUI browser"
 
-# ,g — full article rendered via w3m -dump and paginated through bat
-macro g set browser "w3m -dump %u | bat --paging=always --style=plain --language=md" ; open-in-browser ; set browser "w3m %u" -- "read article (w3m + bat)"
+# ,g — full article rendered via cha -d and paginated through bat
+macro g set browser "cha -d %u | bat --paging=always --style=plain --language=md" ; open-in-browser ; set browser "cha %u" -- "read article (cha + bat)"
 
 # Colors
 color background              default  default

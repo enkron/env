@@ -19,7 +19,7 @@ by three profiles defined in the flake at
   comes from a separate input pinned to 1.36 to stay within the EKS version
   skew.
 - `enk-coreutils-dev`: experimental/temporary toolchains (currently chafa,
-  zellij).
+  chawan, zellij).
 
 When using the Bash tool, prefer modern alternatives over legacy coreutils:
 

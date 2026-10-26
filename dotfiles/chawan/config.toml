@@ -1,0 +1,55 @@
+# Chawan configuration
+# Docs: `man cha-config` (keybindings/actions), `man cha-api` (JS pager API).
+#
+# The [page] bindings mirror dotfiles/w3m/keymap so both browsers share the
+# same Vim-style muscle memory. Bindings already matching Chawan's defaults
+# are restated anyway, so the keymap reads as one complete list.
+
+[buffer]
+# Ghostty speaks the kitty graphics protocol; display.image-mode = "auto"
+# picks it up. Toggle per buffer with M-i.
+images = true
+
+[page]
+# Motion
+'h' = 'cursorLeft'
+'j' = 'cursorDown'
+'k' = 'cursorUp'
+'l' = 'cursorRight'
+'w' = 'cursorNextWord'
+'b' = 'cursorWordBegin'
+'0' = 'cursorLineBegin'
+'$' = 'cursorLineEnd'
+'g g' = 'gotoLineOrStart'
+'G' = 'gotoLineOrEnd'
+'C-f' = 'pageDown'
+'C-b' = 'pageUp'
+'C-d' = 'halfPageDown'
+'C-u' = 'halfPageUp'
+'C-y' = 'scrollUp'
+'C-e' = 'scrollDown'
+
+# Links / navigation
+# w3m BACK drops the current buffer and returns to the previous one.
+'u' = 'discardBufferPrev'
+'H' = '() => pager.loadSubmit(config.external.historyFile)'
+'o' = 'loadEmpty'
+'O' = 'load'
+'r' = 'reloadBuffer'
+
+# Tabs / buffers
+'g t' = '() => pager.nextTab()'
+'g T' = '() => pager.prevTab()'
+'t' = '() => pager.addTab(pager.url)'
+'x' = '() => pager.discardTab()'
+
+# Search
+'/' = 'isearchForward'
+'?' = 'isearchBackward'
+'n' = 'searchNext'
+'N' = 'searchPrev'
+
+# Misc
+':' = 'enterCommand'
+'Z Z' = 'quit'
+'q' = 'quit'
