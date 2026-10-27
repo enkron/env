@@ -5,12 +5,9 @@
 https://kubernetes.io/feed.xml                                "kubernetes" "cloud-native"
 https://k8s.io/docs/reference/issues-security/official-cve-feed/feed.xml  "kubernetes" "security"
 https://lwkd.info/feed.xml                                    "kubernetes"
-https://www.cncf.io/blog/feed/                                "cloud-native"
-https://thenewstack.io/feed/                                  "cloud-native" "devops"
 
 # Platform Engineering, SRE & DevOps
 https://sreweekly.com/rss                                     "sre"
-https://www.infoq.com/feed/devops/                            "devops" "sre"
 https://www.jenkins.io/changelog-stable/rss.xml               "jenkins" "ci"
 
 # Languages
@@ -36,7 +33,6 @@ https://guix.gnu.org/feeds/blog.atom                          "immutable" "guix"
 
 # Linux & systems newsletters
 https://lwn.net/headlines/rss                                 "linux" "newsletter"
-https://www.phoronix.com/rss.php                              "linux" "newsletter"
 https://news.opensuse.org/feed/                               "linux" "opensuse"
 
 # FreeBSD
@@ -53,12 +49,23 @@ https://spectrum.ieee.org/customfeeds/feed/all-topics/rss     "science" "enginee
 https://lawsofsoftwareengineering.com/index.xml               "engineering"
 https://cmr.berkeley.edu/feed.xml                             "science" "business"
 
+# AI / LLMs
+https://simonwillison.net/atom/entries/                       "ai" "llm"
+https://www.interconnects.ai/feed                             "ai" "llm" "research"
+https://importai.substack.com/feed                            "ai" "llm" "newsletter"
+https://magazine.sebastianraschka.com/feed                    "ai" "llm" "research"
+https://www.latent.space/feed                                 "ai" "llm" "engineering"
+https://newsletter.semianalysis.com/feed                      "ai" "industry" "hardware"
+https://epoch.ai/atom.xml                                     "ai" "research" "industry"
+https://lilianweng.github.io/index.xml                        "ai" "llm" "research"
+https://karpathy.bearblog.dev/feed/                           "ai" "llm"
+https://deepmind.google/blog/rss.xml                          "ai" "vendor"
+https://huggingface.co/blog/feed.xml                          "ai" "llm" "open-models"
+
 # Neuroscience
 https://www.nature.com/neuro.rss                              "neuroscience" "journal"
 https://www.nature.com/nrn.rss                                "neuroscience" "journal" "reviews"
 https://www.cell.com/neuron/current.rss                       "neuroscience" "journal"
 https://elifesciences.org/rss/subject/neuroscience.xml        "neuroscience" "journal"
-http://connect.biorxiv.org/biorxiv_xml.php?subject=neuroscience  "neuroscience" "preprints"
 https://api.quantamagazine.org/feed/                          "neuroscience" "science"
 https://www.thetransmitter.org/feed/                          "neuroscience"
-https://neurosciencenews.com/feed/                            "neuroscience" "news"
