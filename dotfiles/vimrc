@@ -55,10 +55,10 @@ if v:version >= 801                  # `v: name` - variable predefined by Vim
     set cursorlineopt=number,screenline  # settings for how 'cursorline' is displayed
 endif
 
-set mouse=a                          # let Vim (not the terminal) own mouse
-                                     # selection, so drag-select reads real
-                                     # buffer text instead of rendered
-                                     # listchars glyphs (e.g. indent guides)
+set mouse=                           # leave mouse selection and copy to the
+                                     # terminal/tmux (drag-select then grabs
+                                     # rendered listchars glyphs such as
+                                     # indent guides too)
 set clipboard=                       # deliberately empty: "unnamed" would
                                      # alias the unnamed register to the macOS
                                      # pasteboard for delete and change too, so

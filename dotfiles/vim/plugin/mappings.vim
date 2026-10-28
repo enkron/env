@@ -124,12 +124,6 @@ nnoremap <leader>ss :syntax sync fromstart<CR>
 nnoremap <C-n> <Cmd>call g:ScrollPopup(3)<CR>
 nnoremap <C-p> <Cmd>call g:ScrollPopup(-3)<CR>
 
-# Restore "drag to select, release to copy" feel now that Vim owns the mouse: yank the just-made
-# visual selection straight to the system clipboard when the drag ends. Only fires from an active
-# Visual selection (started by the drag itself), so plain clicks are unaffected.  The explicit "+
-# means this does not lean on the mirror autocmd below, which skips it (regname is '+').
-vnoremap <LeftRelease> <LeftRelease>"+y
-
 # 'clipboard' is left empty; "unnamed" aliases the unnamed register to the pasteboard for delete
 # and change as well as yank, so copying text in another app and then deleting a word here would
 # put the deleted word back. Mirror only genuine yanks instead. Deletes and changes stay in Vim's
