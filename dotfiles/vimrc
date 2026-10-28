@@ -136,8 +136,11 @@ augroup END
 # non-standard syntax groups conflict with the colorscheme.
 # sh: markdown fences (plugin/prose.vim) 'syn include' every sh.vim on the
 # runtimepath, and polyglot's copy then relinks sh groups session-wide.
+# diff: polyglot's copy predates Vim 9.1 and links diffAdded/diffRemoved to
+# Identifier/Special instead of Added/Removed, so git (fugitive) and patch
+# buffers lose their green/red.
 # Polyglot requires this to be set before the plugin loads, hence vimrc.
-g:polyglot_disabled = ['zig', 'rust', 'go', 'markdown', 'yaml', 'sh']
+g:polyglot_disabled = ['zig', 'rust', 'go', 'markdown', 'yaml', 'sh', 'diff']
 
 # Must be set before plugin/mappings.vim is sourced so <leader> resolves
 # to space in every mapping defined there
