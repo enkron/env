@@ -14,6 +14,7 @@ const PluginRepos = [
 \   'sheerun/vim-polyglot',
 \   'dense-analysis/ale',
 \   'yegappan/lsp',
+\   'tpope/vim-fugitive',
 \]
 # Add plugins by appending 'owner/repo' to s:PluginRepos above.
 # Run :PluginsUpdate to clone or refresh every plugin via git.

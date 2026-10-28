@@ -57,6 +57,8 @@ nnoremap <leader>co :%s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
 nnoremap <leader>cl :.s/\<<C-r>=expand('<cword>')<CR>\>//g<Left><Left>
 # count number of matches of a pattern
 nnoremap <leader>gn :%s/\<<C-r>=expand('<cword>')<CR>\>//gn<CR>
+# git blame side pane (vim-fugitive); <CR> on a line opens the commit that last changed it
+nnoremap <leader>gb <Cmd>Git blame<CR>
 
 # release search highlighting
 nnoremap <leader><space> :nohlsearch<CR>
