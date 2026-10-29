@@ -5,9 +5,14 @@
 # same Vim-style muscle memory. Bindings already matching Chawan's defaults
 # are restated anyway, so the keymap reads as one complete list.
 
+[display]
+# Inline images are off: under tmux, "auto" picks sixel (tmux advertises it)
+# but Ghostty cannot display sixel, so tmux paints "SIXEL IMAGE" placeholders
+# over the panes. Revisit once tmux ships native kitty image support (3.9?),
+# then "auto" should select kitty again.
+image-mode = "none"
+
 [buffer]
-# Ghostty speaks the kitty graphics protocol; display.image-mode = "auto"
-# picks it up. Toggle per buffer with M-i.
 images = true
 # Drop author backgrounds so everything renders on the terminal default;
 # display.minimum-contrast then keeps the text readable.
