@@ -1,170 +1,55 @@
-# Tool preferences
+# Global instructions
 
-This environment uses Nix (flakes) for package management. Tools are provided
-by three profiles defined in the flake at
-`/Users/sergei.belokon/rps/github.com/enkron/env/flake.nix`:
+## Environment
 
-- `enk-coreutils-stable`: pinned to nixos-26.05. Core CLI utilities: btop,
-  cdrtools, curl, delta, difftastic, dnsutils, dust, fd, git, git-lfs,
-  gnumake, gnupg, gnutar, groovy, hyperfine, jq, lsof, newsboat, nmap,
-  nushell, podman, procs, qemu, ripgrep, rsync, sd, skopeo, socat, tokei,
-  tree, uv, viddy, vim, w3m, yq-go, zoxide, zstd.
-- `enk-coreutils-unstable`: tracks nixpkgs-unstable. Language toolchains and
-  fast-moving tools: 1password-cli, actionlint, argo-workflows, argocd,
-  awscli2, bat, cilium-cli, claude-code, codex, fzf, go, gofumpt, gopls,
-  herdr, hubble, irssi, jujutsu, k9s, kubeconform, kubernetes-helm,
-  kustomize, nixd, nodejs_24, rumdl, rustup, shellcheck, tailcat, talosctl,
-  tealdeer, terraform, terraform-ls, tmux, wasm-pack, yaml-language-server,
-  yamlfmt, yamllint, zig, zls (plus `container` on aarch64-darwin). kubectl
-  comes from a separate input pinned to 1.36 to stay within the EKS version
-  skew.
-- `enk-coreutils-dev`: experimental/temporary toolchains (currently chafa,
-  chawan, zellij).
+Single-user workstation. CLI tools come from Nix flake profiles. If a tool
+is missing, say so and suggest adding it to the flake; never install via
+brew, npm -g, pip or curl.
 
-When using the Bash tool, prefer modern alternatives over legacy coreutils:
+Use modern tools and never fall back to legacy ones "for compatibility":
+rg not grep, fd not find, sd not sed, bat -pp not cat, jq/yq for JSON/YAML,
+delta/difft for diffs, hyperfine for timing, tokei for line counts.
 
-| Instead of        | Use         | Profile   | Notes                                |
-|-------------------|-------------|-----------|--------------------------------------|
-| `grep`            | `rg`        | stable    | ripgrep, faster, respects .gitignore |
-| `find`            | `fd`        | stable    | simpler syntax, respects .gitignore  |
-| `cat`             | `bat`       | unstable  | syntax highlighting, git integration |
-| `sed`             | `sd`        | stable    | simpler regex syntax (no escaping)   |
-| `du`              | `dust`      | stable    | visual disk usage                    |
-| `top` / `htop`    | `btop`      | stable    | resource monitor                     |
-| `ps`              | `procs`     | stable    | modern process viewer                |
-| `diff`            | `delta`     | stable    | also configured as git pager         |
-| `diff` (semantic) | `difft`     | stable    | difftastic, syntax-aware diffs       |
-| `time` (bench)    | `hyperfine` | stable    | statistical command benchmarking     |
-| `wc -l` (code)    | `tokei`     | stable    | language-aware line counts           |
-| `watch`           | `viddy`     | stable    | modern watch, highlights diffs       |
-| `cd` history      | `zoxide`    | stable    | frecency-based directory jumping     |
-| `man` (quick)     | `tldr`      | unstable  | tealdeer, concise example pages      |
-| manual JSON parse | `jq`        | stable    | always available                     |
-| manual YAML parse | `yq`        | stable    | go-yq variant                        |
+Prefer jj; use git only where jj cannot (Git LFS, hooks, git-only commands).
 
-Use `fzf` (unstable) for interactive selection when multiple results are
-expected and user input is appropriate.
+## Boundaries
 
-For version control, prefer `jj` (jujutsu, unstable) where it can act as a
-drop-in for the needed operation. Fall back to `git` when `jj` cannot: it has
-no support for the Git LFS extension, and some git-specific commands or
-techniques (eg. interactive rebase workflows, certain hooks) have no `jj`
-equivalent in a git-backed repo.
+State-changing VCS and infrastructure operations are my responsibility.
+Draft the exact command and stop; do not run it, even if it is trivially
+reversible (`jj undo`). This covers jj new/edit/rebase/squash/abandon/
+restore/split, bookmark changes, git rebase/merge/reset/checkout/push, and
+terraform apply/destroy, kubectl apply/delete/patch, helm install/upgrade,
+argocd app sync and their equivalents. Read-only inspection (status, log,
+diff, show, op log, terraform plan, kubectl get/describe) is fine.
 
-Do not fall back to legacy tools "for compatibility". This is a single-user
-workstation, not a portable script target.
+Exception: to record session work you may run `jj describe`/`jj commit` on
+the working-copy change, or `git add <files you changed>` then `git commit`.
+Never use --amend, --no-verify or `git add -A`/`.`, and never reword commits
+that are mine, pushed or immutable.
 
-# Version control boundaries
+## Commit messages
 
-Claude must never execute any state-changing Git or JJ (Jujutsu) operation,
-under any circumstances except the one below - this includes
-(non-exhaustively) rebase, new, edit, abandon, squash, restore,
-branch/bookmark create or move, merge, and push. This applies even when
-the operation looks safe, trivial, or easily reversible (eg. `jj undo`
-exists) - reversibility is not the test; execution itself is prohibited.
-These actions are the user's sole responsibility. Claude may explain the
-current repository state, describe what a candidate operation would do, and
-draft or suggest the exact command(s) to run (including commit
-messages/descriptions), but must always stop there and let the user run it
-themselves - never execute it on their behalf, and never change repository
-state without the user's explicit approval for that specific action, outside
-the exception below.
-Read-only/inspection commands (eg. `git status`, `git log`, `git diff`,
-`git show`, `jj log`, `jj st`, `jj diff`, `jj op log`, `jj bookmark list`)
-remain fine to run without asking.
+Conventional Commits 1.0.0 with a scope nested at most two levels:
 
-Exception - recording commits: Claude may run `jj describe` and `jj commit`
-on the working-copy change, and `git add` of the files its change touched
-followed by `git commit`, to record work done in the session. The message
-must follow "Commit messages" below. This never covers `--amend`,
-`--no-verify`, `git add -A`/`git add .` over unrelated files, rewording a
-commit the user wrote or one already pushed (or immutable in jj), or any
-operation listed above.
+    type(scope(sub)): imperative lower-case subject, no period
 
-# Commit messages
+    Body wrapped at 72: what changed and why, plus what the diff cannot
+    show. Omit only for a self-evident one-liner.
 
-Messages follow Conventional Commits 1.0.0
-(<https://www.conventionalcommits.org/en/v1.0.0/>) with nested scopes:
+    * optional changeset item
 
-    <type>(<scope>[(<sub-scope>)]): <subject>
-
-    <body>
-
-    * <optional changeset item>
-    * <...>
-
-    Refs: <TICKET-123>
+    Refs: TICKET-123
     Co-Authored-By: <attribution>
 
-- type: one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`,
-  `build`, `ci`, `chore`, `revert`. A breaking change adds `!` before the
-  `:` and a `BREAKING CHANGE:` trailer.
-- scope: the component touched, sub-components nested in parentheses, at
-  most two levels (eg. `gitops(jenkins)`, `docs(ci(karpenter))`).
-  Lower-case, kebab-case. Take it from the repo's CLAUDE.md scope list
-  first, else from the most common spelling in `jj log`/`git log` for the
-  same paths. Never invent a new top-level scope when one already exists;
-  omit the scope only when the change spans the whole repo.
-- subject: imperative mood, lower-case first word, no trailing period, the
-  whole header at most 72 columns. It names the effect, not the files.
-- body: after a blank line, wrapped at 72. What changed and why, plus
-  anything a reviewer cannot see in the diff (rollout steps, measurements,
-  side effects). Omit it only for a self-evident one-line change.
-- changeset: an optional `*` bullet list when one commit carries several
-  distinct items worth naming.
-- trailers: one block at the very end, one `Token: value` per line, no
-  blank lines inside. `Refs: <KEY>` when a ticket exists, then the
-  attribution line.
-- One logical change per commit; a subject that needs "and" means split.
-- Never mention Claude or the session in the subject or body; attribution
-  lives only in the trailer.
+- Header at most 72 columns. Breaking: `!` before `:` and a
+  `BREAKING CHANGE:` trailer.
+- Scope: take it from the repo CLAUDE.md, else the most common scope in the
+  log for the same paths; never invent a new top-level scope.
+- One logical change per commit. Mention Claude only in the trailer.
 
-# Infrastructure boundaries
+## Line width
 
-Claude must never execute infrastructure rollout/apply commands (eg.
-`terraform apply`, `terraform destroy`, `pulumi up`, `kubectl apply`,
-`helm install`/`upgrade`, `argocd app sync`, or any equivalent command that
-provisions, mutates, or tears down real infrastructure), under any
-circumstances. These actions are the user's sole responsibility. Claude may
-draft, explain, or suggest the exact command to run (eg. show a `terraform
-plan`/`apply` invocation) but must never execute it itself. Read-only or
-inspection commands (eg. `terraform plan`, `terraform show`, `kubectl get`,
-`kubectl describe`) are fine to run.
-
-# Typography
-
-Do not use Unicode hyphen/dash variants in documents or source code files
-(including code comments). The forbidden characters are em dash, en dash,
-hyphen, non-breaking hyphen, figure dash, minus sign, and any other
-Unicode dash. Always use the plain ASCII hyphen-minus '-'.
-
-# Line width
-
-Wrap comments, docstrings and prose to the width Vim applies to that
-file type, not to a generic 79/80:
-
-- 99 columns by default, for every file type (`set textwidth=99` in
-  `dotfiles/vimrc`).
-- 79 for markdown (`dotfiles/vim/plugin/prose.vim`; the rumdl ALE fixer
-  reflows to the same `MD013.line-length = 79` on save).
-- 72 for git commit messages and jj descriptions (Vim's builtin
-  `gitcommit` and `jjdescription` ftplugins).
-- yaml is never reflowed: yamlfmt leaves long scalars alone and
-  yamllint only warns past 120 (`dotfiles/yamllint.yaml`).
-
-This governs prose only - comments, docstrings, documentation, commit
-messages. Leave code lines to the language's formatter (rustfmt,
-gofumpt, ruff, yamlfmt) and do not hand-break them to hit these
-numbers. Unbreakable tokens (URLs, image references, table rows, long
-identifiers) may exceed the width.
-
-An explicit project convention outranks these defaults: a formatter or
-linter config in the repo (`rustfmt.toml`, `.editorconfig`, a
-`line-length` in `pyproject.toml`), or a width the file being edited
-plainly already follows. Match the file being edited; do not reformat
-it. Never reflow lines the current change does not otherwise touch.
-
-When the width is unclear, ask Vim instead of guessing:
-
-    vim -es -u ~/.vimrc -i NONE -c 'edit <file>' \
-        -c 'redir >> /dev/stdout' -c 'echo &tw' -c 'redir END' -c 'qa!'
+Wrap prose (comments, docs, commit messages) at 99 columns by default, 79
+in markdown and 72 in commit messages; never reflow YAML. A repo formatter
+config, or the width the file already follows, takes precedence. Never
+hand-wrap code or reflow lines the change does not touch.
