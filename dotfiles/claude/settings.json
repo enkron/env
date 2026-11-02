@@ -3,7 +3,43 @@
     "DISABLE_INSTALLATION_CHECKS": "1"
   },
   "permissions": {
-    "defaultMode": "default"
+    "defaultMode": "default",
+    "deny": [
+      "Bash(git push:*)",
+      "Bash(git rebase:*)",
+      "Bash(git reset:*)",
+      "Bash(git merge:*)",
+      "Bash(git checkout:*)",
+      "Bash(git switch:*)",
+      "Bash(git cherry-pick:*)",
+      "Bash(git commit --amend:*)",
+      "Bash(jj git push:*)",
+      "Bash(jj new:*)",
+      "Bash(jj edit:*)",
+      "Bash(jj rebase:*)",
+      "Bash(jj squash:*)",
+      "Bash(jj abandon:*)",
+      "Bash(jj restore:*)",
+      "Bash(jj split:*)",
+      "Bash(jj undo:*)",
+      "Bash(jj op restore:*)",
+      "Bash(jj bookmark create:*)",
+      "Bash(jj bookmark set:*)",
+      "Bash(jj bookmark move:*)",
+      "Bash(jj bookmark delete:*)",
+      "Bash(jj bookmark forget:*)",
+      "Bash(jj bookmark rename:*)",
+      "Bash(terraform apply:*)",
+      "Bash(terraform destroy:*)",
+      "Bash(kubectl apply:*)",
+      "Bash(kubectl delete:*)",
+      "Bash(kubectl patch:*)",
+      "Bash(helm install:*)",
+      "Bash(helm upgrade:*)",
+      "Bash(helm uninstall:*)",
+      "Bash(argocd app sync:*)",
+      "Bash(pulumi up:*)"
+    ]
   },
   "hooks": {
     "SessionStart": [
