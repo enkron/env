@@ -170,6 +170,10 @@ log info "Linking herdr configuration"
 mkdir -p "${HOME}/.config/herdr"
 ln -sf "${REPOS_HOME}/env/dotfiles/herdr.toml" "${HOME}/.config/herdr/config.toml"
 
+log info "Linking Rex configuration"
+mkdir -p "${HOME}/.config/rex"
+ln -sf "${REPOS_HOME}/env/dotfiles/rex/init.lua" "${HOME}/.config/rex/init.lua"
+
 log info "Linking bat configuration"
 mkdir -p "${HOME}/.config/bat"
 ln -sf "${REPOS_HOME}/env/dotfiles/bat/config" "${HOME}/.config/bat/config"
