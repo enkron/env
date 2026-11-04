@@ -21,11 +21,14 @@ rex.bind("ctrl+shift+[Minus]", "pane.send_key", { key = "ctrl+/" })   -- ^_, und
 -- it unbound, so the tmux F12 passthrough is not needed
 rex.bind(P .. "ctrl+s", "pane.send_key", { key = "ctrl+s" })
 
--- Splits: `"`/`_` below, `%`/`|` right. Rex has no full-width (`-f`) split, so both pairs match
+-- Splits: `"` below, `%` right (tmux full-width keys; Rex has no `-f` split). Shift+h/j/k/l
+-- split towards that side, like the native cmd+shift+arrows
 rex.bind(P .. "shift+'", "pane.split", { direction = "down" })
-rex.bind(P .. "shift+-", "pane.split", { direction = "down" })
 rex.bind(P .. "shift+5", "pane.split", { direction = "right" })
-rex.bind(P .. "shift+\\", "pane.split", { direction = "right" })
+rex.bind(P .. "shift+h", "pane.split", { direction = "left" })
+rex.bind(P .. "shift+j", "pane.split", { direction = "down" })
+rex.bind(P .. "shift+k", "pane.split", { direction = "up" })
+rex.bind(P .. "shift+l", "pane.split", { direction = "right" })
 
 -- Windows are Rex tabs, numbered from 1 like tmux `base-index 1`
 rex.bind(P .. "c", "client.tab.new")
