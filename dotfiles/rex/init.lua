@@ -8,7 +8,9 @@ local P = "ctrl+s>"
 
 -- Legacy control keys for readline/zle emacs bindings (as ghostty.conf does for ^M/^I). Rex sends
 -- nothing for these four; every other ctrl+letter, ctrl+space, ctrl+/ and alt+key already sends
--- its usual byte. Bracketed physical-key names keep `[` and `-` unambiguous
+-- its usual byte. Bracketed physical-key names keep `[` and `-` unambiguous. Rex also applies
+-- these in its own text fields (e.g. tab rename), where ^M closes the field and sends Enter to the
+-- terminal; DefaultKeyBinding.dict alone fixes the fields but leaves terminals without ^M
 rex.bind("ctrl+m", "pane.send_key", { key = "enter" })                -- ^M, CR
 rex.bind("ctrl+i", "pane.send_key", { key = "tab" })                  -- ^I, HT
 rex.bind("ctrl+[BracketLeft]", "pane.send_key", { key = "escape" })   -- ^[, ESC

@@ -1,0 +1,14 @@
+/*
+ * Extra Cocoa text bindings, merged over AppKit's StandardKeyBinding.dict (which already has ^a ^e
+ * ^b ^f ^n ^p ^d ^h ^k ^t ^y). Adds the legacy terminal control keys it lacks, so native text
+ * fields  take them like a shell does. Read at app launch.
+ *
+ * Install as a copy: a symlink here is silently ignored.
+ */
+{
+    "^m" = "insertNewline:";                /* CR: submits a one-line field */
+    "^i" = "insertTab:";                    /* HT: next field in a form */
+    "^[" = "cancelOperation:";              /* ESC */
+    "^w" = "deleteWordBackward:";
+    "^u" = "deleteToBeginningOfParagraph:";
+}

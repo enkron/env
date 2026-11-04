@@ -91,6 +91,15 @@ if [ "$(uname -s)" = 'Darwin' ]; then
     log info "Linking zshrc"
     ln -sf "${REPOS_HOME}/env/dotfiles/Darwin/zshrc" "${HOME}/.zshrc"
 
+    # Emacs-style control keys (^M, ^I, ^[, ^W, ^U) in native text fields. Copied, not linked:
+    # AppKit ignores a symlinked DefaultKeyBinding.dict, so re-run this after editing it. The rm
+    # drops an old symlink, which cp would otherwise follow back onto the repo file
+    log info "Installing Cocoa key bindings"
+    mkdir -p "${HOME}/Library/KeyBindings"
+    rm -f "${HOME}/Library/KeyBindings/DefaultKeyBinding.dict"
+    cp "${REPOS_HOME}/env/dotfiles/Darwin/DefaultKeyBinding.dict" \
+        "${HOME}/Library/KeyBindings/DefaultKeyBinding.dict"
+
     log info "Installing fonts"
     # Setup "Hack" font family
     cp -R "${REPOS_HOME}/env/fonts/hack-v3.003-ttf" "${HOME}/Library/Fonts/Hack"
