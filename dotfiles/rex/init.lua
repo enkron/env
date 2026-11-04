@@ -73,6 +73,27 @@ rex.bind("resize/escape", "client.mode.exit")
 rex.bind("resize/enter", "client.mode.exit")
 rex.bind("resize/q", "client.mode.exit")
 
+-- Navigate mode: h/j/k/l and arrows keep moving focus, `o` cycles to the next pane, Escape/Enter/q
+-- leave. Exclusive, like resize mode
+rex.mode("navigate", { exclusive = true })
+rex.bind(P .. "w", "client.mode.enter", { name = "navigate" })
+
+local navigate = {
+  { keys = { "h", "left" }, dir = "left" },
+  { keys = { "j", "down" }, dir = "down" },
+  { keys = { "k", "up" }, dir = "up" },
+  { keys = { "l", "right" }, dir = "right" },
+}
+for _, n in ipairs(navigate) do
+  for _, key in ipairs(n.keys) do
+    rex.bind("navigate/" .. key, "pane.focus." .. n.dir)
+  end
+end
+rex.bind("navigate/o", "pane.focus_next")
+rex.bind("navigate/escape", "client.mode.exit")
+rex.bind("navigate/enter", "client.mode.exit")
+rex.bind("navigate/q", "client.mode.exit")
+
 -- Panes: zoom (stock `z`), float toggle (stock `@`), kill (`x`; Rex closes without a confirm)
 rex.bind(P .. "z", "pane.zoom")
 rex.bind(P .. "shift+2", "pane.float")
