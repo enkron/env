@@ -1,5 +1,5 @@
 -- Rex configuration: keeps the tmux.conf prefix (`Ctrl+s`) and key tables for muscle memory.
--- Rex keys are written unshifted: `|` is shift+\, `_` is shift+-, `"` is shift+', `%` is shift+5.
+-- Rex keys are written unshifted: `H` is shift+h, `@` is shift+2, `$` is shift+4.
 -- The default cmd+... shortcuts stay as they are.
 --
 -- Validate with `rex config check`, apply with `rex config reload`, inspect with `rex keymap`.
@@ -21,10 +21,8 @@ rex.bind("ctrl+shift+[Minus]", "pane.send_key", { key = "ctrl+/" })   -- ^_, und
 -- it unbound, so the tmux F12 passthrough is not needed
 rex.bind(P .. "ctrl+s", "pane.send_key", { key = "ctrl+s" })
 
--- Splits: `"` below, `%` right (tmux full-width keys; Rex has no `-f` split). Shift+h/j/k/l
--- split towards that side, like the native cmd+shift+arrows
-rex.bind(P .. "shift+'", "pane.split", { direction = "down" })
-rex.bind(P .. "shift+5", "pane.split", { direction = "right" })
+-- Splits: Shift+h/j/k/l split towards that side, like the native cmd+shift+arrows. The tmux
+-- full-width `"`/`%` splits are left out, as Rex has no `-f` split
 rex.bind(P .. "shift+h", "pane.split", { direction = "left" })
 rex.bind(P .. "shift+j", "pane.split", { direction = "down" })
 rex.bind(P .. "shift+k", "pane.split", { direction = "up" })
