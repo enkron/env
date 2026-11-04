@@ -3,11 +3,12 @@
 # foreground and cursor follow ghostty.conf. Rex keeps its own copy: after editing, run "Import
 # ecs Theme" from the command palette (the ecs_theme action in init.lua).
 
-background = #000000
-foreground = #ffffff
+# Near-black and off-white (about 14:1) to cut glare, as ghostty.conf; darker than ecs surface
+background = #101010
+foreground = #dcdcdc
 
-# ecs accent, as ghostty.conf
-cursor-color = #3972a8
+# Dim steel, as ghostty.conf: Rex has no cursor opacity, so the colour itself carries the dimming
+cursor-color = #4f6378
 cursor-text = #ffffff
 
 # ecs Visual, as tmux copy-mode-selection-style; no foreground, so selected text keeps its colours
