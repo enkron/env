@@ -1,0 +1,34 @@
+# ecs: Rex terminal theme in Ghostty format, from the ecs.vim palette
+# (https://github.com/enkron/ecs.vim). ANSI 0-15 follow its g:terminal_ansi_colors; background,
+# foreground and cursor follow ghostty.conf. Rex keeps its own copy: after editing, run "Import
+# ecs Theme" from the command palette (the ecs_theme action in init.lua).
+
+background = #000000
+foreground = #ffffff
+
+# ecs accent, as ghostty.conf
+cursor-color = #3972a8
+cursor-text = #ffffff
+
+# ecs Visual, as tmux copy-mode-selection-style; no foreground, so selected text keeps its colours
+selection-background = #1f3550
+
+# 0 is ecs 'surface' rather than pure black, so black-on-default text stays visible
+palette = 0=#1a1a1a
+# red, green, amber, blue, lavender, teal, grey80
+palette = 1=#f06a6a
+palette = 2=#73c991
+palette = 3=#d7af5f
+palette = 4=#5a93c8
+palette = 5=#9a94d9
+palette = 6=#6fa3a3
+palette = 7=#cccccc
+# grey40, then the bright variants and white
+palette = 8=#666666
+palette = 9=#ff8787
+palette = 10=#95e0ad
+palette = 11=#f0cc80
+palette = 12=#8ab4e0
+palette = 13=#b8b0f0
+palette = 14=#95c8c8
+palette = 15=#ffffff

@@ -89,3 +89,17 @@ rex.bind(P .. "/", "client.find.open")
 
 -- Reload configuration file (tmux `R`)
 rex.bind(P .. "shift+r", "client.config.reload")
+
+-- ecs colour theme (themes/ecs, from ecs.vim). Rex has no colour options in this file; this
+-- action imports the Ghostty-format theme and selects it. Rex keeps its own copy, so run it from
+-- the command palette after editing the theme
+rex.action{
+  name = "ecs_theme",
+  title = "Import ecs Theme",
+  category = "Themes",
+  run = function()
+    rex.client.queue("client.theme.import", {
+      path = os.getenv("HOME") .. "/rps/github.com/enkron/env/dotfiles/rex/themes/ecs",
+    })
+  end,
+}
