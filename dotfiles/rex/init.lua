@@ -50,8 +50,9 @@ rex.bind(P .. "ctrl+j", "pane.resize", { direction = "down", amount = 2 })
 rex.bind(P .. "ctrl+k", "pane.resize", { direction = "up", amount = 2 })
 rex.bind(P .. "ctrl+l", "pane.resize", { direction = "right", amount = 1 })
 
--- Resize mode (tmux `-T resize`): h/j/k/l and arrows step, H/J/K/L take a coarse step, M-h/j/k/l
--- move the pane, `=` balances, Escape/Enter/q leave. Exclusive: stray keys never reach the shell
+-- Resize mode (tmux `-T resize`): h/j/k/l and arrows step, H/J/K/L take a coarse step,
+-- M-h/j/k/l move the pane, `=` balances, Escape/Enter/^M/q leave. Exclusive: stray keys never
+-- reach the shell
 rex.mode("resize", { exclusive = true })
 rex.bind(P .. "r", "client.mode.enter", { name = "resize" })
 
@@ -72,9 +73,10 @@ rex.bind("resize/=", "pane.balance")
 rex.bind("resize/escape", "client.mode.exit")
 rex.bind("resize/enter", "client.mode.exit")
 rex.bind("resize/q", "client.mode.exit")
+rex.bind("resize/ctrl+m", "client.mode.exit")
 
--- Navigate mode: h/j/k/l and arrows keep moving focus, `o` cycles to the next pane, Escape/Enter/q
--- leave. Exclusive, like resize mode
+-- Navigate mode: h/j/k/l and arrows keep moving focus, `o` cycles to the next pane,
+-- Escape/Enter/^M/q leave. Exclusive, like resize mode
 rex.mode("navigate", { exclusive = true })
 rex.bind(P .. "w", "client.mode.enter", { name = "navigate" })
 
@@ -93,6 +95,7 @@ rex.bind("navigate/o", "pane.focus_next")
 rex.bind("navigate/escape", "client.mode.exit")
 rex.bind("navigate/enter", "client.mode.exit")
 rex.bind("navigate/q", "client.mode.exit")
+rex.bind("navigate/ctrl+m", "client.mode.exit")
 
 -- Panes: zoom (stock `z`), float toggle (stock `@`), kill (`x`; Rex closes without a confirm)
 rex.bind(P .. "z", "pane.zoom")
