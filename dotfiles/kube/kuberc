@@ -1,0 +1,36 @@
+# kubectl user preferences (beta, on by default since 1.34).
+# Linked to ~/.kube/kuberc by bootstrap.sh.
+# https://kubernetes.io/docs/reference/kubectl/kuberc/
+apiVersion: kubectl.config.k8s.io/v1beta1
+kind: Preference
+
+defaults:
+  # Server-side apply: field ownership is tracked by the API server.
+  # The first SSA over an object applied client-side, or managed by
+  # Helm/Argo, can raise field-manager conflicts.
+  - command: apply
+    options:
+      - name: server-side
+        default: "true"
+  # Confirm before deleting; skip once with --interactive=false.
+  - command: delete
+    options:
+      - name: interactive
+        default: "true"
+  - command: logs
+    options:
+      - name: timestamps
+        default: "true"
+
+aliases:
+  # kubectl ctx -> kubectl config get-contexts
+  - name: ctx
+    command: config
+    prependArgs:
+      - get-contexts
+
+# A kubeconfig `exec:` entry runs whatever command it names; only allow
+# the credential plugins actually in use (EKS contexts use `aws`).
+credentialPluginPolicy: Allowlist
+credentialPluginAllowlist:
+  - command: aws

@@ -175,6 +175,10 @@ log info "Linking yamlfmt configuration"
 mkdir -p "${HOME}/.config/yamlfmt"
 ln -sf "${REPOS_HOME}/env/dotfiles/yamlfmt.yaml" "${HOME}/.config/yamlfmt/.yamlfmt"
 
+log info "Linking kubectl preferences (kuberc)"
+mkdir -p "${HOME}/.kube"
+ln -sf "${REPOS_HOME}/env/dotfiles/kube/kuberc" "${HOME}/.kube/kuberc"
+
 log info "Linking herdr configuration"
 mkdir -p "${HOME}/.config/herdr"
 ln -sf "${REPOS_HOME}/env/dotfiles/herdr.toml" "${HOME}/.config/herdr/config.toml"
