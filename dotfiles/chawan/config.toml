@@ -6,11 +6,12 @@
 # are restated anyway, so the keymap reads as one complete list.
 
 [display]
-# Inline images are off: under tmux, "auto" picks sixel (tmux advertises it)
-# but Ghostty cannot display sixel, so tmux paints "SIXEL IMAGE" placeholders
-# over the panes. Revisit once tmux ships native kitty image support (3.9?),
-# then "auto" should select kitty again.
-image-mode = "none"
+# Force kitty rather than "auto": under tmux, "auto" picks sixel (tmux
+# advertises it) and Ghostty paints "SIXEL IMAGE" placeholders. tmux takes the
+# kitty sequence as a pane title (not shown in the status bar), so images
+# there stay blank boxes without the placeholders. Ghostty and Rex draw them.
+# Revisit "auto" once tmux ships native kitty image support (3.9?).
+image-mode = "kitty"
 
 [buffer]
 images = true
