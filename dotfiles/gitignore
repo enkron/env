@@ -5,5 +5,8 @@
 # creates such a file)
 **/.claude/settings.local.json
 
+# macOS Finder metadata
+.DS_Store
+
 # jj secondary workspaces kept inside the main checkout (eg. morse_svt_jenkins_pipelines)
 svt_*/
