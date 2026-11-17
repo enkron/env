@@ -17,8 +17,28 @@ image-mode = "kitty"
 images = true
 # Drop author backgrounds so everything renders on the terminal default;
 # display.minimum-contrast then keeps the text readable.
+#
+# Chawan has no MathML layout and flattens formulas into run-on text
+# ("b2-4ac2a"). The math rules below linearise the MathML tree into plain-text
+# notation instead: x=(-b±√(b^2-4ac))/(2a).
 user-style = '''
 * { background: transparent !important }
+
+msup > :last-child::before { content: "^" }
+msub > :last-child::before { content: "_" }
+msubsup > :nth-child(2)::before { content: "_" }
+msubsup > :nth-child(3)::before { content: "^" }
+mfrac > :first-child + *::before { content: "/" }
+mfrac > mrow:first-child::before { content: "(" }
+mfrac > mrow:first-child::after { content: ")" }
+mfrac > mrow:last-child::before { content: "/(" }
+mfrac > mrow:last-child::after { content: ")" }
+msqrt::before { content: "√(" }
+msqrt::after { content: ")" }
+mroot > :first-child::before { content: "√(" }
+mroot > :first-child::after { content: ")" }
+mroot > :last-child { display: none }
+mtable, mtr { display: block }
 '''
 
 [page]
