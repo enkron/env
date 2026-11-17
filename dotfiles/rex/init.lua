@@ -6,6 +6,83 @@
 
 local P = "ctrl+s>"
 
+-- Floating panes live in layers of kind "floating" in session.view; the client actions cover
+-- creating them but not toggling or resizing, so these helpers drive the server API directly
+
+-- The window holding `block_id` (else the active one), and the layer `block_id` sits in
+local function locate(session_id, block_id)
+  local view = rex.call("session.view", { session_id = session_id })
+  local active
+  for _, win in ipairs(view.windows or {}) do
+    if win.window_id == view.active_window_id then active = win end
+    for _, layer in ipairs(win.layers or {}) do
+      for _, b in ipairs(layer.blocks or {}) do
+        if b.block_id == block_id then return win, layer end
+      end
+    end
+  end
+  return active, nil
+end
+
+-- Show/hide toggle (tmux display-popup): minimize the focused floating pane; otherwise raise and
+-- focus the frontmost floating pane, minimized or not; with none in the window, open one
+rex.action{
+  name = "float_toggle",
+  title = "Toggle Floating Pane",
+  category = "Pane",
+  run = function(ctx)
+    local win, layer = locate(ctx.session_id, ctx.block_id)
+    if layer and layer.kind == "floating" then
+      rex.call("session.set_layer_state",
+        { session_id = ctx.session_id, layer_id = layer.layer_id, state = "minimized" })
+      return
+    end
+    local front
+    for _, l in ipairs(win and win.layers or {}) do
+      if l.kind == "floating" and #(l.blocks or {}) > 0 then front = l end
+    end
+    if front then
+      rex.call("session.set_layer_state",
+        { session_id = ctx.session_id, layer_id = front.layer_id, state = "normal", focus = true })
+    else
+      rex.client.queue("pane.new_floating")
+    end
+  end,
+}
+
+-- pane.resize ignores floating panes, so resize their layer instead: right/down grow the pane
+-- from its right/bottom edge, left/up shrink it. `amount` is in percent of the window, as layer
+-- bounds are fractions; tiled panes fall through to pane.resize unchanged. `repeats` lets a held
+-- key keep resizing, as it does for the built-in pane.resize; actions default to one press
+local MIN_FLOAT = 0.1
+rex.action{
+  name = "pane_resize",
+  title = "Resize Pane (Tiled or Floating)",
+  category = "Pane",
+  repeats = true,
+  run = function(ctx, args)
+    local _, layer = locate(ctx.session_id, ctx.block_id)
+    if not (layer and layer.kind == "floating") then
+      rex.client.queue("pane.resize", { direction = args.direction, amount = args.amount })
+      return
+    end
+    local x, y, w, h = layer.bounds[1], layer.bounds[2], layer.bounds[3], layer.bounds[4]
+    local d = (args.amount or 1) / 100
+    if args.direction == "right" then w = w + d
+    elseif args.direction == "left" then w = w - d
+    elseif args.direction == "down" then h = h + d
+    elseif args.direction == "up" then h = h - d
+    end
+    -- Keep the layer inside the window: shift it back when it outgrows an edge
+    w = math.max(MIN_FLOAT, math.min(w, 1))
+    h = math.max(MIN_FLOAT, math.min(h, 1))
+    x = math.max(0, math.min(x, 1 - w))
+    y = math.max(0, math.min(y, 1 - h))
+    rex.call("session.resize_layer",
+      { session_id = ctx.session_id, layer_id = layer.layer_id, bounds = { x, y, w, h } })
+  end,
+}
+
 -- Legacy control keys for readline/zle emacs bindings (as ghostty.conf does for ^M/^I). Rex sends
 -- nothing for these four; every other ctrl+letter, ctrl+space, ctrl+/ and alt+key already sends
 -- its usual byte. Bracketed physical-key names keep `[` and `-` unambiguous. Rex also applies
@@ -44,11 +121,12 @@ rex.bind(P .. "k", "pane.focus.up")
 rex.bind(P .. "l", "pane.focus.right")
 rex.bind(P .. "o", "pane.focus_next")
 
--- One-shot resize (tmux C-h/j/k/l); `amount` units are undocumented, values mirror tmux.conf
-rex.bind(P .. "ctrl+h", "pane.resize", { direction = "left", amount = 1 })
-rex.bind(P .. "ctrl+j", "pane.resize", { direction = "down", amount = 2 })
-rex.bind(P .. "ctrl+k", "pane.resize", { direction = "up", amount = 2 })
-rex.bind(P .. "ctrl+l", "pane.resize", { direction = "right", amount = 1 })
+-- One-shot resize (tmux C-h/j/k/l); `amount` units are undocumented, values mirror tmux.conf.
+-- pane_resize (top of file) also handles floating panes
+rex.bind(P .. "ctrl+h", "pane_resize", { direction = "left", amount = 1 })
+rex.bind(P .. "ctrl+j", "pane_resize", { direction = "down", amount = 2 })
+rex.bind(P .. "ctrl+k", "pane_resize", { direction = "up", amount = 2 })
+rex.bind(P .. "ctrl+l", "pane_resize", { direction = "right", amount = 1 })
 
 -- Resize mode (tmux `-T resize`): h/j/k/l and arrows step, H/J/K/L take a coarse step,
 -- M-h/j/k/l move the pane, `=` balances, Escape/Enter/^M/q leave. Exclusive: stray keys never
@@ -64,9 +142,9 @@ local resize = {
 }
 for _, r in ipairs(resize) do
   for _, key in ipairs(r.keys) do
-    rex.bind("resize/" .. key, "pane.resize", { direction = r.dir, amount = r.step })
+    rex.bind("resize/" .. key, "pane_resize", { direction = r.dir, amount = r.step })
   end
-  rex.bind("resize/shift+" .. r.keys[1], "pane.resize", { direction = r.dir, amount = 5 })
+  rex.bind("resize/shift+" .. r.keys[1], "pane_resize", { direction = r.dir, amount = 5 })
   rex.bind("resize/alt+" .. r.keys[1], "pane.move." .. r.dir)
 end
 rex.bind("resize/=", "pane.balance")
@@ -101,6 +179,13 @@ rex.bind("navigate/ctrl+m", "client.mode.exit")
 rex.bind(P .. "z", "pane.zoom")
 rex.bind(P .. "shift+2", "pane.float")
 rex.bind(P .. "x", "pane.close")
+
+-- Floating panes: `f` shows/hides one (float_toggle, top of file; a hidden pane keeps running),
+-- `F` always opens another, `M` hides them all. `o` cycles through them; h/j/k/l do not reach
+-- them
+rex.bind(P .. "f", "float_toggle")
+rex.bind(P .. "shift+f", "pane.new_floating")
+rex.bind(P .. "shift+m", "pane.minimize_all_floating")
 
 -- Sessions (stock `s` chooser and `$` rename)
 rex.bind(P .. "s", "session.switch")
