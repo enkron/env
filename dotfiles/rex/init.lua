@@ -7,7 +7,8 @@
 local P = "ctrl+s>"
 
 -- Floating panes live in layers of kind "floating" in session.view; the client actions cover
--- creating them but not toggling or resizing, so these helpers drive the server API directly
+-- creating and minimizing them but not restoring or resizing, so these helpers drive the server
+-- API directly
 
 -- The window holding `block_id` (else the active one), and the layer `block_id` sits in
 local function locate(session_id, block_id)
@@ -33,8 +34,7 @@ rex.action{
   run = function(ctx)
     local win, layer = locate(ctx.session_id, ctx.block_id)
     if layer and layer.kind == "floating" then
-      rex.call("session.set_layer_state",
-        { session_id = ctx.session_id, layer_id = layer.layer_id, state = "minimized" })
+      rex.client.queue("pane.minimize_floating")
       return
     end
     local front
