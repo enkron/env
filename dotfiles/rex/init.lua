@@ -194,8 +194,28 @@ rex.bind(P .. "shift+4", "session.rename")
 -- Rex has no status line; `e` toggles the sidebar, the closest chrome to hide
 rex.bind(P .. "e", "client.sidebar.toggle")
 
--- Rex has no copy mode; `/` opens its scrollback search
+-- Rex has no copy mode (no keyboard selection); `/` opens its scrollback search
 rex.bind(P .. "/", "client.find.open")
+
+-- Scroll mode (closest to tmux `[` copy mode): `[`/`]` jump between shell prompts, ctrl+u/d and
+-- PageUp/PageDown page through scrollback, `/` searches, n/N step through matches,
+-- Escape/Enter/^M/q leave. Exclusive, like resize mode
+rex.mode("scroll", { exclusive = true })
+rex.bind(P .. "[BracketLeft]", "client.mode.enter", { name = "scroll" })
+
+rex.bind("scroll/[BracketLeft]", "client.prompt.previous")
+rex.bind("scroll/[BracketRight]", "client.prompt.next")
+rex.bind("scroll/ctrl+u", "client.scroll.page_up")
+rex.bind("scroll/ctrl+d", "client.scroll.page_down")
+rex.bind("scroll/pageup", "client.scroll.page_up")
+rex.bind("scroll/pagedown", "client.scroll.page_down")
+rex.bind("scroll//", "client.find.open")
+rex.bind("scroll/n", "client.find.next")
+rex.bind("scroll/shift+n", "client.find.previous")
+rex.bind("scroll/escape", "client.mode.exit")
+rex.bind("scroll/enter", "client.mode.exit")
+rex.bind("scroll/q", "client.mode.exit")
+rex.bind("scroll/ctrl+m", "client.mode.exit")
 
 -- Reload configuration file (tmux `R`)
 rex.bind(P .. "shift+r", "client.config.reload")
