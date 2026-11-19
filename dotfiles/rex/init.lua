@@ -114,11 +114,16 @@ for i = 1, 9 do
   rex.bind(P .. i, "client.tab.goto", { index = i })
 end
 
--- vim-like pane switching
-rex.bind(P .. "h", "pane.focus.left")
-rex.bind(P .. "j", "pane.focus.down")
-rex.bind(P .. "k", "pane.focus.up")
-rex.bind(P .. "l", "pane.focus.right")
+-- Move the tab left/right (tmux `swap-window -t -1`/`+1` on `<`/`>`)
+rex.bind(P .. "shift+,", "client.tab.move.backward")
+rex.bind(P .. "shift+.", "client.tab.move.forward")
+
+-- vim-like pane switching; `wrap` crosses from one edge to the other, as tmux select-pane does.
+-- tmux `;` (last-pane) waits for pane.focus_recent.in_tab, documented but not in this build
+local focus = { h = "left", j = "down", k = "up", l = "right" }
+for key, dir in pairs(focus) do
+  rex.bind(P .. key, "pane.focus", { direction = dir, wrap = true })
+end
 rex.bind(P .. "o", "pane.focus_next")
 
 -- One-shot resize (tmux C-h/j/k/l); `amount` units are undocumented, values mirror tmux.conf.
@@ -166,7 +171,7 @@ local navigate = {
 }
 for _, n in ipairs(navigate) do
   for _, key in ipairs(n.keys) do
-    rex.bind("navigate/" .. key, "pane.focus." .. n.dir)
+    rex.bind("navigate/" .. key, "pane.focus", { direction = n.dir, wrap = true })
   end
 end
 rex.bind("navigate/o", "pane.focus_next")
@@ -179,6 +184,7 @@ rex.bind("navigate/ctrl+m", "client.mode.exit")
 rex.bind(P .. "z", "pane.zoom")
 rex.bind(P .. "shift+2", "pane.float")
 rex.bind(P .. "x", "pane.close")
+rex.bind(P .. "shift+1", "pane.move_to_new_tab") -- tmux `!` break-pane
 
 -- Floating panes: `f` shows/hides one (float_toggle, top of file; a hidden pane keeps running),
 -- `F` always opens another, `M` hides them all. `o` cycles through them; h/j/k/l do not reach
@@ -190,6 +196,8 @@ rex.bind(P .. "shift+m", "pane.minimize_all_floating")
 -- Sessions (stock `s` chooser and `$` rename)
 rex.bind(P .. "s", "session.switch")
 rex.bind(P .. "shift+4", "session.rename")
+rex.bind(P .. "shift+9", "session.previous") -- tmux `(`
+rex.bind(P .. "shift+0", "session.next")     -- tmux `)`
 
 -- Rex has no status line; `e` toggles the sidebar, the closest chrome to hide
 rex.bind(P .. "e", "client.sidebar.toggle")
