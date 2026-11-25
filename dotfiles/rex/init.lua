@@ -310,26 +310,59 @@ rex.action{
 }
 rex.bind(P .. "shift+/", "list_keys")
 
--- App settings that stand in for tmux.conf options. Rex keeps them in the app, not in this
--- file, so run "Apply tmux-like Settings" from the command palette (or `rex do tmux_settings`)
--- after a fresh install or after changing them here
+-- App settings. Rex keeps them in the app, not in this file, and each client.setting.* action
+-- sets one, so this action pins them: run "Apply App Settings" from the command palette
+-- (prefix+:) after a fresh install or after changing a value here. `rex do app_settings` works
+-- only with Remote Control on (Settings > General). Settings left out stay at the app's default
+-- or as set in Settings; `rex actions -C <client>` lists them all.
+-- Not pinned: the themes (ecs_theme below imports and selects the dark one), and settings
+-- whose stored value has no unambiguous action value (active border opacity, interface style,
+-- tab icon tint, inactive window fade, cursor blink)
+local APP_SETTINGS = {
+  -- Interface
+  { "interface.toolbar.layout", "left" },                -- vertical tabs in a left sidebar
+  { "interface.toolbar.auto_hide_toolbar", "always_show" },
+  { "interface.appearance.glass", false },
+  { "interface.panes.density", "comfortable" },
+  -- tmux pane-border-status top-floating: Rex headers cover every pane, so on hover only
+  { "interface.panes.headers", "on_hover" },
+  -- tmux pane-active-border-style fg=#3972a8: the theme's blue
+  { "interface.active_panes.active_border", true },
+  { "interface.active_panes.active_border_color", "blue" },
+  { "interface.active_panes.fade", "both" },             -- dim inactive panes
+  { "interface.splits_focus.autobalance", false },
+  { "interface.splits_focus.focus_follows_mouse", true },
+  { "interface.animation.style", "natural" },
+  { "interface.app_icon.selection", "default" },
+  { "notifications.overview.position", "bottom_right" },
+  -- Terminal
+  { "terminal.typography.font", "Hack" },
+  { "terminal.typography.size", 14 },
+  { "terminal.advanced_fonts.smoothing", false },
+  { "terminal.cursor.shaders", true },
+  { "terminal.keyboard.option", "sends_alt" },          -- Option is Meta, as in Ghostty
+  -- Which-key popup after the prefix, beside prefix+? (list_keys)
+  { "terminal.keyboard.sequence_hints", true },
+  { "terminal.scrolling.smooth", true },
+  -- tmux copy-pipe on mouse selection
+  { "terminal.selection.copy_on_select", true },
+  -- Selected text keeps its colours, as the bg-only copy-mode-selection-style
+  { "terminal.selection.foreground", "cell_foreground" },
+  { "terminal.selection.background", "theme" },
+  { "terminal.titles.prefer_generated", false },
+  -- Developer
+  { "developer.mode.enabled", true },
+  { "developer.experimental.new_quick_switcher", true },
+}
+
 rex.action{
-  name = "tmux_settings",
-  title = "Apply tmux-like Settings",
+  name = "app_settings",
+  title = "Apply App Settings",
   category = "Settings",
   run = function()
-    local s = "client.setting."
-    -- Copy-on-select, as the copy-pipe mouse bindings
-    rex.client.queue(s .. "terminal.selection.copy_on_select", { value = true })
-    -- Selected text keeps its colours, as the bg-only copy-mode-selection-style
-    rex.client.queue(s .. "terminal.selection.foreground", { value = "cell_foreground" })
-    -- pane-active-border-style fg=#3972a8: the theme's blue
-    rex.client.queue(s .. "interface.active_panes.active_border", { value = true })
-    rex.client.queue(s .. "interface.active_panes.active_border_color", { value = "blue" })
-    -- pane-border-status top-floating: Rex headers cover every pane, so show them on hover only
-    rex.client.queue(s .. "interface.panes.headers", { value = "on_hover" })
-    -- Which-key popup after ctrl+s, standing in for tmux `?` list-keys
-    rex.client.queue(s .. "terminal.keyboard.sequence_hints", { value = true })
+    for _, s in ipairs(APP_SETTINGS) do
+      rex.client.queue("client.setting." .. s[1], { value = s[2] })
+    end
   end,
 }
 
