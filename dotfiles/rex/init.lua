@@ -285,6 +285,30 @@ rex.bind("scroll/ctrl+m", "client.mode.exit")
 -- Reload configuration file (tmux `R`)
 rex.bind(P .. "shift+r", "client.config.reload")
 
+-- Command palette (tmux `:` command-prompt): every action, including the ones defined here
+rex.bind(P .. "shift+;", "client.palette.toggle")
+
+-- List keys (tmux `?` list-keys): `rex keymap` in a floating pane, closed by quitting less. It
+-- shows this file's bindings and modes, not the app's built-in cmd+... shortcuts
+rex.action{
+  name = "list_keys",
+  title = "List Key Bindings",
+  category = "Help",
+  run = function(ctx)
+    rex.call("session.new_layer", {
+      session_id = ctx.session_id,
+      bounds = { 0.1, 0.05, 0.8, 0.9 },
+      focus = true,
+      layout = { block = {
+        flavor = "com.superlogical.terminal.shell",
+        label = "keys",
+        options = { command = { "sh", "-c", "rex keymap --color=always | less -RS" } },
+      } },
+    })
+  end,
+}
+rex.bind(P .. "shift+/", "list_keys")
+
 -- App settings that stand in for tmux.conf options. Rex keeps them in the app, not in this
 -- file, so run "Apply tmux-like Settings" from the command palette (or `rex do tmux_settings`)
 -- after a fresh install or after changing them here
