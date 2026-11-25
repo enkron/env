@@ -194,7 +194,8 @@ rex.bind(P .. "shift+2", "pane.float")
 rex.bind(P .. "x", "pane.close")
 rex.bind(P .. "u", "session.undo_close")
 rex.bind(P .. "shift+1", "pane.move_to_new_tab") -- tmux `!` break-pane
-rex.bind(P .. "m", "pane.move_to_tab")           -- tmux join-pane, with a tab picker
+-- tmux join-pane, with a tab picker; does nothing while the session has only one tab
+rex.bind(P .. "m", "pane.move_to_tab")
 rex.bind(P .. "shift+t", "pane.rename")          -- tmux select-pane -T
 
 -- Floating panes: `f` shows/hides one (float_toggle, top of file; a hidden pane keeps running),
