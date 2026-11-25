@@ -118,13 +118,20 @@ end
 rex.bind(P .. "shift+,", "client.tab.move.backward")
 rex.bind(P .. "shift+.", "client.tab.move.forward")
 
--- vim-like pane switching; `wrap` crosses from one edge to the other, as tmux select-pane does.
--- tmux `;` (last-pane) waits for pane.focus_recent.in_tab, documented but not in this build
+-- Pick any session, tab or pane from a tree (tmux `'` select-window by index or name, and
+-- choose-tree)
+rex.bind(P .. "'", "pane.go_to")
+
+-- vim-like pane switching; `wrap` crosses from one edge to the other, as tmux select-pane does
 local focus = { h = "left", j = "down", k = "up", l = "right" }
 for key, dir in pairs(focus) do
   rex.bind(P .. key, "pane.focus", { direction = dir, wrap = true })
 end
 rex.bind(P .. "o", "pane.focus_next")
+
+-- tmux `;` last-pane. Rex has no in-tab last pane; navigate.back walks a jump list of panes
+-- across tabs and sessions, so it also returns to a pane in another tab
+rex.bind(P .. ";", "client.navigate.back")
 
 -- One-shot resize (tmux C-h/j/k/l); `amount` units are undocumented, values mirror tmux.conf.
 -- pane_resize (top of file) also handles floating panes
@@ -180,11 +187,15 @@ rex.bind("navigate/enter", "client.mode.exit")
 rex.bind("navigate/q", "client.mode.exit")
 rex.bind("navigate/ctrl+m", "client.mode.exit")
 
--- Panes: zoom (stock `z`), float toggle (stock `@`), kill (`x`; Rex closes without a confirm)
+-- Panes: zoom (stock `z`), float toggle (stock `@`), kill (`x`). Rex closes without the tmux
+-- confirm; `u` reopens the last closed pane instead, repeat for the one before
 rex.bind(P .. "z", "pane.zoom")
 rex.bind(P .. "shift+2", "pane.float")
 rex.bind(P .. "x", "pane.close")
+rex.bind(P .. "u", "session.undo_close")
 rex.bind(P .. "shift+1", "pane.move_to_new_tab") -- tmux `!` break-pane
+rex.bind(P .. "m", "pane.move_to_tab")           -- tmux join-pane, with a tab picker
+rex.bind(P .. "shift+t", "pane.rename")          -- tmux select-pane -T
 
 -- Floating panes: `f` shows/hides one (float_toggle, top of file; a hidden pane keeps running),
 -- `F` always opens another, `M` hides them all. `o` cycles through them; h/j/k/l do not reach
@@ -192,6 +203,48 @@ rex.bind(P .. "shift+1", "pane.move_to_new_tab") -- tmux `!` break-pane
 rex.bind(P .. "f", "float_toggle")
 rex.bind(P .. "shift+f", "pane.new_floating")
 rex.bind(P .. "shift+m", "pane.minimize_all_floating")
+
+-- Place the focused floating pane, keeping its size: corner 1-4 (top-left, top-right,
+-- bottom-left, bottom-right) or "fill"; with `direction`, nudge it by `amount` percent of the
+-- window instead. Tiled panes are left alone
+rex.action{
+  name = "float_place",
+  title = "Place Floating Pane",
+  category = "Pane",
+  repeats = true,
+  run = function(ctx, args)
+    local _, layer = locate(ctx.session_id, ctx.block_id)
+    if not (layer and layer.kind == "floating") then return end
+    local x, y, w, h = layer.bounds[1], layer.bounds[2], layer.bounds[3], layer.bounds[4]
+    local d = (args.amount or 5) / 100
+    if args.corner == "fill" then x, y, w, h = 0, 0, 1, 1
+    elseif args.corner then
+      x = (args.corner == 2 or args.corner == 4) and 1 - w or 0
+      y = (args.corner == 3 or args.corner == 4) and 1 - h or 0
+    elseif args.direction == "left" then x = x - d
+    elseif args.direction == "right" then x = x + d
+    elseif args.direction == "up" then y = y - d
+    elseif args.direction == "down" then y = y + d
+    end
+    x = math.max(0, math.min(x, 1 - w))
+    y = math.max(0, math.min(y, 1 - h))
+    rex.call("session.resize_layer",
+      { session_id = ctx.session_id, layer_id = layer.layer_id, bounds = { x, y, w, h } })
+  end,
+}
+
+-- Move mode (tmux 3.8 stock `g` table): one key, then back to normal, as a tmux key table does.
+-- 1-4 snap to a corner, 0 fills the window, h/j/k/l nudge. Resize mode (`r`) resizes
+rex.mode("move", { exclusive = true })
+rex.bind(P .. "g", "client.mode.enter", { name = "move", once = true })
+for corner = 1, 4 do
+  rex.bind("move/" .. corner, "float_place", { corner = corner })
+end
+rex.bind("move/0", "float_place", { corner = "fill" })
+for key, dir in pairs(focus) do
+  rex.bind("move/" .. key, "float_place", { direction = dir, amount = 5 })
+end
+rex.bind("move/escape", "client.mode.exit")
 
 -- Sessions (stock `s` chooser and `$` rename)
 rex.bind(P .. "s", "session.switch")
@@ -202,14 +255,18 @@ rex.bind(P .. "shift+0", "session.next")     -- tmux `)`
 -- Rex has no status line; `e` toggles the sidebar, the closest chrome to hide
 rex.bind(P .. "e", "client.sidebar.toggle")
 
--- Rex has no copy mode (no keyboard selection); `/` opens its scrollback search
+-- `/` opens the scrollback search outside copy mode
 rex.bind(P .. "/", "client.find.open")
 
--- Scroll mode (closest to tmux `[` copy mode): `[`/`]` jump between shell prompts, ctrl+u/d and
--- PageUp/PageDown page through scrollback, `/` searches, n/N step through matches,
+-- Copy mode (tmux `[` with mode-keys vi). The app supplies the keys inside it, as tmux
+-- copy-mode-vi does: vi motions, v/V/ctrl+v select, y yanks, / and ? search, f/t find
+rex.bind(P .. "[BracketLeft]", "pane.copy_mode.enter")
+
+-- Scroll mode on `{`, kept for what copy mode lacks: `[`/`]` jump between shell prompts,
+-- ctrl+u/d and PageUp/PageDown page through scrollback, `/` searches, n/N step through matches,
 -- Escape/Enter/^M/q leave. Exclusive, like resize mode
 rex.mode("scroll", { exclusive = true })
-rex.bind(P .. "[BracketLeft]", "client.mode.enter", { name = "scroll" })
+rex.bind(P .. "shift+[BracketLeft]", "client.mode.enter", { name = "scroll" })
 
 rex.bind("scroll/[BracketLeft]", "client.prompt.previous")
 rex.bind("scroll/[BracketRight]", "client.prompt.next")
@@ -227,6 +284,29 @@ rex.bind("scroll/ctrl+m", "client.mode.exit")
 
 -- Reload configuration file (tmux `R`)
 rex.bind(P .. "shift+r", "client.config.reload")
+
+-- App settings that stand in for tmux.conf options. Rex keeps them in the app, not in this
+-- file, so run "Apply tmux-like Settings" from the command palette (or `rex do tmux_settings`)
+-- after a fresh install or after changing them here
+rex.action{
+  name = "tmux_settings",
+  title = "Apply tmux-like Settings",
+  category = "Settings",
+  run = function()
+    local s = "client.setting."
+    -- Copy-on-select, as the copy-pipe mouse bindings
+    rex.client.queue(s .. "terminal.selection.copy_on_select", { value = true })
+    -- Selected text keeps its colours, as the bg-only copy-mode-selection-style
+    rex.client.queue(s .. "terminal.selection.foreground", { value = "cell_foreground" })
+    -- pane-active-border-style fg=#3972a8: the theme's blue
+    rex.client.queue(s .. "interface.active_panes.active_border", { value = true })
+    rex.client.queue(s .. "interface.active_panes.active_border_color", { value = "blue" })
+    -- pane-border-status top-floating: Rex headers cover every pane, so show them on hover only
+    rex.client.queue(s .. "interface.panes.headers", { value = "on_hover" })
+    -- Which-key popup after ctrl+s, standing in for tmux `?` list-keys
+    rex.client.queue(s .. "terminal.keyboard.sequence_hints", { value = true })
+  end,
+}
 
 -- ecs colour theme (themes/ecs, from ecs.vim). Rex has no colour options in this file; this
 -- action imports the Ghostty-format theme and selects it. Rex keeps its own copy, so run it from
