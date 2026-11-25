@@ -317,14 +317,15 @@ rex.bind(P .. "shift+/", "list_keys")
 -- or as set in Settings; `rex actions -C <client>` lists them all.
 -- Not pinned: the themes (ecs_theme below imports and selects the dark one), and settings
 -- whose stored value has no unambiguous action value (active border opacity, interface style,
--- tab icon tint, inactive window fade, cursor blink)
+-- tab icon tint, inactive window fade)
 local APP_SETTINGS = {
   -- Interface
   { "interface.toolbar.layout", "left" },                -- vertical tabs in a left sidebar
   { "interface.toolbar.auto_hide_toolbar", "always_show" },
   { "interface.appearance.glass", false },
   { "interface.panes.density", "comfortable" },
-  -- tmux pane-border-status top-floating: Rex headers cover every pane, so on hover only
+  -- tmux pane-border-status top-floating: Rex headers cover every pane, so on hover only; a
+  -- header shows when the pointer reaches the pane's top corners
   { "interface.panes.headers", "on_hover" },
   -- tmux pane-active-border-style fg=#3972a8: the theme's blue
   { "interface.active_panes.active_border", true },
@@ -338,8 +339,18 @@ local APP_SETTINGS = {
   -- Terminal
   { "terminal.typography.font", "Hack" },
   { "terminal.typography.size", 14 },
-  { "terminal.advanced_fonts.smoothing", false },
-  { "terminal.cursor.shaders", true },
+  -- Ghostty font-thicken turns on macOS font smoothing; Rex has no thicken strength
+  { "terminal.advanced_fonts.smoothing", true },
+  -- Cursor as ghostty.conf: a plain, steady block (its colour comes from themes/ecs). Programs
+  -- may still change the shape, so Vim keeps its insert-mode bar; no trail shader
+  { "terminal.cursor.style", "block" },
+  { "terminal.cursor.blink", "off" },
+  { "terminal.cursor.shaders", false },
+  -- Keep the hand-tuned ecs colours exact: no contrast adjustment, no mapping of truecolor to
+  -- the nearest theme colour, and sRGB rather than Display P3, as Ghostty
+  { "terminal.colors.contrast", false },
+  { "terminal.colors.palette", false },
+  { "terminal.colors.display_p3", false },
   { "terminal.keyboard.option", "sends_alt" },          -- Option is Meta, as in Ghostty
   -- Which-key popup after the prefix, beside prefix+? (list_keys)
   { "terminal.keyboard.sequence_hints", true },
